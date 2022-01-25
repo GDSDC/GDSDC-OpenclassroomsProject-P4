@@ -1,0 +1,52 @@
+Menu Principal
+
+"1. Créer un nouveau tournoi
+2. Ajouter huit joueurs
+3. Génèrer des paires de joueurs pour le premier/prochain tour
+4. Entrer les résultats
+5. Terminer le tournoi
+
+. Quitter
+
+Entrez votre choix : " :int
+
+
+
+Menu 1. Créer un nouveau tournoi
+
+Inputs
+1.1 "Renseignez le Nom du tournoi : " :str à rentrer dans le dictionnaire 'nouveau_tournoi'
+1.2 "Renseignez le Lieu du tournoi : " :str à rentrer dans le dictionnaire 'nouveau_tournoi'
+1.3 Inscrire date actuel  dans le dictionnaire 'nouveau_tournoi'
+1.4 Inscrire la valeur par défaut NOMBRE_DE_TOURS 4 dans le dictionnaire 'nouveau_tournoi'
+1.5 "Contrôle du temps (bullet, blitz ou coup radide) : " :str à rentrer dans le dictionnaire 'nouveau_tournoi'
+1.6 "Rensignez la description : " :str à rentrer dans le dictionnaire 'nouveau_tournoi'
+1.7 Créer un instance de la class Tournoi du Controler.py avec le dictionnaire 'nouveau_tournoi' en argument
+1.8 "Nouveau tournoi créé avec succès !!" -> revenir au Menu Principal
+
+
+Menu 2. Ajouter huit joueurs
+
+Inputs
+2.1 "Entrez les informations du joueur n°1. \n"
+2.1.1 "Entrez son Nom de famille : " :str à rentrer dans la liste de dictionnaires 'nouveaux_joueurs'
+2.1.2 "Entrez son prénom : " :str à rentrer dans la liste de dictionnaires 'nouveaux_joueurs'
+2.1.3 "Entrez sa date de naissance (format jj/mm/aaaa) : " :str à rentrer dans la liste de dictionnaires 'nouveaux_joueurs'
+2.1.4 "Entrez son sexe (H ou F) : " :str à rentrer dans la liste de dictionnaires 'nouveaux_joueurs'
+2.1.2 "Entrez son classement : " :int à rentrer dans la liste de dictionnaires 'nouveaux_joueurs'
+-> Répéter les inputs pour les 8 joueurs
+2.9 Créer un instance de la class Joueurs du Controler.py avec la liste 'nouveaux_joueurs' en argument
+2.10 "Huit joueurs ajoutés avec succès !" -> revenir au Menu Principal
+
+
+Menu 3. Génèrer des paires de joueurs pour le premier/prochain tour
+
+3.1 Créer un instance de la class Tours du Controler.py
+3.2 Appeler une méthode de cette classe permettant l'affichage des paires
+3.3 "Nouvelles paires de joueurs générées avec succès"
+
+
+
+
+
+
