@@ -97,7 +97,8 @@ Créer un nouveau Tournoi
             except:
                 print('Choisissez le contrôle du temps en écrivant "bullet", "blitz" ou "coup rapide".')
 
-
+        # Description
+        nouveau_tournoi['description'] = input('Rensignez les remarques générales du directeur du tournoi : ')
 
 
         return nouveau_tournoi
