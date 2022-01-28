@@ -5,8 +5,7 @@ Menu Principal
 3. Génèrer des paires de joueurs pour le premier/prochain tour
 4. Entrer les résultats
 5. Terminer le tournoi
-
-. Quitter
+6. Quitter
 
 Entrez votre choix : " :int
 
