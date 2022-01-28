@@ -82,6 +82,21 @@ Créer un nouveau Tournoi
         # définition date de début de tournoi
         nouveau_tournoi['date_debut'] = date.today()
 
+        # Boucle pour définir le contrôle du temps
+        while(True):
+            try:
+                nouveau_tournoi['controle_du_temps'] = str(input('\nRenseignez le contrôle du temps ("bullet", "blitz" ou "coup rapide") : '))
+                if nouveau_tournoi['controle_du_temps'] == 'bullet':
+                    break
+                elif nouveau_tournoi['controle_du_temps'] == 'blitz':
+                    break
+                elif nouveau_tournoi['controle_du_temps'] == 'coup rapide':
+                    break
+                else:
+                    raise Exception
+            except:
+                print('Choisissez le contrôle du temps en écrivant "bullet", "blitz" ou "coup rapide".')
+
 
 
 
