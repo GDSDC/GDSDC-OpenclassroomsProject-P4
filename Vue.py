@@ -33,10 +33,18 @@ Menu Principal
         for choix in CHOIX_MENU_PRINCIPAL.keys():
             print(choix,'--', CHOIX_MENU_PRINCIPAL[choix])
 
-
+        # Boucle pour définir le Choix du menu
+        while (True):
+            try:
+                choix_utilisateur_menu_principal = int(input('\nRenseignez votre choix parmis les propositions ci-dessus (1 à ' + str(len(CHOIX_MENU_PRINCIPAL)) + ') : '))
+                if (choix_utilisateur_menu_principal > 0 and choix_utilisateur_menu_principal <= int(len(CHOIX_MENU_PRINCIPAL))):
+                    break
+                else:
+                    raise Exception
+            except:
+                print('Veuillez renseigner un entier compris entre 1 et ' + str(len(CHOIX_MENU_PRINCIPAL)) + ' .')
 
         return choix_utilisateur_menu_principal
-
 
     def menu_creer_nouveau_tournoi(self) -> Dict[str, str]:
         '''Création d'un nouveau tournoi en renseignant toutes les informations demandées.'''
@@ -104,7 +112,6 @@ Créer un nouveau Tournoi
         nouveau_tournoi['description'] = input('Rensignez les remarques générales du directeur du tournoi : ')
 
         return nouveau_tournoi
-
 
     def ajouter_huit_joueurs(self) -> List[Dict[str, str]]:
         '''AJout des informations de huit joueurs dans une liste de dictionnaires à destination du Controller.'''
@@ -202,8 +209,29 @@ Ajouter ''' + str(NOMBRE_DE_JOUEURS) + ''' joueurs
 
         return nouveaux_joueurs
 
+    def afficher_paires_joueurs(self, paires_joueurs: List[tuple[str, str]]):
+
+        # Affichage de l'entête
+        affichage_paires_joueurs_entête = '''
+==========================================================
+''' + str(len(paires_joueurs)) + ''' nouvelles paires de joueurs générées avec succès !
+==========================================================
+'''
+        print(affichage_paires_joueurs_entête)
+
+        # Boucle pour afficher toutes les paires de joueurs
+        for paires in range(1,len(paires_joueurs)+1):
+            print('Paire n°' + str(paires) + ' : ' + paires_joueurs[paires-1][0] + ' / ' + paires_joueurs[paires-1][1])
+
+    def entrer_scores(self, ):
+        pass
+
 if __name__ == '__main__':
 
     initiation_vue = Vue()
-    resultat = initiation_vue.ajouter_huit_joueurs()
+    paires_6_joueurs = [('Gabriel1', 'Stephane1'), ('Gabriel2', 'Stephane2'), ('Gabriel3', 'Stephane3'), ('Gabriel4', 'Stephane4'), ('Gabriel5', 'Stephane5'), ('Gabriel6', 'Stephane6')]
+    paires_8_joueurs = [('Gabriel1', 'Stephane1'), ('Gabriel2', 'Stephane2'), ('Gabriel3', 'Stephane3'), ('Gabriel4', 'Stephane4'), ('Gabriel5', 'Stephane5'), ('Gabriel6', 'Stephane6'), ('Gabriel7', 'Stephane7'), ('Gabriel8', 'Stephane8')]
+    resultat = initiation_vue.afficher_paires_joueurs(paires_6_joueurs)
+    print(resultat)
+    resultat = initiation_vue.afficher_paires_joueurs(paires_8_joueurs)
     print(resultat)
