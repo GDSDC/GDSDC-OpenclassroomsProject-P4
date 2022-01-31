@@ -34,7 +34,6 @@ if __name__ == '__main__':
 
     tournoi_test = {'nom': 'Tournoi TEst', 'lieu': 'TEST VILLE', 'date_debut': date(2022, 1, 31), 'date_fin': '', 'nombre_tours': '4', 'controle_du_temps': 'bullet', 'description': 'ok description'}
 
-    vide= Tournoi()
-    print(dir(vide))
-    test = Tournoi(tournoi_test)
-    print(dir(test))
+    test = tournoi_test.keys()
+    print(test)
+    print(type(test))
