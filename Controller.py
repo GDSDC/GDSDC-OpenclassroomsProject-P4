@@ -12,4 +12,5 @@ class Controller:
 if __name__ == '__main__':
 
     initiation_controller = Controller()
-    initiation_controller.ui.menu_principal()
+    choix_utilisateur = initiation_controller.ui.menu_principal()
+    print(choix_utilisateur)
