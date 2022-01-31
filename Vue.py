@@ -229,9 +229,12 @@ Ajouter ''' + str(NOMBRE_DE_JOUEURS) + ''' joueurs
 if __name__ == '__main__':
 
     initiation_vue = Vue()
-    paires_6_joueurs = [('Gabriel1', 'Stephane1'), ('Gabriel2', 'Stephane2'), ('Gabriel3', 'Stephane3'), ('Gabriel4', 'Stephane4'), ('Gabriel5', 'Stephane5'), ('Gabriel6', 'Stephane6')]
-    paires_8_joueurs = [('Gabriel1', 'Stephane1'), ('Gabriel2', 'Stephane2'), ('Gabriel3', 'Stephane3'), ('Gabriel4', 'Stephane4'), ('Gabriel5', 'Stephane5'), ('Gabriel6', 'Stephane6'), ('Gabriel7', 'Stephane7'), ('Gabriel8', 'Stephane8')]
-    resultat = initiation_vue.afficher_paires_joueurs(paires_6_joueurs)
-    print(resultat)
-    resultat = initiation_vue.afficher_paires_joueurs(paires_8_joueurs)
+    #paires_6_joueurs = [('Gabriel1', 'Stephane1'), ('Gabriel2', 'Stephane2'), ('Gabriel3', 'Stephane3'), ('Gabriel4', 'Stephane4'), ('Gabriel5', 'Stephane5'), ('Gabriel6', 'Stephane6')]
+    #paires_8_joueurs = [('Gabriel1', 'Stephane1'), ('Gabriel2', 'Stephane2'), ('Gabriel3', 'Stephane3'), ('Gabriel4', 'Stephane4'), ('Gabriel5', 'Stephane5'), ('Gabriel6', 'Stephane6'), ('Gabriel7', 'Stephane7'), ('Gabriel8', 'Stephane8')]
+    #resultat = initiation_vue.afficher_paires_joueurs(paires_6_joueurs)
+    #print(resultat)
+    #resultat = initiation_vue.afficher_paires_joueurs(paires_8_joueurs)
+    #print(resultat)
+
+    resultat = initiation_vue.menu_creer_nouveau_tournoi()
     print(resultat)
