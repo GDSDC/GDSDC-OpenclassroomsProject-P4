@@ -1,5 +1,4 @@
-
-
+from datetime import date
 
 class Tournoi:
     '''Classe Tournoi'''
@@ -16,9 +15,9 @@ class Tournoi:
             'controle_du_temps': '',
             'description': '',
         }
-    def __init__(self, nouveau_tournoi: Dict[str, str]=tournoi_vide):
+    def __init__(self, nouveau_tournoi: dict[str, str]= tournoi_vide):
         # Itération sur les clés du dictionnaire
-        for data in nouveau_tournoi.keys:
+        for data in nouveau_tournoi.keys():
             self.data = nouveau_tournoi[data]
 
 class Joueur:
@@ -33,9 +32,9 @@ class Ronde:
 
 if __name__ == '__main__':
 
-    tournoi_test = {'nom': 'Tournoi TEst', 'lieu': 'TEST VILLE', 'date_debut': datetime.date(2022, 1, 31), 'date_fin': '', 'nombre_tours': '4', 'controle_du_temps': 'bullet', 'description': 'ok description'}
+    tournoi_test = {'nom': 'Tournoi TEst', 'lieu': 'TEST VILLE', 'date_debut': date(2022, 1, 31), 'date_fin': '', 'nombre_tours': '4', 'controle_du_temps': 'bullet', 'description': 'ok description'}
 
     vide= Tournoi()
-    print(vide)
+    print(dir(vide))
     test = Tournoi(tournoi_test)
-    print(test)
+    print(dir(test))
