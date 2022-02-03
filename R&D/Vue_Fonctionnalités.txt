@@ -45,6 +45,10 @@ Menu 3. Génèrer des paires de joueurs pour le premier/prochain tour
 3.3 "Nouvelles paires de joueurs générées avec succès"
 
 
+Menu 4. Entrer les résultats
+
+4.1 "Entrez le résultat pour le match n°1 du tour Round n°1."
+
 
 
 
