@@ -1,24 +1,23 @@
+import dataclasses
+from enum import Enum
 from datetime import date
+
+### Création des classes Enum
+
+# Classe Enum du sexe
+class Sex(Enum):
+    MALE = 'm'
+    FEMALE = 'f'
+
+# Classe Enum du Contrôle du temps
+class Controle_du_temps(Enum):
+    BULLET = 'bullet'
+    BLITZ = 'blitz'
+    COUP_RAPIDE = 'coup rapide'
 
 class Tournoi:
     '''Classe Tournoi'''
-
-
-
-    # Initialisation du Tournoi à l'aide du dictionnaire nouveau_tournoi
-    tournoi_vide = {
-            'nom' : '',
-            'lieu': '',
-            'date_debut': '',
-            'date_fin': '',
-            'nombre_tours' : '',
-            'controle_du_temps': '',
-            'description': '',
-        }
-    def __init__(self, nouveau_tournoi: dict[str, str]= tournoi_vide):
-        # Itération sur les clés du dictionnaire
-        for data in nouveau_tournoi.keys():
-            self.data = nouveau_tournoi[data]
+    pass
 
 class Joueur:
     pass
@@ -31,9 +30,6 @@ class Ronde:
 
 
 if __name__ == '__main__':
-
-    tournoi_test = {'nom': 'Tournoi TEst', 'lieu': 'TEST VILLE', 'date_debut': date(2022, 1, 31), 'date_fin': '', 'nombre_tours': '4', 'controle_du_temps': 'bullet', 'description': 'ok description'}
-
-    test = tournoi_test.keys()
-    print(test)
-    print(type(test))
+    nouveau_sexe = Sex.MALE
+    print(nouveau_sexe.value)
+    print(type(nouveau_sexe.value))
