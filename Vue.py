@@ -1,5 +1,6 @@
 from typing import Any, Dict, List
 from datetime import date
+import Parse_Validate_Tools as pvt
 
 
 # Constantes Globales
@@ -33,16 +34,9 @@ Menu Principal
         for choix in CHOIX_MENU_PRINCIPAL.keys():
             print(choix,'--', CHOIX_MENU_PRINCIPAL[choix])
 
-        # Boucle pour définir le Choix du menu
-        while (True):
-            try:
-                choix_utilisateur_menu_principal = int(input('\nRenseignez votre choix parmis les propositions ci-dessus (1 à ' + str(len(CHOIX_MENU_PRINCIPAL)) + ') : '))
-                if (choix_utilisateur_menu_principal > 0 and choix_utilisateur_menu_principal <= int(len(CHOIX_MENU_PRINCIPAL))):
-                    break
-                else:
-                    raise Exception
-            except:
-                print('Veuillez renseigner un entier compris entre 1 et ' + str(len(CHOIX_MENU_PRINCIPAL)) + ' .')
+        # Choix du menu
+        choix_du_menu_texte = '\nRenseignez votre choix parmis les propositions ci-dessus (1 à ' + str(len(CHOIX_MENU_PRINCIPAL)) + ') : '
+        choix_utilisateur_menu_principal = pvt.parse_and_validate(explanation= choix_du_menu_texte, parse=pvt.parse_int, validate=pvt.validate_integer_interval)
 
         return choix_utilisateur_menu_principal
 
