@@ -1,5 +1,6 @@
 from typing import Any, Dict, List, Tuple, Optional, Callable
 from datetime import date
+import Model as md
 
 
 ### Global constant
@@ -8,14 +9,14 @@ MENU_LENGTH = 6 # -> Find a way to get the data from the length of dictionnary C
 ### Functions for input parsing
 
 def parse_string_not_empty(user_input: str) -> Tuple[Optional[Any], bool, str]:
-    ''' Function that verify the input string is not empty'''
+    """ Function that verify the input string is not empty"""
     if len(user_input) > 0:
         return user_input, True, ''
     else:
         return None, False, 'Votre entrée doit contenir au moins 1 caractère.'
 
 def parse_int(user_input: str):
-    ''' Function that verify the input is an int'''
+    """ Function that verify the input is an int"""
     try:
         res = int(user_input)
         return res, True, ''
@@ -24,7 +25,7 @@ def parse_int(user_input: str):
 
 
 def parse_date(user_input: str):
-    '''Function that verify the input is a valid date'''
+    """Function that verify the input is a valid date"""
     try:
         day, month, year = user_input.split('/')
         res = date(int(year), int(month), int(day))
@@ -37,7 +38,7 @@ def parse_date(user_input: str):
 ### Functions for input validation
 
 def validate_date_format(parsed_date: date):
-    '''Function that verify if the date format is dd/mm/yyyy'''
+    """Function that verify if the date format is dd/mm/yyyy"""
     if len(str(parsed_date.year)) == 4:
         res = parsed_date
         return res, True, ''
@@ -45,15 +46,33 @@ def validate_date_format(parsed_date: date):
         return None, False, 'La date doit être au format jj/mm/aaaa'
 
 def validate_integer_interval(parsed_int: int, interval: Tuple[int, int] = [1,MENU_LENGTH]):
-    '''Function that verify if the integer is in the interval'''
+    """Function that verify if the integer is in the interval"""
     res = parsed_int
     if (parsed_int >= interval[0]) and (parsed_int <= interval[1]):
         return res, True, ''
     else:
         return None, False, f"{parsed_int} n'est pas compris entre {interval[0]} et {interval[1]}."
 
+def validate_controle_du_temps(user_input: str):
+    """Function that verify if user_input is in Controle_du_temps(Enum)"""
+    try:
+        res = md.ControleDuTemps(user_input)
+        return res, True, ''
+    except ValueError:
+        exemple_controle_du_temps = [controle_du_temps.value for controle_du_temps in md.ControleDuTemps]
+        return None, False, f'"{user_input}" n\'est pas un choix de contrôle du temps valide. Veuillez choisir un élément dans la liste {exemple_controle_du_temps}.'
+
+def validate_sexe(user_input: str):
+    """Function that verify if user_intpu is in Sex(Enum)"""
+    try:
+        res = md.Sex(user_input)
+        return res, True, ''
+    except ValueError:
+        exemple_sexe = [sexe.value for sexe in md.Sex]
+        return None, False, f'"{user_input}" n\'est pas un choix de sexe valide. Veuillez choisir un élément dans la liste {exemple_sexe}.'
+
 def no_validation(user_input):
-    '''Function that do no validation when this is not needed'''
+    """Function that do no validation when this is not needed"""
     res = user_input
     return res, True, ''
 
@@ -78,4 +97,7 @@ def parse_and_validate(explanation: str,
 
 if __name__ == '__main__':
 
-    pass
+    explanation = '\n Renseignez le sexe du joueur : '
+    result = parse_and_validate(explanation=explanation, parse=parse_string_not_empty, validate=validate_sexe)
+    print(result)
+    print(type(result))
