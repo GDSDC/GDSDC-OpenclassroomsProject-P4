@@ -1,10 +1,10 @@
 import Vue
 
 class Controller:
-    '''Contrôleur principal.'''
+    """Contrôleur principal."""
 
     def __init__(self):
-        '''Initialise les modèles et les vues.'''
+        """Initialise les modèles et les vues."""
 
         self.ui = Vue.Vue()
 
