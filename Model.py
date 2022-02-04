@@ -1,4 +1,5 @@
-import dataclasses
+from typing import Any, Dict, List
+from dataclasses import dataclass
 from enum import Enum
 from datetime import date
 
@@ -13,14 +14,12 @@ NOMBRE_DE_JOUEURS = 8
 # Classes Enum
 class Sex(Enum):
     """Classe Enum du sexe"""
-
     MALE = 'm'
     FEMALE = 'f'
 
 
 class ControleDuTemps(Enum):
     """Classe Enum du Contrôle du temps"""
-
     BULLET = 'bullet'
     BLITZ = 'blitz'
     COUP_RAPIDE = 'coup rapide'
@@ -29,7 +28,6 @@ class ControleDuTemps(Enum):
 @dataclass
 class Joueur:
     """Classe décrivant un Joueur"""
-
     nom_de_famille: str
     prenom: str
     date_de_naissance: date
@@ -40,15 +38,13 @@ class Joueur:
 @dataclass
 class Tournoi:
     """Classe décrivant un Tournoi"""
-
     nom: str
     lieu: str
     date_debut: date
     date_fin: date
-    nombre_tours: int = NOMBRE_DE_TOURS
-    controle_du_temps: Controle_du_temps
+    controle_du_temps: ControleDuTemps
     description: str
-
+    nombre_tours: int = NOMBRE_DE_TOURS
 
 class Match:
     pass
@@ -70,6 +66,6 @@ class State:
 
 
 if __name__ == '__main__':
-    nouveau_sexe = Controle_du_temps.BULLET
+    nouveau_sexe = ControleDuTemps.BULLET
     print(nouveau_sexe.value)
     print(type(nouveau_sexe.value))
