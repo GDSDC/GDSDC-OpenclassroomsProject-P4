@@ -11,10 +11,10 @@ CHOIX_MENU_PRINCIPAL = {1 : 'Créer un nouveau tournoi',
                         5 : 'Terminer le tournoi',
                         6 : 'Quitter'}
 # nombres de tours (Round) par tournoi
-NOMBRE_DE_TOURS = 4
+# NOMBRE_DE_TOURS = 4
 
 # nombre de joueurs par tournoi
-NOMBRE_DE_JOUEURS = 8
+# NOMBRE_DE_JOUEURS = 8
 
 class Vue:
     '''Classe qui gère l'interface/menu du programme.'''
@@ -62,16 +62,9 @@ Créer un nouveau Tournoi
 '''
         print(affichage_menu_creer_nouveau_tournoi)
 
-        # Boucle pour définir le nom du tournoi
-        while(True):
-            try:
-                nouveau_tournoi['nom'] = str(input('\nRenseignez le Nom du tournoi : '))
-                if len(nouveau_tournoi['nom']) > 0:
-                    break
-                else:
-                    raise Exception
-            except:
-                print('Veuillez renseigner un nom de tournoi contenant au moins un charactère.')
+        # Définition du nom du tournoi
+        nouveau_tournoi_texte = '\nRenseignez le Nom du tournoi : '
+        nouveau_tournoi['nom'] = pvt.parse_and_validate(explanation=nouveau_tournoi_texte, parse=pvt.parse_string_not_empty, validate=pvt.no_validation)
 
         # Boucle pour définir le lieu du tournoi
         while(True):
