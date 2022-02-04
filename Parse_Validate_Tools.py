@@ -53,6 +53,15 @@ def validate_integer_interval(parsed_int: int, interval: Tuple[int, int] = [1,ME
     else:
         return None, False, f"{parsed_int} n'est pas compris entre {interval[0]} et {interval[1]}."
 
+def validate_integer_positive(parsed_int: int):
+    """Function that verify if the integer is positive"""
+    res = parsed_int
+    if parsed_int > 0:
+        return res, True, ''
+    else:
+        return None, False, f"{parsed_int} n'est pas un entier positif."
+
+
 def validate_controle_du_temps(user_input: str):
     """Function that verify if user_input is in Controle_du_temps(Enum)"""
     try:
