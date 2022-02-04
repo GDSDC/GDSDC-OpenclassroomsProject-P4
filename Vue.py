@@ -17,17 +17,17 @@ CHOIX_MENU_PRINCIPAL = {1 : 'Créer un nouveau tournoi',
 # NOMBRE_DE_JOUEURS = 8
 
 class Vue:
-    '''Classe qui gère l'interface/menu du programme.'''
+    """Classe qui gère l'interface/menu du programme."""
 
     def menu_principal(self) -> int:
-        '''Affichage du menu principal et récupération du choix de l'utilisateur.'''
+        """Affichage du menu principal et récupération du choix de l'utilisateur."""
 
         # Affichage de l'entête
-        affichage_menu_principal = '''
+        affichage_menu_principal = """
 ==============================
 Menu Principal
 ==============================
-'''
+"""
         print(affichage_menu_principal)
 
         # Affichage des différents choix
@@ -41,7 +41,7 @@ Menu Principal
         return choix_utilisateur_menu_principal
 
     def menu_creer_nouveau_tournoi(self) -> Dict[str, str]:
-        '''Création d'un nouveau tournoi en renseignant toutes les informations demandées.'''
+        """Création d'un nouveau tournoi en renseignant toutes les informations demandées."""
 
         # Initialisation
         nouveau_tournoi = {
@@ -55,32 +55,25 @@ Menu Principal
         }
 
         # Affichage de l'entête
-        affichage_menu_creer_nouveau_tournoi = '''
+        affichage_menu_creer_nouveau_tournoi = """
 ==============================
 Créer un nouveau Tournoi
 ==============================
-'''
+"""
         print(affichage_menu_creer_nouveau_tournoi)
 
         # Définition du nom du tournoi
-        nouveau_tournoi_texte = '\nRenseignez le Nom du tournoi : '
-        nouveau_tournoi['nom'] = pvt.parse_and_validate(explanation=nouveau_tournoi_texte, parse=pvt.parse_string_not_empty, validate=pvt.no_validation)
+        nouveau_tournoi_texte_nom = '\nRenseignez le Nom du tournoi : '
+        nouveau_tournoi['nom'] = pvt.parse_and_validate(explanation=nouveau_tournoi_texte_nom, parse=pvt.parse_string_not_empty, validate=pvt.no_validation)
 
-        # Boucle pour définir le lieu du tournoi
-        while(True):
-            try:
-                nouveau_tournoi['lieu'] = str(input('\nRenseignez le Lieu du tournoi : '))
-                if len(nouveau_tournoi['lieu']) > 0:
-                    break
-                else:
-                    raise Exception
-            except:
-                print('Veuillez renseigner un lieu de tournoi contenant au moins un charactère.')
+        # Définition du le lieu du tournoi
+        nouveau_tournoi_texte_lieu = '\nRenseignez le Lieu du tournoi : '
+        nouveau_tournoi['lieu'] = pvt.parse_and_validate(explanation=nouveau_tournoi_texte_lieu,parse=pvt.parse_string_not_empty, validate=pvt.no_validation)
 
-        # définition date de début de tournoi
+        # Définition date de début de tournoi
         nouveau_tournoi['date_debut'] = date.today()
 
-        # Boucle pour définir le contrôle du temps
+        # Définition le contrôle du temps
         while(True):
             try:
                 nouveau_tournoi['controle_du_temps'] = str(input('\nRenseignez le contrôle du temps ("bullet", "blitz" ou "coup rapide") : '))
@@ -101,7 +94,7 @@ Créer un nouveau Tournoi
         return nouveau_tournoi
 
     def ajouter_huit_joueurs(self) -> List[Dict[str, str]]:
-        '''AJout des informations de huit joueurs dans une liste de dictionnaires à destination du Controller.'''
+        """AJout des informations de huit joueurs dans une liste de dictionnaires à destination du Controller."""
 
         # Initialisation
         # liste retournée contenant les informations des huit joueurs
@@ -116,11 +109,11 @@ Créer un nouveau Tournoi
         }
 
         # Affichage de l'entête
-        affichage_menu_ajouter_huit_joueurs = '''
+        affichage_menu_ajouter_huit_joueurs = """
 ==============================
-Ajouter ''' + str(NOMBRE_DE_JOUEURS) + ''' joueurs
+Ajouter """ + str(NOMBRE_DE_JOUEURS) + """ joueurs
 ==============================
-'''
+"""
         print(affichage_menu_ajouter_huit_joueurs)
 
         # Boucle sur les huits joueurs
@@ -129,10 +122,10 @@ Ajouter ''' + str(NOMBRE_DE_JOUEURS) + ''' joueurs
             nouveaux_joueurs.append(information_nouveau_joueur)
 
             # Affichage de l'entête pour chaque nouveau joueur
-            affichage_nouveau_joueur = '''
-    Renseigner les informations du joueur n°''' + str(joueur) + '''
+            affichage_nouveau_joueur = """
+    Renseigner les informations du joueur n°""" + str(joueur) + """
     ==========================================
-            '''
+            """
             print(affichage_nouveau_joueur)
 
             # Boucle pour définir le nom de famille
@@ -199,11 +192,11 @@ Ajouter ''' + str(NOMBRE_DE_JOUEURS) + ''' joueurs
     def afficher_paires_joueurs(self, paires_joueurs: List[tuple[str, str]]):
 
         # Affichage de l'entête
-        affichage_paires_joueurs_entête = '''
+        affichage_paires_joueurs_entête = """
 ==========================================================
-''' + str(len(paires_joueurs)) + ''' nouvelles paires de joueurs générées avec succès !
+""" + str(len(paires_joueurs)) + """ nouvelles paires de joueurs générées avec succès !
 ==========================================================
-'''
+"""
         print(affichage_paires_joueurs_entête)
 
         # Boucle pour afficher toutes les paires de joueurs
