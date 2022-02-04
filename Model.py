@@ -2,34 +2,74 @@ import dataclasses
 from enum import Enum
 from datetime import date
 
-### Création des classes Enum
+# INITIALISATION CONSTANTES
+# nombres de tours (Round) par tournoi
+NOMBRE_DE_TOURS = 4
 
-# Classe Enum du sexe
+# nombre de joueurs par tournoi
+NOMBRE_DE_JOUEURS = 8
+
+
+# Classes Enum
 class Sex(Enum):
+    """Classe Enum du sexe"""
+
     MALE = 'm'
     FEMALE = 'f'
 
-# Classe Enum du Contrôle du temps
-class Controle_du_temps(Enum):
+
+class ControleDuTemps(Enum):
+    """Classe Enum du Contrôle du temps"""
+
     BULLET = 'bullet'
     BLITZ = 'blitz'
     COUP_RAPIDE = 'coup rapide'
 
-class Tournoi:
-    '''Classe Tournoi'''
-    pass
 
+@dataclass
 class Joueur:
-    pass
+    """Classe décrivant un Joueur"""
+
+    nom_de_famille: str
+    prenom: str
+    date_de_naissance: date
+    sexe: Sex
+    classement: int
+
+
+@dataclass
+class Tournoi:
+    """Classe décrivant un Tournoi"""
+
+    nom: str
+    lieu: str
+    date_debut: date
+    date_fin: date
+    nombre_tours: int = NOMBRE_DE_TOURS
+    controle_du_temps: Controle_du_temps
+    description: str
+
 
 class Match:
     pass
+
 
 class Ronde:
     pass
 
 
+class State:
+    def __init__(self):
+        self.joueurs = []
+        self.nombre_joueurs = 0
+        self.tournoi = None
+
+    def ajouter_joueurs(self, joueurs: List[Joueur]):
+        self.joueurs = joueurs
+        self.nombre_joueurs = len(joueurs)
+
+
 if __name__ == '__main__':
-    nouveau_sexe = Sex.MALE
+    nouveau_sexe = Controle_du_temps.BULLET
     print(nouveau_sexe.value)
     print(type(nouveau_sexe.value))
