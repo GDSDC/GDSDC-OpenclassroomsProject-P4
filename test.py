@@ -1,5 +1,8 @@
-import Vue
+from enum import Enum
 
-init = Vue.Vue()
-result = init.menu_principal()
-print(result)
+class Sex(Enum):
+    MALE = 'm'
+    FEMALE  = 'f'
+
+res = [sexe_member.value for sexe_member in Sex]
+print(res)
