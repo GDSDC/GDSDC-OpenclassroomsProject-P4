@@ -1,16 +1,19 @@
 import Vue
+import Model
 
 class Controller:
     """Contrôleur principal."""
 
     def __init__(self):
         """Initialise les modèles et les vues."""
+        self.state = Model.State()
+        self.vue = Vue.Vue()
 
-        self.ui = Vue.Vue()
-
+    def creer_nouveau_tournoi(self):
+        nouveau_tournoi = self.vue.menu_creer_nouveau_tournoi()
+        self.state.creer_nouveau_tournoi(nouveau_tournoi)
 
 if __name__ == '__main__':
 
     initiation_controller = Controller()
-    choix_utilisateur = initiation_controller.ui.menu_principal()
-    print(choix_utilisateur)
+    creer_nouveau_tournoi_test = initiation_controller.creer_nouveau_tournoi()
