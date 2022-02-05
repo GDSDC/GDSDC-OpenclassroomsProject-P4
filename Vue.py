@@ -3,6 +3,7 @@ from datetime import date
 import Parse_Validate_Tools as pvt
 
 
+
 # Constantes Globales
 CHOIX_MENU_PRINCIPAL = {1 : 'Créer un nouveau tournoi',
                         2 : 'Ajouter huit joueurs',
@@ -72,6 +73,9 @@ Créer un nouveau Tournoi
 
         # Définition date de début de tournoi
         nouveau_tournoi['date_debut'] = date.today()
+
+        # Définition date de fin de tournoi par defaut
+        nouveau_tournoi['date_fin'] = date.today()
 
         # Définition le contrôle du temps
         nouveau_tournoi_texte_controle_du_temps = '\nRenseignez le contrôle du temps ("bullet", "blitz" ou "coup rapide") : '
@@ -160,12 +164,5 @@ Ajouter 8 joueurs
 if __name__ == '__main__':
 
     initiation_vue = Vue()
-    #paires_6_joueurs = [('Gabriel1', 'Stephane1'), ('Gabriel2', 'Stephane2'), ('Gabriel3', 'Stephane3'), ('Gabriel4', 'Stephane4'), ('Gabriel5', 'Stephane5'), ('Gabriel6', 'Stephane6')]
-    #paires_8_joueurs = [('Gabriel1', 'Stephane1'), ('Gabriel2', 'Stephane2'), ('Gabriel3', 'Stephane3'), ('Gabriel4', 'Stephane4'), ('Gabriel5', 'Stephane5'), ('Gabriel6', 'Stephane6'), ('Gabriel7', 'Stephane7'), ('Gabriel8', 'Stephane8')]
-    #resultat = initiation_vue.afficher_paires_joueurs(paires_6_joueurs)
-    #print(resultat)
-    #resultat = initiation_vue.afficher_paires_joueurs(paires_8_joueurs)
-    #print(resultat)
-
     resultat = initiation_vue.ajouter_huit_joueurs()
     print(resultat)
