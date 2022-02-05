@@ -60,6 +60,12 @@ class State:
         self.nombre_joueurs = 0
         self.tournoi = None
 
+    def creer_nouveau_tournoi(self, nouveau_tounoi :Tournoi):
+        self.tournoi = Tournoi(nouveau_tounoi)
+        print('Nouveau Tournoi créé avec succès !')
+        print(nouveau_tounoi)
+        print(type(self.tournoi))
+
     def ajouter_joueurs(self, joueurs: List[Joueur]):
         self.joueurs = joueurs
         self.nombre_joueurs = len(joueurs)
