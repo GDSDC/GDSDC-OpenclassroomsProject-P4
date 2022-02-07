@@ -60,18 +60,16 @@ class State:
         self.nombre_joueurs = 0
         self.tournoi = None
 
-    def creer_nouveau_tournoi(self, nouveau_tounoi :Tournoi):
-        self.tournoi = Tournoi(nouveau_tounoi)
+    def creer_nouveau_tournoi(self, nouveau_tournoi :Tournoi):
+        self.tournoi = nouveau_tournoi
         print('Nouveau Tournoi créé avec succès !')
-        print(nouveau_tounoi)
-        print(type(self.tournoi))
+
 
     def ajouter_joueurs(self, joueurs: List[Joueur]):
         self.joueurs = joueurs
         self.nombre_joueurs = len(joueurs)
+        print('Nouveaux Joueurs créés avec succès !')
 
 
 if __name__ == '__main__':
-    nouveau_sexe = ControleDuTemps.BULLET
-    print(nouveau_sexe.value)
-    print(type(nouveau_sexe.value))
+    pass
