@@ -38,7 +38,7 @@ Menu Principal
 
         return choix_utilisateur_menu_principal
 
-    def menu_creer_nouveau_tournoi(self) -> Dict[str, str]:
+    def menu_creer_nouveau_tournoi(self) -> model.Tournoi:
         """Création d'un nouveau tournoi en renseignant toutes les informations demandées."""
 
         # Initialisation
@@ -81,6 +81,9 @@ Créer un nouveau Tournoi
         # Description
         nouveau_tournoi_texte_description ='\nRensignez les remarques générales du directeur du tournoi : '
         nouveau_tournoi['description'] = pvt.parse_and_validate(explanation=nouveau_tournoi_texte_description, parse=pvt.parse_string_not_empty, validate=pvt.no_validation)
+
+        #Formatage du resultat au format model.Tournoi
+        nouveau_tournoi = model.Tournoi(**nouveau_tournoi)
 
         return nouveau_tournoi
 

@@ -11,7 +11,6 @@ class Controller:
 
     def creer_nouveau_tournoi(self):
         nouveau_tournoi = self.vue.menu_creer_nouveau_tournoi()
-        nouveau_tournoi = model.Tournoi(**nouveau_tournoi)
         self.state.creer_nouveau_tournoi(nouveau_tournoi)
 
     def ajouter_joueurs(self):
