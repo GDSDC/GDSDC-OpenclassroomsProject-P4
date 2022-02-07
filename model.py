@@ -11,18 +11,11 @@ NOMBRE_DE_TOURS = 4
 NOMBRE_DE_JOUEURS = 8
 
 
-# Classes Enum
+# Classe décrivant le Joueur
 class Sex(Enum):
     """Classe Enum du sexe"""
     MALE = 'm'
     FEMALE = 'f'
-
-
-class ControleDuTemps(Enum):
-    """Classe Enum du Contrôle du temps"""
-    BULLET = 'bullet'
-    BLITZ = 'blitz'
-    COUP_RAPIDE = 'coup rapide'
 
 
 @dataclass
@@ -33,6 +26,14 @@ class Joueur:
     date_de_naissance: date
     sexe: Sex
     classement: int
+
+
+# Classe décrivant le Tournoi
+class ControleDuTemps(Enum):
+    """Classe Enum du Contrôle du temps"""
+    BULLET = 'bullet'
+    BLITZ = 'blitz'
+    COUP_RAPIDE = 'coup rapide'
 
 
 @dataclass
@@ -47,10 +48,27 @@ class Tournoi:
     nombre_tours: int = NOMBRE_DE_TOURS
 
 
+# Classe décrivant le Match
+class Score(Enum):
+    """Classe Enum du système de points"""
+    GAGNANT = 1
+    PERDANT = 0
+    MATCH_NUL = 1/2
+
+
+@dataclass
+class Resultat:
+    joueur: Joueur
+    resultat: Resultat
+
+
+@dataclass
 class Match:
-    pass
+    resultat_1: Resultat
+    resultat_2: Resultat
 
 
+# Classes décrivant le Round
 class Round:
     pass
 
