@@ -14,7 +14,7 @@ class Controller:
         self.state.creer_nouveau_tournoi(nouveau_tournoi)
 
     def ajouter_joueurs(self):
-        joueurs = self.vue.ajouter_huit_joueurs()
+        joueurs = self.vue.ajouter_joueurs()
         self.state.ajouter_joueurs(joueurs)
 
     def generer_paires_joueurs(self):

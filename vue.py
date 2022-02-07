@@ -87,7 +87,7 @@ Créer un nouveau Tournoi
 
         return nouveau_tournoi
 
-    def ajouter_huit_joueurs(self) -> List[model.Joueur]:
+    def ajouter_joueurs(self) -> List[model.Joueur]:
         """AJout des informations de huit joueurs dans une liste de dictionnaires à destination du Controller."""
 
         # Initialisation
@@ -95,15 +95,15 @@ Créer un nouveau Tournoi
         nouveaux_joueurs = []
 
         # Affichage de l'entête
-        affichage_menu_ajouter_huit_joueurs = """
+        affichage_menu_ajouter_joueurs = """
 ==============================
 Ajouter 8 joueurs
 ==============================
 """
-        print(affichage_menu_ajouter_huit_joueurs)
+        print(affichage_menu_ajouter_joueurs)
 
         # Boucle sur les huits joueurs
-        for joueur in range(1,3):
+        for joueur in range(1,model.NOMBRE_DE_JOUEURS + 1):
 
             # dictionnaire type contenant les informations d'un joueur
             information_nouveau_joueur = {
