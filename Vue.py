@@ -96,7 +96,7 @@ Créer un nouveau Tournoi
         # dictionnaire type contenant les informations d'un joueur
         information_nouveau_joueur = {
             'nom_de_famille' : '',
-            'prénom': '',
+            'prenom': '',
             'date_de_naissance': '',
             'sexe': '',
             'classement' : ''
@@ -128,7 +128,7 @@ Ajouter 8 joueurs
 
             # Définition le prénom
             nouveau_joueur_texte_prenom = '\nRenseignez le Prénom du joueur n°' + str(joueur) +' : '
-            nouveaux_joueurs[joueur - 1]['prénom'] = pvt.parse_and_validate(explanation=nouveau_joueur_texte_prenom, parse=pvt.parse_string_not_empty, validate=pvt.no_validation)
+            nouveaux_joueurs[joueur - 1]['prenom'] = pvt.parse_and_validate(explanation=nouveau_joueur_texte_prenom, parse=pvt.parse_string_not_empty, validate=pvt.no_validation)
 
             # Définition de la date de naissance
             nouveau_joueur_texte_date_naissance = '\nRenseignez la Date de naissance du joueur n°' + str(joueur) +' au format "jj/mm/aaaa" : '
