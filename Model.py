@@ -50,7 +50,7 @@ class Match:
     pass
 
 
-class Ronde:
+class Round:
     pass
 
 
@@ -59,6 +59,7 @@ class State:
         self.joueurs = []
         self.nombre_joueurs = 0
         self.tournoi = None
+        self.paires_joueurs = []
 
     def creer_nouveau_tournoi(self, nouveau_tournoi :Tournoi):
         self.tournoi = nouveau_tournoi
@@ -70,6 +71,21 @@ class State:
         self.nombre_joueurs = len(joueurs)
         print('Nouveaux Joueurs créés avec succès !')
 
+    def generer_paires_joueurs(self, joueurs: List[Joueur]):
+        self.paires_joueurs = []
+        i = 0
+        while i < len(joueurs):
+            self.paires_joueurs.append((joueurs[i], joueurs[i+1]))
+            i += 2
+
+
+
+
 
 if __name__ == '__main__':
-    pass
+
+    liste_joueurs_test = [Joueur(nom_de_famille='Da Costa', prenom='Gabriel', date_de_naissance=date(1990, 6, 27), sexe=Sex.MALE, classement=56), Joueur(nom_de_famille='Rainaud', prenom='Lucie', date_de_naissance=date(1989, 10, 27), sexe=Sex.FEMALE, classement=9)]
+    test = State()
+    test.ajouter_joueurs(liste_joueurs_test)
+    test.generer_paires_joueurs(test.joueurs)
+    print(test.paires_joueurs)
