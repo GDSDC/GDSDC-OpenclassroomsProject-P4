@@ -1,6 +1,7 @@
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Tuple
 from datetime import date
 import Parse_Validate_Tools as pvt
+import Model
 
 
 
@@ -11,11 +12,7 @@ CHOIX_MENU_PRINCIPAL = {1 : 'Créer un nouveau tournoi',
                         4 : 'Entrer les résultats',
                         5 : 'Terminer le tournoi',
                         6 : 'Quitter'}
-# nombres de tours (Round) par tournoi
-# NOMBRE_DE_TOURS = 4
 
-# nombre de joueurs par tournoi
-# NOMBRE_DE_JOUEURS = 8
 
 class Vue:
     """Classe qui gère l'interface/menu du programme."""
@@ -146,7 +143,7 @@ Ajouter 8 joueurs
 
         return nouveaux_joueurs
 
-    def afficher_paires_joueurs(self, paires_joueurs: List[Tuple[str, str]]):
+    def afficher_paires_joueurs(self, paires_joueurs: List[Tuple[Model.Joueur]]):
 
         # Affichage de l'entête
         affichage_paires_joueurs_entête = """
@@ -158,7 +155,7 @@ Ajouter 8 joueurs
 
         # Boucle pour afficher toutes les paires de joueurs
         for paires in range(1,len(paires_joueurs)+1):
-            print('Paire n°' + str(paires) + ' : ' + paires_joueurs[paires-1][0] + ' / ' + paires_joueurs[paires-1][1])
+            print('Paire n°' + str(paires) + ' : ' + str(paires_joueurs[paires-1][0].prenom) + ' ' + str(paires_joueurs[paires-1][0].nom_de_famille) + ' / ' + str(paires_joueurs[paires-1][1].prenom) + ' ' + str(paires_joueurs[paires-1][1].nom_de_famille))
 
     def entrer_scores(self, ):
         pass
