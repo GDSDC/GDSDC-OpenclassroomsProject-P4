@@ -87,7 +87,7 @@ Créer un nouveau Tournoi
 
         return nouveau_tournoi
 
-    def ajouter_huit_joueurs(self) -> List[Dict[str, str]]:
+    def ajouter_huit_joueurs(self) -> List[model.Joueur]:
         """AJout des informations de huit joueurs dans une liste de dictionnaires à destination du Controller."""
 
         # Initialisation
@@ -143,6 +143,9 @@ Ajouter 8 joueurs
             # Définition du classement
             nouveau_joueur_texte_classement = '\nRenseignez le classement du joueur n°' + str(joueur) +' : '
             nouveaux_joueurs[joueur - 1]['classement'] = pvt.parse_and_validate(explanation=nouveau_joueur_texte_classement, parse=pvt.parse_int, validate=pvt.validate_integer_positive)
+
+            # Formatage des informations de joueurs au format model.Joueur
+            nouveaux_joueurs[joueur - 1] = model.Joueur(**nouveaux_joueurs[joueur - 1])
 
         return nouveaux_joueurs
 
