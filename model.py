@@ -46,6 +46,7 @@ class Tournoi:
     description: str
     nombre_tours: int = NOMBRE_DE_TOURS
 
+
 class Match:
     pass
 
@@ -61,7 +62,7 @@ class State:
         self.tournoi = None
         self.paires_joueurs = []
 
-    def creer_nouveau_tournoi(self, nouveau_tournoi :Tournoi):
+    def creer_nouveau_tournoi(self, nouveau_tournoi: Tournoi):
         self.tournoi = nouveau_tournoi
 
     def ajouter_joueurs(self, joueurs: List[Joueur]):
@@ -71,12 +72,9 @@ class State:
     def generer_paires_joueurs(self, joueurs: List[Joueur]):
         self.paires_joueurs = []
         i = 0
-        while i < len(joueurs) - 1: # -1 pour se proteger d'indexError
+        while i < len(joueurs) - 1:  # -1 pour se proteger d'indexError
             self.paires_joueurs.append((joueurs[i], joueurs[i+1]))
             i += 2
-
-
-
 
 
 if __name__ == '__main__':

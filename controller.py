@@ -1,6 +1,7 @@
 import vue
 import model
 
+
 class Controller:
     """Contrôleur principal."""
 

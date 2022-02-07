@@ -2,4 +2,5 @@ import controller
 
 initiation_controller = controller.Controller()
 initiation_controller.ajouter_joueurs()
-initiation_controller.generer_paires_joueurs()
+resultat = initiation_controller.state.joueurs
+print(resultat)
