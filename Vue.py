@@ -146,7 +146,7 @@ Ajouter 8 joueurs
 
         return nouveaux_joueurs
 
-    def afficher_paires_joueurs(self, paires_joueurs: List[tuple[str, str]]):
+    def afficher_paires_joueurs(self, paires_joueurs: List[Tuple[str, str]]):
 
         # Affichage de l'entête
         affichage_paires_joueurs_entête = """
