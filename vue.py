@@ -1,7 +1,7 @@
 from typing import Any, Dict, List, Tuple
 from datetime import date
-import Parse_Validate_Tools as pvt
-import Model
+import parse_validate_tools as pvt
+import model
 
 
 
@@ -143,7 +143,7 @@ Ajouter 8 joueurs
 
         return nouveaux_joueurs
 
-    def afficher_paires_joueurs(self, paires_joueurs: List[Tuple[Model.Joueur]]):
+    def afficher_paires_joueurs(self, paires_joueurs: List[Tuple[model.Joueur]]):
 
         # Affichage de l'entête
         affichage_paires_joueurs_entête = """

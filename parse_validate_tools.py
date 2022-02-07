@@ -1,6 +1,6 @@
 from typing import Any, Dict, List, Tuple, Optional, Callable
 from datetime import date
-import Model as md
+import model as md
 
 
 ### Global constant
