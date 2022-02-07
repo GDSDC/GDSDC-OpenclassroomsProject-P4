@@ -80,9 +80,4 @@ class State:
 
 
 if __name__ == '__main__':
-
-    liste_joueurs_test = [Joueur(nom_de_famille='Da Costa', prenom='Gabriel', date_de_naissance=date(1990, 6, 27), sexe=Sex.MALE, classement=56), Joueur(nom_de_famille='Rainaud', prenom='Lucie', date_de_naissance=date(1989, 10, 27), sexe=Sex.FEMALE, classement=9)]
-    test = State()
-    test.ajouter_joueurs(liste_joueurs_test)
-    test.generer_paires_joueurs(test.joueurs)
-    print(test.paires_joueurs)
+    pass

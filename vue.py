@@ -161,7 +161,4 @@ Ajouter 8 joueurs
         pass
 
 if __name__ == '__main__':
-
-    initiation_vue = Vue()
-    resultat = initiation_vue.ajouter_huit_joueurs()
-    print(resultat)
+    pass

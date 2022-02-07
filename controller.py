@@ -26,7 +26,4 @@ class Controller:
 
 
 if __name__ == '__main__':
-
-    initiation_controller = Controller()
-    initiation_controller.ajouter_joueurs()
-    initiation_controller.generer_paires_joueurs()
+    pass

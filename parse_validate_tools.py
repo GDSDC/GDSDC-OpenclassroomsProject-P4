@@ -105,8 +105,4 @@ def parse_and_validate(explanation: str,
 
 
 if __name__ == '__main__':
-
-    explanation = '\n Renseignez le sexe du joueur : '
-    result = parse_and_validate(explanation=explanation, parse=parse_string_not_empty, validate=validate_sexe)
-    print(result)
-    print(type(result))
+    pass
