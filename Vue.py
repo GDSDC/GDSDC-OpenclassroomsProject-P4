@@ -93,14 +93,6 @@ Créer un nouveau Tournoi
         # Initialisation
         # liste retournée contenant les informations des huit joueurs
         nouveaux_joueurs = []
-        # dictionnaire type contenant les informations d'un joueur
-        information_nouveau_joueur = {
-            'nom_de_famille' : '',
-            'prenom': '',
-            'date_de_naissance': '',
-            'sexe': '',
-            'classement' : ''
-        }
 
         # Affichage de l'entête
         affichage_menu_ajouter_huit_joueurs = """
@@ -111,7 +103,17 @@ Ajouter 8 joueurs
         print(affichage_menu_ajouter_huit_joueurs)
 
         # Boucle sur les huits joueurs
-        for joueur in range(1,9):
+        for joueur in range(1,3):
+
+            # dictionnaire type contenant les informations d'un joueur
+            information_nouveau_joueur = {
+                'nom_de_famille': '',
+                'prenom': '',
+                'date_de_naissance': '',
+                'sexe': '',
+                'classement': ''
+            }
+
             # ajout du dictionnaire type à la liste de nouveaux joueurs
             nouveaux_joueurs.append(information_nouveau_joueur)
 
