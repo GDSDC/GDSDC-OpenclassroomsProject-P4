@@ -74,7 +74,7 @@ class State:
     def generer_paires_joueurs(self, joueurs: List[Joueur]):
         self.paires_joueurs = []
         i = 0
-        while i < len(joueurs):
+        while i < len(joueurs) - 1: # -1 pour se proteger d'indexError
             self.paires_joueurs.append((joueurs[i], joueurs[i+1]))
             i += 2
 
