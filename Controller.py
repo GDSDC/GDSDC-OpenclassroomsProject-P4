@@ -21,12 +21,8 @@ class Controller:
         self.state.ajouter_joueurs(joueurs)
 
     def generer_paires_joueurs(self):
-        paires_joueurs_data = self.state.generer_paires_joueurs(self.state.joueurs)
-        print(paires_joueurs_data)
-        paires_joueurs = []
-        for data in paires_joueurs_data:
-            paires_joueurs.append((str(data[0]['prenom'] + ' ' + data[0]['nom']),str(data[1]['prenom'] + ' ' + data[1]['nom'])))
-        self.vue.afficher_paires_joueurs(paires_joueurs)
+        self.state.generer_paires_joueurs(self.state.joueurs)
+        self.vue.afficher_paires_joueurs(self.state.paires_joueurs)
 
 
 if __name__ == '__main__':
