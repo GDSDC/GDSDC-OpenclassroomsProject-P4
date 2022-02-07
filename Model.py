@@ -63,13 +63,10 @@ class State:
 
     def creer_nouveau_tournoi(self, nouveau_tournoi :Tournoi):
         self.tournoi = nouveau_tournoi
-        print('Nouveau Tournoi créé avec succès !')
-
 
     def ajouter_joueurs(self, joueurs: List[Joueur]):
         self.joueurs = joueurs
         self.nombre_joueurs = len(joueurs)
-        print('Nouveaux Joueurs créés avec succès !')
 
     def generer_paires_joueurs(self, joueurs: List[Joueur]):
         self.paires_joueurs = []
