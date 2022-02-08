@@ -27,27 +27,6 @@ class Joueur:
     sexe: Sex
     classement: int
 
-
-# Classe décrivant le Tournoi
-class ControleDuTemps(Enum):
-    """Classe Enum du Contrôle du temps"""
-    BULLET = 'bullet'
-    BLITZ = 'blitz'
-    COUP_RAPIDE = 'coup rapide'
-
-
-@dataclass
-class Tournoi:
-    """Classe décrivant un Tournoi"""
-    nom: str
-    lieu: str
-    date_debut: date
-    date_fin: date
-    controle_du_temps: ControleDuTemps
-    description: str
-    nombre_tours: int = NOMBRE_DE_TOURS
-
-
 # Classe décrivant le Match
 class Score(Enum):
     """Classe Enum du système de points"""
@@ -69,8 +48,43 @@ class Match:
 
 
 # Classes décrivant le Round
+class RoundName(Enum):
+    """Classe Enum décrivant les noms de Rounds utilisés"""
+    ROUND1 = 'Round 1'
+    ROUND2 = 'Round 2'
+    ROUND3 = 'Round 3'
+    ROUND4 = 'Round 4'
+
+
+@dataclass
 class Round:
-    pass
+    nom: RoundName
+    match_liste = List[Match]
+    date_debut: date
+    date_fin: date
+
+
+
+# Classe décrivant le Tournoi
+class ControleDuTemps(Enum):
+    """Classe Enum du Contrôle du temps"""
+    BULLET = 'bullet'
+    BLITZ = 'blitz'
+    COUP_RAPIDE = 'coup rapide'
+
+
+
+@dataclass
+class Tournoi:
+    """Classe décrivant un Tournoi"""
+    nom: str
+    lieu: str
+    date_debut: date
+    date_fin: date
+    controle_du_temps: ControleDuTemps
+    description: str
+    rounds: List[Round]
+    nombre_tours: int = NOMBRE_DE_TOURS
 
 
 class State:
