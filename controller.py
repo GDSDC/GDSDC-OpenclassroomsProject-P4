@@ -22,6 +22,12 @@ class Controller:
         self.state.generer_paires_joueurs(self.state.joueurs)
         self.vue.afficher_paires_joueurs(self.state.paires_joueurs)
 
+    # Fonctions TEST
+
+    def test_ajouter_joueurs(self, nombre_joueur: int):
+        joueurs = self.vue.test_ajouter_joueurs(nombre_joueur)
+        self.state.ajouter_joueurs(joueurs)
+
 
 if __name__ == '__main__':
     pass
