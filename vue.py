@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Tuple
+from typing import List, Tuple
 from datetime import date
 import parse_validate_tools as pvt
 import model
@@ -152,12 +152,12 @@ Ajouter 8 joueurs
     def afficher_paires_joueurs(self, paires_joueurs: List[Tuple[model.Joueur]]):
 
         # Affichage de l'entête
-        affichage_paires_joueurs_entête = """
+        affichage_paires_joueurs_entete = """
 ==========================================================
 """ + str(len(paires_joueurs)) + """ nouvelles paires de joueurs générées avec succès !
 ==========================================================
 """
-        print(affichage_paires_joueurs_entête)
+        print(affichage_paires_joueurs_entete)
 
         # Boucle pour afficher toutes les paires de joueurs
         for paires in range(1,len(paires_joueurs)+1):
@@ -165,6 +165,19 @@ Ajouter 8 joueurs
 
     def entrer_scores(self, ):
         pass
+
+    # Fonctions TEST
+
+    def test_ajouter_joueurs(self, nombre_joueur: int):
+        joueurs = []
+        for i in range(1, nombre_joueur + 1):
+            joueurs.append(model.Joueur(nom_de_famille='Nom de Famille Joueur '+ str(i),
+                                  prenom = 'Prenom Joueur ' + str(i),
+                                  date_de_naissance = date.today(),
+                                  sexe =  model.Sex.MALE,
+                                  classement = i * 13
+                                ))
+        return joueurs
 
 if __name__ == '__main__':
     pass
