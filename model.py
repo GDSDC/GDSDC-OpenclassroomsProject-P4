@@ -1,4 +1,4 @@
-from typing import Any, Dict, List
+from typing import List
 from dataclasses import dataclass
 from enum import Enum
 from datetime import date
@@ -26,6 +26,7 @@ class Joueur:
     date_de_naissance: date
     sexe: Sex
     classement: int
+
 
 # Classe décrivant le Match
 class Score(Enum):
@@ -64,14 +65,12 @@ class Round:
     date_fin: date
 
 
-
 # Classe décrivant le Tournoi
 class ControleDuTemps(Enum):
     """Classe Enum du Contrôle du temps"""
     BULLET = 'bullet'
     BLITZ = 'blitz'
     COUP_RAPIDE = 'coup rapide'
-
 
 
 @dataclass
