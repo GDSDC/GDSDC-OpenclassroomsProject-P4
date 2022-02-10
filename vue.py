@@ -196,10 +196,34 @@ Création du ''' + nouveau_round['nom'].value + ''' avec succès !
 
         return nouveau_round
 
+    def entrer_scores(self, round: model.Round) -> List[model.Match]:
 
-    def entrer_scores(self, ):
+        # Initialisation
+        match_liste_scores = round.match_liste
+        nombre_de_paires = len(match_liste_scores)
 
-        pass
+        # Affichage menu entrer scores
+        affichage_menu_entrer_scores = '''
+==========================================================
+Entrez les scores des ''' + str(nombre_de_paires) + ''' matchs :  
+==========================================================        
+'''
+        print(affichage_menu_entrer_scores)
+
+        # Boucle sur les matchs
+        for paires in range(1,nombre_de_paires+1):
+            print('Match ' + str(paires) + ' : ')
+                # Boucle sur les résultats du match
+            for restultat in match_liste_scores[paires-1]
+                match_texte = ' Veuillez renseigner le score du joueur ' + str(match_liste_scores[paires-1].restultat.joueur.prenom) + ' ' + str(match_liste_scores[paires-1].restultat.joueur.nom_de_famille) + ' : '
+                restultat = pvt.parse_and_validate(explanation=match_texte, parse=pvt.parse_int, validate=pvt.validate_score)
+                # inscrire le score dans la valeur de retour
+
+
+
+        return match_liste_scores
+
+
 
     # Fonctions TEST
 

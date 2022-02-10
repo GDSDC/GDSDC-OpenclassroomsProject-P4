@@ -101,6 +101,18 @@ def validate_sexe(user_input: str):
             f'"{user_input}" n\'est pas un choix de sexe valide. Veuillez choisir un élément dans la liste {exemple_sexe}.',
         )
 
+def validate_score(user_input: int):
+    """Function that verify if user_intput is in Score(Enum)"""
+    try:
+        res = md.Score(user_input)
+        return res, True, ''
+    except ValueError:
+        exemple_score = [score.value for score in md.Score]
+        return (
+            None,
+            False,
+            f'"{user_input}" n\'est pas un choix de score valide. Veuillez choisir un élément dans la liste {exemple_score}.',
+        )
 
 def no_validation(user_input):
     """Function that do no validation when this is not needed"""
