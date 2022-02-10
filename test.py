@@ -1,7 +1,8 @@
 import model
 
-joueur_test = model.Joueur()
+resultat = model.RoundName('Round 1')
 
-print(joueur_test)
+print(resultat)
+print(resultat.value)
 
 
