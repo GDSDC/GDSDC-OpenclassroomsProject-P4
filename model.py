@@ -36,6 +36,7 @@ class Score(Enum):
     MATCH_NUL = 1/2
 
 
+
 @dataclass
 class Resultat:
     joueur: Joueur
@@ -93,7 +94,6 @@ class State:
         self.tournoi = None
         self.actual_round = None
         self.round_list = []
-        self.paires_joueurs = []
 
     def creer_nouveau_tournoi(self, nouveau_tournoi: Tournoi):
         self.tournoi = nouveau_tournoi
@@ -110,12 +110,11 @@ class State:
         self.actual_round = None
 
     def generer_paires_joueurs(self, joueurs: List[Joueur]):
-        self.paires_joueurs = []
         i = 0
         while i < len(joueurs) - 1:  # -1 pour se proteger d'indexError
-            self.paires_joueurs.append((joueurs[i], joueurs[i+1]))
+            self.actual_round.match_liste.append(Match(resultat_1=Resultat(joueur=joueurs[i],score = None),
+                                                       resultat_2=Resultat(joueur=joueurs[i+1], score = None)))
             i += 2
-
 
 if __name__ == '__main__':
     pass
