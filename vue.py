@@ -1,5 +1,5 @@
 from typing import List, Tuple
-from datetime import date
+from datetime import date, datetime
 import parse_validate_tools as pvt
 import model
 
@@ -162,6 +162,40 @@ Ajouter 8 joueurs
         # Boucle pour afficher toutes les paires de joueurs
         for paires in range(1,len(paires_joueurs)+1):
             print('Paire n°' + str(paires) + ' : ' + str(paires_joueurs[paires-1][0].prenom) + ' ' + str(paires_joueurs[paires-1][0].nom_de_famille) + ' / ' + str(paires_joueurs[paires-1][1].prenom) + ' ' + str(paires_joueurs[paires-1][1].nom_de_famille))
+
+    def creer_nouveau_round(self, numero_round: int) -> model.Round:
+        """Affichage menu creer_nouveau_round"""
+
+        # Initialisation
+        nouveau_round = {
+            'nom': '',
+            'match_liste': [],
+            'date_debut': '',
+            'date_fin': ''
+        }
+
+        # Définition du nom du Round
+        nouveau_round['nom'] = model.RoundName('Round ' + str(numero_round))
+
+        # Affichage
+        affichage_creer_nouveau_round = '''
+==============================
+Création du ''' + nouveau_round['nom'].value + ''' avec succès !
+==============================
+'''
+        print(affichage_creer_nouveau_round)
+
+        # Définition date de début de round
+        nouveau_round['date_debut'] = datetime.today()
+
+        # Définition date de fin de round par defaut
+        nouveau_round['date_fin'] = datetime.today()
+
+        #Formatage du resultat au format model.Round
+        nouveau_round = model.Round(**nouveau_round)
+
+        return nouveau_round
+
 
     def entrer_scores(self, ):
         pass

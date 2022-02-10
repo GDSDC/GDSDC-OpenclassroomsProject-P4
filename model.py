@@ -60,7 +60,7 @@ class RoundName(Enum):
 @dataclass
 class Round:
     nom: RoundName
-    match_liste = List[Match]
+    match_liste: List[Match]
     date_debut: datetime
     date_fin: datetime
 

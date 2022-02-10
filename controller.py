@@ -18,6 +18,11 @@ class Controller:
         joueurs = self.vue.ajouter_joueurs()
         self.state.ajouter_joueurs(joueurs)
 
+    def creer_nouveau_round(self):
+        numero_round = len(self.state.round_list) + 1
+        nouveau_round = self.vue.creer_nouveau_round(numero_round)
+        self.state.creer_nouveau_round(nouveau_round)
+
     def generer_paires_joueurs(self):
         self.state.generer_paires_joueurs(self.state.joueurs)
         self.vue.afficher_paires_joueurs(self.state.paires_joueurs)
