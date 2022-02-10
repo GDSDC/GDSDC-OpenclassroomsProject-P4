@@ -1,8 +1,9 @@
 import model
+from datetime import datetime
 
-resultat = model.RoundName('Round 1')
+actual_round = model.Round(nom = 'Round 1', match_liste = '', date_debut = datetime.today(), date_fin = datetime.today())
 
-print(resultat)
-print(resultat.value)
+actual_round.match_liste = 'test'
+print(actual_round)
 
 
