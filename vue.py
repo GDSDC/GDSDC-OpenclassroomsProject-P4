@@ -8,7 +8,7 @@ import model
 # Constantes Globales
 CHOIX_MENU_PRINCIPAL = {1 : 'Créer un nouveau tournoi',
                         2 : 'Ajouter huit joueurs',
-                        3 : 'Génèrer des paires de joueurs pour le premier/prochain tour',
+                        3 : 'Démarrer nouveau Round',
                         4 : 'Entrer les résultats',
                         5 : 'Terminer le tournoi',
                         6 : 'Quitter'}
@@ -50,6 +50,7 @@ Menu Principal
             'nombre_tours' : '',
             'controle_du_temps': '',
             'description': '',
+            'rounds': ''
         }
 
         # Affichage de l'entête
@@ -72,7 +73,7 @@ Créer un nouveau Tournoi
         nouveau_tournoi['date_debut'] = date.today()
 
         # Définition date de fin de tournoi par defaut
-        nouveau_tournoi['date_fin'] = date.today()
+        #nouveau_tournoi['date_fin'] = date.today()
 
         # Définition le contrôle du temps
         nouveau_tournoi_texte_controle_du_temps = '\nRenseignez le contrôle du temps ("bullet", "blitz" ou "coup rapide") : '
@@ -187,9 +188,6 @@ Création du ''' + nouveau_round['nom'].value + ''' avec succès !
 
         # Définition date de début de round
         nouveau_round['date_debut'] = datetime.today()
-
-        # Définition date de fin de round par defaut
-        nouveau_round['date_fin'] = datetime.today()
 
         #Formatage du resultat au format model.Round
         nouveau_round = model.Round(**nouveau_round)
