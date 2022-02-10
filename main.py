@@ -1,7 +1,7 @@
 import controller
 
-initiation_controller = controller.Controller()
-# initiation_controller.test_ajouter_joueurs(nombre_joueur=2)
-initiation_controller.creer_nouveau_tournoi()
-resultat = initiation_controller.state.tournoi
-print(resultat)
+init_controller = controller.Controller()
+init_controller.creer_nouveau_tournoi()
+init_controller.test_ajouter_joueurs(nombre_joueur=2)
+init_controller.creer_nouveau_round()
+init_controller.generer_paires_joueurs()
