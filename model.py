@@ -1,7 +1,7 @@
 from typing import List
 from dataclasses import dataclass
 from enum import Enum
-from datetime import date
+from datetime import date, datetime
 
 # INITIALISATION CONSTANTES
 # nombres de tours (Round) par tournoi
@@ -61,8 +61,8 @@ class RoundName(Enum):
 class Round:
     nom: RoundName
     match_liste = List[Match]
-    date_debut: date
-    date_fin: date
+    date_debut: datetime
+    date_fin: datetime
 
 
 # Classe décrivant le Tournoi
@@ -91,6 +91,8 @@ class State:
         self.joueurs = []
         self.nombre_joueurs = 0
         self.tournoi = None
+        self.actual_round = None
+        self.round_list = []
         self.paires_joueurs = []
 
     def creer_nouveau_tournoi(self, nouveau_tournoi: Tournoi):
@@ -99,6 +101,13 @@ class State:
     def ajouter_joueurs(self, joueurs: List[Joueur]):
         self.joueurs = joueurs
         self.nombre_joueurs = len(joueurs)
+
+    def creer_nouveau_round(self, nouveau_round: Round):
+        self.actual_round = nouveau_round
+
+    def terminer_round(self):
+        self.round_list.append(self.actual_round)
+        self.actual_round = None
 
     def generer_paires_joueurs(self, joueurs: List[Joueur]):
         self.paires_joueurs = []
