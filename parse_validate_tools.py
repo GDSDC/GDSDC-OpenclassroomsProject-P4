@@ -25,6 +25,13 @@ def parse_int(user_input: str):
     except ValueError:
         return None, False, f"{user_input} n'est pas un entier valide."
 
+def parse_float(user_input: str):
+    """Function that verify the input is a float"""
+    try:
+        res = float(user_input)
+        return res, True, ''
+    except ValueError:
+        return None, False, f"{user_input} n'est pas un entier décimal valide."
 
 def parse_date(user_input: str):
     """Function that verify the input is a valid date"""
