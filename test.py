@@ -2,6 +2,10 @@ import controller
 import vue
 import model
 from datetime import datetime, date
+import random
+from typing import List
+
+
 
 class TestController(controller.Controller):
 
@@ -25,6 +29,10 @@ class TestController(controller.Controller):
         joueurs = self.vue.test_ajouter_joueurs(nombre_joueur)
         self.state.ajouter_joueurs(joueurs)
 
+    def test_entrer_scores(self):
+        scores = self.vue.test_entrer_scores(round=self.state.actual_round)
+        self.state.actual_round.match_liste = scores
+
 class TestVue(vue.Vue):
 
     def test_ajouter_joueurs(self, nombre_joueur: int):
@@ -38,6 +46,23 @@ class TestVue(vue.Vue):
                                 ))
         return joueurs
 
+    def test_entrer_scores(self, round: model.Round) -> List[model.Match]:
+
+        # Initialisation
+        match_liste_scores = round.match_liste
+        nombre_de_paires = len(match_liste_scores)
+        scores_liste = [score.value for score in model.Score]
+
+        # Boucle sur les matchs
+        for paires in range(1, nombre_de_paires + 1):
+            # Boucle sur les résultats du match
+            for result_field in list(match_liste_scores[paires - 1].__dict__.keys()):
+                resultat = getattr(match_liste_scores[paires - 1], result_field)
+                score = random.choice(scores_liste)
+                resultat.score = score
+
+        return match_liste_scores
+
 
 if __name__ == '__main__':
 
@@ -46,5 +71,7 @@ if __name__ == '__main__':
     init_controller.test_ajouter_joueurs(nombre_joueur=4)
     init_controller.creer_nouveau_round()
     init_controller.generer_paires_joueurs()
-    init_controller.entrer_scores()
+    init_controller.test_entrer_scores()
     print(init_controller.state.actual_round.match_liste)
+
+
