@@ -26,8 +26,12 @@ class Controller:
 
     def generer_paires_joueurs(self):
         self.state.generer_paires_joueurs(self.state.joueurs)
-        #self.vue.afficher_paires_joueurs(self.state.paires_joueurs)
         self.vue.afficher_paires_joueurs(self.state.actual_round)
+
+    def entrer_scores(self):
+        scores = self.vue.entrer_scores(round=self.state.actual_round)
+        self.state.actual_round.match_liste = scores
+
 
     # Fonctions TEST
 

@@ -213,11 +213,12 @@ Entrez les scores des ''' + str(nombre_de_paires) + ''' matchs :
         # Boucle sur les matchs
         for paires in range(1,nombre_de_paires+1):
             print('Match ' + str(paires) + ' : ')
-                # Boucle sur les résultats du match
-            for restultat in match_liste_scores[paires-1]
-                match_texte = ' Veuillez renseigner le score du joueur ' + str(match_liste_scores[paires-1].restultat.joueur.prenom) + ' ' + str(match_liste_scores[paires-1].restultat.joueur.nom_de_famille) + ' : '
-                restultat = pvt.parse_and_validate(explanation=match_texte, parse=pvt.parse_int, validate=pvt.validate_score)
-                # inscrire le score dans la valeur de retour
+            # Boucle sur les résultats du match
+            for result_field in list(match_liste_scores[paires-1].__dict__.keys()):
+                resultat = getattr(match_liste_scores[paires-1], result_field)
+                match_texte = ' Veuillez renseigner le score du joueur ' + str(resultat.joueur.prenom) + ' ' + str(resultat.joueur.nom_de_famille) + ' : '
+                score = pvt.parse_and_validate(explanation=match_texte, parse=pvt.parse_float, validate=pvt.validate_score)
+                resultat.score = score
 
 
 
