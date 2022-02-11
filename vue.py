@@ -225,19 +225,5 @@ Entrez les scores des ''' + str(nombre_de_paires) + ''' matchs :
         return match_liste_scores
 
 
-
-    # Fonctions TEST
-
-    def test_ajouter_joueurs(self, nombre_joueur: int):
-        joueurs = []
-        for i in range(1, nombre_joueur + 1):
-            joueurs.append(model.Joueur(nom_de_famille='Nom de Famille Joueur '+ str(i),
-                                  prenom = 'Prenom Joueur ' + str(i),
-                                  date_de_naissance = date.today(),
-                                  sexe =  model.Sex.MALE,
-                                  classement = i * 13
-                                ))
-        return joueurs
-
 if __name__ == '__main__':
     pass
