@@ -28,7 +28,7 @@ class Controller:
         # Iteration sur tous les résultats de tous les matchs du précédent Round
         for match in last_round_match_liste:
             for resultat_field in list(match.__dict__.keys()):
-                resultat = getattr(match, resultat_field) # utiliser un dictionnaire
+                resultat = getattr(match, resultat_field)  # utiliser un dictionnaire
                 if resultat.score != model.Score.PERDANT:
                     self.state.joueurs.append(resultat.joueur)
 
@@ -46,7 +46,6 @@ class Controller:
         numero_round = len(self.state.round_list) + 1
         nouveau_round = self.vue.creer_nouveau_round(numero_round=numero_round)
         self.state.creer_nouveau_round(nouveau_round)
-
 
     def generer_paires_joueurs(self):
         self.state.generer_paires_joueurs(self.state.joueurs)

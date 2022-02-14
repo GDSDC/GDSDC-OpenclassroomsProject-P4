@@ -33,8 +33,7 @@ class Score(Enum):
     """Classe Enum du système de points"""
     GAGNANT = 1
     PERDANT = 0
-    MATCH_NUL = 1/2
-
+    MATCH_NUL = 1 / 2
 
 
 @dataclass
@@ -112,8 +111,8 @@ class State:
     def generer_paires_joueurs(self, joueurs: List[Joueur]):
         i = 0
         while i < len(joueurs) - 1:  # -1 pour se proteger d'indexError
-            self.actual_round.match_liste.append(Match(resultat_1=Resultat(joueur=joueurs[i],score = None),
-                                                       resultat_2=Resultat(joueur=joueurs[i+1], score = None)))
+            self.actual_round.match_liste.append(Match(resultat_1=Resultat(joueur=joueurs[i], score=None),
+                                                       resultat_2=Resultat(joueur=joueurs[i + 1], score=None)))
             i += 2
 
 

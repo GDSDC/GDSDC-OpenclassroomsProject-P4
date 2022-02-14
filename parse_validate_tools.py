@@ -2,9 +2,9 @@ from typing import Any, Dict, List, Tuple, Optional, Callable
 from datetime import date
 import model as md
 
-
 # Global constant
 MENU_LENGTH = 6  # -> Find a way to get the data from the length of dictionnary CHOIX_MENU_PRINCIPAL
+
 
 # Functions for input parsing
 
@@ -25,6 +25,7 @@ def parse_int(user_input: str):
     except ValueError:
         return None, False, f"{user_input} n'est pas un entier valide."
 
+
 def parse_float(user_input: str):
     """Function that verify the input is a float"""
     try:
@@ -32,6 +33,7 @@ def parse_float(user_input: str):
         return res, True, ''
     except ValueError:
         return None, False, f"{user_input} n'est pas un entier décimal valide."
+
 
 def parse_date(user_input: str):
     """Function that verify the input is a valid date"""
@@ -56,7 +58,7 @@ def validate_date_format(parsed_date: date):
 
 
 def validate_integer_interval(
-    parsed_int: int, interval: Tuple[int, int] = [1, MENU_LENGTH]
+        parsed_int: int, interval: Tuple[int, int] = [1, MENU_LENGTH]
 ):
     """Function that verify if the integer is in the interval"""
     res = parsed_int
@@ -108,6 +110,7 @@ def validate_sexe(user_input: str):
             f'"{user_input}" n\'est pas un choix de sexe valide. Veuillez choisir un élément dans la liste {exemple_sexe}.',
         )
 
+
 def validate_score(user_input: int):
     """Function that verify if user_intput is in Score(Enum)"""
     try:
@@ -121,6 +124,7 @@ def validate_score(user_input: int):
             f'"{user_input}" n\'est pas un choix de score valide. Veuillez choisir un élément dans la liste {exemple_score}.',
         )
 
+
 def no_validation(user_input):
     """Function that do no validation when this is not needed"""
     res = user_input
@@ -131,9 +135,9 @@ def no_validation(user_input):
 
 
 def parse_and_validate(
-    explanation: str,
-    parse: Callable[[str], Tuple[Optional[Any], bool, str]],
-    validate: Callable[[Any], Tuple[Any, bool, str]] = no_validation,
+        explanation: str,
+        parse: Callable[[str], Tuple[Optional[Any], bool, str]],
+        validate: Callable[[Any], Tuple[Any, bool, str]] = no_validation,
 ):
     is_valid, error_message = False, None
     final_result = None
