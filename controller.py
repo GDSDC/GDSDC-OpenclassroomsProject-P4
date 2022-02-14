@@ -19,26 +19,32 @@ class Controller:
         joueurs = self.vue.ajouter_joueurs()
         self.state.ajouter_joueurs(joueurs)
 
-    def creer_nouveau_round(self):
+    def mettre_a_jour_joueurs(self):
+        """ Generation of new state.joueurs list"""
+        # Initialisation
+        self.state.joueurs = []
+        last_round = self.state.round_list[-1]
+        last_round_match_liste = getattr(last_round, 'match_liste')
+        # Iteration sur tous les résultats de tous les matchs du précédent Round
+        for match in last_round_match_liste:
+            for resultat_field in list(match.__dict__.keys()):
+                resultat = getattr(match, resultat_field)
+                if resultat.score != model.Score.PERDANT:
+                    self.state.joueurs.append(resultat.joueur)
+
+    def mettre_a_jour_round_list(self):
         # In case it is the very first round of Tournament
         if self.state.actual_round == None:
-            nouveau_round = self.vue.creer_nouveau_round(numero_round=1)
+            pass
         # If it is the second, third or fourth round
         else:
-            # Udpdate round_list with the previous acutal_list
             self.state.round_list.append(self.state.actual_round)
-            numero_round = len(self.state.round_list) + 1
-            # Generation of new state.joueurs list
-            self.state.joueurs = []
-            last_round = self.state.round_list[-1]
-            last_round_match_liste = getattr(last_round, 'match_liste')
-            for match in last_round_match_liste:
-                for resultat_field in list(match.__dict__.keys()):
-                    resultat = getattr(match, resultat_field)
-                    if resultat.score != model.Score.PERDANT:
-                        self.state.joueurs.append(resultat.joueur)
-            nouveau_round = self.vue.creer_nouveau_round(numero_round=numero_round)
+            self.mettre_a_jour_joueurs()
 
+    def creer_nouveau_round(self):
+        self.mettre_a_jour_round_list()
+        numero_round = len(self.state.round_list) + 1
+        nouveau_round = self.vue.creer_nouveau_round(numero_round=numero_round)
         self.state.creer_nouveau_round(nouveau_round)
 
 
