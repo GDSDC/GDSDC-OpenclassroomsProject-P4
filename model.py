@@ -116,5 +116,6 @@ class State:
                                                        resultat_2=Resultat(joueur=joueurs[i+1], score = None)))
             i += 2
 
+
 if __name__ == '__main__':
     pass

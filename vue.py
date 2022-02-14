@@ -218,7 +218,7 @@ Entrez les scores des ''' + str(nombre_de_paires) + ''' matchs :
                 resultat = getattr(match_liste_scores[paires-1], result_field)
                 match_texte = ' Veuillez renseigner le score du joueur ' + str(resultat.joueur.prenom) + ' ' + str(resultat.joueur.nom_de_famille) + ' : '
                 score = pvt.parse_and_validate(explanation=match_texte, parse=pvt.parse_float, validate=pvt.validate_score)
-                resultat.score = score
+                resultat.score = model.Score(score)
 
 
 

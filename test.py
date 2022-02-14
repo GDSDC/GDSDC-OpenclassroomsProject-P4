@@ -67,7 +67,7 @@ class TestVue(vue.Vue):
             for result_field in list(match_liste_scores[paires - 1].__dict__.keys()):
                 resultat = getattr(match_liste_scores[paires - 1], result_field)
                 score = random.choice(scores_liste)
-                resultat.score = score
+                resultat.score = model.Score(score)
 
         return match_liste_scores
 
@@ -77,7 +77,18 @@ if __name__ == '__main__':
     init_controller = TestController()
     init_controller.test_creer_nouveau_tournoi()
     init_controller.test_ajouter_joueurs(nombre_joueur=4)
+    print(init_controller.state.joueurs)
+    print('acutal_round = ' + str(init_controller.state.actual_round))
+    print('round_liste = ' + str(init_controller.state.round_list))
     init_controller.creer_nouveau_round()
     init_controller.generer_paires_joueurs()
     init_controller.test_entrer_scores()
-    print(init_controller.state.actual_round.match_liste)
+    # print(init_controller.state.actual_round.match_liste)
+    print('acutal_round = ' + str(init_controller.state.actual_round))
+    print('round_liste = ' + str(init_controller.state.round_list))
+    init_controller.creer_nouveau_round()
+    # print(init_controller.state.joueurs)
+    print('acutal_round = ' + str(init_controller.state.actual_round))
+    print('round_liste = ' + str(init_controller.state.round_list))
+    init_controller.generer_paires_joueurs()
+    print(init_controller.state.joueurs)
