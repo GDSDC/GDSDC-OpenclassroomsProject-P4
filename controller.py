@@ -1,3 +1,5 @@
+from typing import Optional
+
 import vue
 import model
 from datetime import datetime
@@ -6,10 +8,10 @@ from datetime import datetime
 class Controller:
     """Contrôleur principal."""
 
-    def __init__(self):
+    def __init__(self, other_vue: Optional[vue.Vue] = None):
         """Initialise les modèles et les vues."""
         self.state = model.State()
-        self.vue = vue.Vue()
+        self.vue = other_vue or vue.Vue()
 
     def creer_nouveau_tournoi(self):
         nouveau_tournoi = self.vue.menu_creer_nouveau_tournoi()
@@ -46,7 +48,6 @@ class Controller:
         numero_round = len(self.state.round_list) + 1
         nouveau_round = self.vue.creer_nouveau_round(numero_round=numero_round)
         self.state.creer_nouveau_round(nouveau_round)
-
 
     def generer_paires_joueurs(self):
         self.state.generer_paires_joueurs(self.state.joueurs)

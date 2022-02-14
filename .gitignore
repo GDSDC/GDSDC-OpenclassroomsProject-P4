@@ -2,3 +2,5 @@ R&D/env/
 Documents/
 .idea/
 env/
+.pytest_cache/
+**/*.pyc
