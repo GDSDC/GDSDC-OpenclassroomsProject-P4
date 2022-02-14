@@ -28,7 +28,7 @@ class Controller:
         # Iteration sur tous les résultats de tous les matchs du précédent Round
         for match in last_round_match_liste:
             for resultat_field in list(match.__dict__.keys()):
-                resultat = getattr(match, resultat_field)
+                resultat = getattr(match, resultat_field) # utiliser un dictionnaire
                 if resultat.score != model.Score.PERDANT:
                     self.state.joueurs.append(resultat.joueur)
 
