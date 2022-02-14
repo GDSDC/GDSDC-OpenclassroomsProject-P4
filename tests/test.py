@@ -1,6 +1,4 @@
-import controller
-import vue
-import model
+from core import model, controller, vue
 from datetime import datetime, date
 import random
 from typing import List
