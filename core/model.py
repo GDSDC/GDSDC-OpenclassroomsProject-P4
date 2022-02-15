@@ -111,8 +111,7 @@ class State:
     def generer_paires_joueurs(self, joueurs: List[Joueur]):
         i = 0
         while i < len(joueurs) - 1:  # -1 pour se proteger d'indexError
-            self.actual_round.match_liste.append(Match(resultat_1=Resultat(joueur=joueurs[i]),
-                                                       resultat_2=Resultat(joueur=joueurs[i + 1])))
+            self.actual_round.match_liste.append(([joueurs[i], None], [joueurs[i + 1], None]))
             i += 2
 
 

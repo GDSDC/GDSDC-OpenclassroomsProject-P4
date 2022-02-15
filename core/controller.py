@@ -32,7 +32,7 @@ class Controller:
 
     def mettre_a_jour_round_list(self):
         # In case it is the very first round of Tournament
-        if self.state.actual_round == None:
+        if self.state.actual_round is None:
             pass
         # If it is the second, third or fourth round
         else:
