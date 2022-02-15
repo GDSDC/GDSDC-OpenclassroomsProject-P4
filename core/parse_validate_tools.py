@@ -1,6 +1,6 @@
 from typing import Any, Dict, List, Tuple, Optional, Callable
 from datetime import date
-import model as md
+from core import model as md
 
 # Global constant
 MENU_LENGTH = 6  # -> Find a way to get the data from the length of dictionnary CHOIX_MENU_PRINCIPAL

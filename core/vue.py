@@ -1,7 +1,6 @@
 from typing import List
 from datetime import date, datetime
-import parse_validate_tools as pvt
-import model
+from core import model, parse_validate_tools as pvt
 
 # Constantes Globales
 CHOIX_MENU_PRINCIPAL = {1: 'Créer un nouveau tournoi',

@@ -1,5 +1,4 @@
-import vue
-import model
+from core import model, vue
 
 
 class Controller:

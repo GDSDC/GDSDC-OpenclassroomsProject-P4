@@ -1,4 +1,5 @@
-import controller
+from core import controller
+
 
 init_controller = controller.Controller()
 init_controller.test_creer_nouveau_tournoi()
