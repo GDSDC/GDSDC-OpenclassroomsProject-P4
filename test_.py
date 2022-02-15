@@ -5,18 +5,33 @@ from typing import List
 import pytest
 
 
-def test_creer_nouveau_tournoi():
-    """Function to test the state.creation of tournament"""
-
-    # Given
-    state = model.State()
-    nouveau_tournoi = model.Tournoi(nom='Tournoi_TEST',
+# TEST CONSTANTS
+TOURNOI = model.Tournoi(nom='Tournoi_TEST',
                                     lieu='lieu_TEST',
                                     date_debut=date.today(),
                                     date_fin=date.today(),
                                     controle_du_temps=model.ControleDuTemps.BLITZ,
                                     description='Remarques_TEST',
                                     rounds=[], )
+ROUND = model.Round(nom=model.RoundName.ROUND1, match_liste=[], date_debut=datetime.today(),
+                                date_fin=datetime.today())
+PLAYER1 = model.Joueur(nom_de_famille='Nom de famille TEST1', prenom='prenom TEST1',
+                       date_de_naissance=date.today(), sexe=model.Sex.MALE, classement=1)
+PLAYER2 = model.Joueur(nom_de_famille='Nom de famille TEST2', prenom='prenom TEST2',
+                       date_de_naissance=date.today(), sexe=model.Sex.FEMALE, classement=10)
+PLAYER3 = model.Joueur(nom_de_famille='Nom de famille TEST3', prenom='prenom TEST3',
+                       date_de_naissance=date.today(), sexe=model.Sex.MALE, classement=13)
+PLAYER4 = model.Joueur(nom_de_famille='Nom de famille TEST4', prenom='prenom TEST4',
+                       date_de_naissance=date.today(), sexe=model.Sex.FEMALE, classement=12)
+
+
+
+def test_model_creer_nouveau_tournoi():
+    """Function to test the state.creation of tournament"""
+
+    # Given
+    state = model.State()
+    nouveau_tournoi = TOURNOI
 
     # When
     state.creer_nouveau_tournoi(nouveau_tournoi)
@@ -25,15 +40,14 @@ def test_creer_nouveau_tournoi():
     assert state.tournoi == nouveau_tournoi
 
 
-def test_ajouter_joueurs():
+def test_model_ajouter_joueurs():
     """Function to test the state.creation of players"""
 
     # Given
     state = model.State()
-    player1 = model.Joueur(nom_de_famille='Nom de famille TEST1', prenom='prenom TEST1',
-                           date_de_naissance=date.today(), sexe=model.Sex.MALE, classement=1)
-    player2 = model.Joueur(nom_de_famille='Nom de famille TEST2', prenom='prenom TEST2',
-                           date_de_naissance=date.today(), sexe=model.Sex.FEMALE, classement=1)
+    player1 = PLAYER1
+    player2 = PLAYER2
+
     # When
     state.ajouter_joueurs([player1, player2])
 
@@ -42,20 +56,38 @@ def test_ajouter_joueurs():
     assert state.nombre_joueurs == 2
 
 
-def test_creer_nouveau_round():
+def test_model_creer_nouveau_round():
     """Function to test the state.creation of new round"""
 
     # Given
     state = model.State()
-
-    nouveau_round = model.Round(nom=model.RoundName.ROUND1, match_liste=[], date_debut=datetime.today(),
-                                date_fin=datetime.today())
+    nouveau_round = ROUND
 
     # When
     state.creer_nouveau_round(nouveau_round)
 
     # Then
     assert state.actual_round == nouveau_round
+
+
+def test_model_generer_paires_joueurs():
+    """Function to test the state.creation of new players pairs"""
+
+    # Given
+    state = model.State()
+    player1 = PLAYER1
+    player2 = PLAYER2
+    player3 = PLAYER3
+    player4 = PLAYER4
+
+    # When
+    state.creer_nouveau_round(ROUND)
+    state.generer_paires_joueurs([player1, player2, player3, player4])
+
+    # Then
+    assert state.actual_round.match_liste == [
+        model.Match(resultat_1=model.Resultat(joueur=player1), resultat_2=model.Resultat(joueur=player2)),
+        model.Match(resultat_1=model.Resultat(joueur=player3), resultat_2=model.Resultat(joueur=player4))]
 
 
 # class TestVue(vue.Vue):
