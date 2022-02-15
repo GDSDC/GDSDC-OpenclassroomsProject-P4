@@ -1,5 +1,7 @@
 from typing import List
 from datetime import date, datetime
+
+import core.parse_validate_tools
 from core import model, parse_validate_tools as pvt
 
 # Constantes Globales
@@ -232,13 +234,10 @@ Entrez les scores des ''' + str(nombre_de_paires) + ''' matchs :
         for paires in range(1, nombre_de_paires + 1):
             print('Match ' + str(paires) + ' : ')
             # Boucle sur les résultats du match
-            for result_field in list(match_liste_scores[paires - 1].__dict__.keys()):
-                resultat = getattr(match_liste_scores[paires - 1], result_field)
-                match_texte = ' Veuillez renseigner le score du joueur ' + str(resultat.joueur.prenom) + ' ' + str(
-                    resultat.joueur.nom_de_famille) + ' : '
-                score = pvt.parse_and_validate(explanation=match_texte, parse=pvt.parse_float,
-                                               validate=pvt.validate_score)
-                resultat.score = model.Score(score)
+            for joueur in range(2):
+                match_texte = ' Veuillez renseigner le score du joueur ' + match_liste_scores[paires - 1][joueur][0].prenom + ' ' + match_liste_scores[paires - 1][joueur][0].joueur.nom_de_famille) + ' : '
+                score = pvt.parse_and_validate(explanation=match_texte,parse=pvt.parse_float, validate=pvt.validate_score)
+                match_liste_scores[paires - 1][joueur][0] = score
 
         return match_liste_scores
 
