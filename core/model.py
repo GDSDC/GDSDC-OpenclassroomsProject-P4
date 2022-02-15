@@ -104,9 +104,9 @@ class State:
     def creer_nouveau_round(self, nouveau_round: Round):
         self.actual_round = nouveau_round
 
-    def terminer_round(self):
-        self.round_list.append(self.actual_round)
-        self.actual_round = None
+    # def terminer_round(self):
+    #     self.round_list.append(self.actual_round)
+    #     self.actual_round = None
 
     def generer_paires_joueurs(self, joueurs: List[Joueur]):
         i = 0
