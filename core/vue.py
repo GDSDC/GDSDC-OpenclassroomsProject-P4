@@ -2,7 +2,8 @@ from typing import List
 from datetime import date, datetime
 
 import core.parse_validate_tools
-from core import model, parse_validate_tools as pvt
+from core import model
+from core import parse_validate_tools as pvt
 
 # Constantes Globales
 CHOIX_MENU_PRINCIPAL = {1: 'Créer un nouveau tournoi',
@@ -235,8 +236,10 @@ Entrez les scores des ''' + str(nombre_de_paires) + ''' matchs :
             print('Match ' + str(paires) + ' : ')
             # Boucle sur les résultats du match
             for joueur in range(2):
-                match_texte = ' Veuillez renseigner le score du joueur ' + match_liste_scores[paires - 1][joueur][0].prenom + ' ' + match_liste_scores[paires - 1][joueur][0].joueur.nom_de_famille) + ' : '
-                score = pvt.parse_and_validate(explanation=match_texte,parse=pvt.parse_float, validate=pvt.validate_score)
+                match_texte = ' Veuillez renseigner le score du joueur ' + match_liste_scores[paires - 1][joueur][
+                    0].prenom + ' ' + match_liste_scores[paires - 1][joueur][0].joueur.nom_de_famille + ' : '
+                score = pvt.parse_and_validate(explanation=match_texte, parse=pvt.parse_float,
+                                               validate=pvt.validate_score)
                 match_liste_scores[paires - 1][joueur][0] = score
 
         return match_liste_scores
