@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 from dataclasses import dataclass
 from enum import Enum
 from datetime import date, datetime
@@ -39,7 +39,7 @@ class Score(Enum):
 @dataclass
 class Resultat:
     joueur: Joueur
-    score: Score
+    score: Optional[Score] = None
 
 
 @dataclass
@@ -111,8 +111,8 @@ class State:
     def generer_paires_joueurs(self, joueurs: List[Joueur]):
         i = 0
         while i < len(joueurs) - 1:  # -1 pour se proteger d'indexError
-            self.actual_round.match_liste.append(Match(resultat_1=Resultat(joueur=joueurs[i], score=None),
-                                                       resultat_2=Resultat(joueur=joueurs[i + 1], score=None)))
+            self.actual_round.match_liste.append(Match(resultat_1=Resultat(joueur=joueurs[i]),
+                                                       resultat_2=Resultat(joueur=joueurs[i + 1])))
             i += 2
 
 
