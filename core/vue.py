@@ -179,10 +179,10 @@ Ajouter 8 joueurs
         # Boucle pour afficher toutes les paires de joueurs
         for paires in range(1, nombre_de_paires + 1):
             print('Paire n°' + str(paires) + ' : ' + str(
-                round.match_liste[paires - 1].resultat_1.joueur.prenom) + ' ' + str(
-                round.match_liste[paires - 1].resultat_1.joueur.nom_de_famille) + ' / ' + str(
-                round.match_liste[paires - 1].resultat_2.joueur.prenom) + ' ' + str(
-                round.match_liste[paires - 1].resultat_2.joueur.nom_de_famille))
+                round.match_liste[paires - 1][0][0].prenom) + ' ' + str(
+                round.match_liste[paires - 1][0][0].nom_de_famille) + ' / ' + str(
+                round.match_liste[paires - 1][1][0].prenom) + ' ' + str(
+                round.match_liste[paires - 1][1][0].nom_de_famille))
 
     def creer_nouveau_round(self, numero_round: int) -> model.Round:
         """Affichage menu creer_nouveau_round"""
