@@ -4,6 +4,7 @@ import random
 from typing import List
 
 
+
 class TestController(controller.Controller):
     """Class Controller with test functions"""
 
