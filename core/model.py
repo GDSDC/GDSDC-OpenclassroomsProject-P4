@@ -94,6 +94,17 @@ class State:
         self.actual_round = None
         self.round_list = []
 
+    # for instance comparison in testing
+    def __eq__(self, other):
+        if isinstance(other, State):
+            return self.joueurs == other.joueurs \
+                   and self.nombre_joueurs == other.nombre_joueurs \
+                   and self.tournoi == other.tournoi \
+                   and self.actual_round == other.actual_round \
+                   and self.round_list == other.round_list
+        else:
+            return false
+
     def creer_nouveau_tournoi(self, nouveau_tournoi: Tournoi):
         self.tournoi = nouveau_tournoi
 

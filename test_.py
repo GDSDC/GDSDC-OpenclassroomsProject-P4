@@ -203,5 +203,32 @@ def test_controller_entrer_scores():
     assert controller_scores.state.actual_round.match_liste == scores
 
 
+def test_controller_terminer_tournoi():
+    """Function to test closing a tournament"""
+
+    # Given
+    initial_state = model.State()
+    controller_terminer_tournoi = controller.Controller()
+    nouveau_tournoi = TOURNOI
+    liste_joueurs = [PLAYER1, PLAYER2, PLAYER3, PLAYER4]
+    nouveau_round1 = ROUND1
+    nouveau_round2 = ROUND2
+
+    # When
+    # Tournament creation
+    controller_terminer_tournoi.creer_nouveau_tournoi(test_tournoi=nouveau_tournoi)
+    # Adding players
+    controller_terminer_tournoi.ajouter_joueurs(test_liste_joueurs=liste_joueurs)
+    # Round 1 creation
+    controller_terminer_tournoi.creer_nouveau_round(test_nouveau_round=nouveau_round1)
+    # Round 2 creation
+    controller_terminer_tournoi.creer_nouveau_round(test_nouveau_round=nouveau_round2)
+    # Closing Tournament
+    controller_terminer_tournoi.terminer_tournoi()
+
+    # Then
+    assert controller_terminer_tournoi.state == initial_state
+
+
 if __name__ == '__main__':
     pass

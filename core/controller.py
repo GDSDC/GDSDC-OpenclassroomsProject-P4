@@ -53,6 +53,15 @@ class Controller:
         scores = self.vue.entrer_scores(round=self.state.actual_round, test_scores=test_scores)
         self.state.actual_round.match_liste = scores
 
+    def terminer_tournoi(self):
+        """Function to close tournament"""
+
+        # Send Sate to database
+
+        # Init the actual instance
+        self.__init__()
+
 
 if __name__ == '__main__':
     pass
+
