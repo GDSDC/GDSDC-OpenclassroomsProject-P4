@@ -230,30 +230,34 @@ Menu Principal
 
         return nouveau_round
 
-    def entrer_scores(self, round: model.Round) -> List[Tuple[model.Joueur, model.Score]]:
+    def entrer_scores(self, round: model.Round, test_scores: Optional[List[Tuple[model.Joueur, model.Score]]]) -> List[Tuple[model.Joueur, model.Score]]:
 
-        # Initialisation
-        match_liste_scores = round.match_liste
-        nombre_de_paires = len(match_liste_scores)
+        if not test_scores:
+            # Initialisation
+            match_liste_scores = round.match_liste
+            nombre_de_paires = len(match_liste_scores)
 
-        # Affichage menu entrer scores
-        affichage_menu_entrer_scores = '''
-==========================================================
-Entrez les scores des ''' + str(nombre_de_paires) + ''' matchs :  
-==========================================================        
-'''
-        print(affichage_menu_entrer_scores)
+            # Affichage menu entrer scores
+            affichage_menu_entrer_scores = '''
+    ==========================================================
+    Entrez les scores des ''' + str(nombre_de_paires) + ''' matchs :  
+    ==========================================================        
+    '''
+            print(affichage_menu_entrer_scores)
 
-        # Boucle sur les matchs
-        for paires in range(1, nombre_de_paires + 1):
-            print('Match ' + str(paires) + ' : ')
-            # Boucle sur les résultats du match
-            for joueur in range(2):
-                match_texte = ' Veuillez renseigner le score du joueur ' + match_liste_scores[paires - 1][joueur][
-                    0].prenom + ' ' + match_liste_scores[paires - 1][joueur][0].nom_de_famille + ' : '
-                score = pvt.parse_and_validate(explanation=match_texte, parse=pvt.parse_float,
-                                               validate=pvt.validate_score)
-                match_liste_scores[paires - 1][joueur][0] = score
+            # Boucle sur les matchs
+            for paires in range(1, nombre_de_paires + 1):
+                print('Match ' + str(paires) + ' : ')
+                # Boucle sur les résultats du match
+                for joueur in range(2):
+                    match_texte = ' Veuillez renseigner le score du joueur ' + match_liste_scores[paires - 1][joueur][
+                        0].prenom + ' ' + match_liste_scores[paires - 1][joueur][0].nom_de_famille + ' : '
+                    score = pvt.parse_and_validate(explanation=match_texte, parse=pvt.parse_float,
+                                                   validate=pvt.validate_score)
+                    match_liste_scores[paires - 1][joueur][0] = score
+
+        else:
+            match_liste_scores = test_scores
 
         return match_liste_scores
 

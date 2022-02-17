@@ -1,5 +1,5 @@
 from core import model, vue
-from typing import List, Optional
+from typing import List, Optional, Tuple
 
 
 class Controller:
@@ -49,8 +49,8 @@ class Controller:
         self.state.generer_paires_joueurs(self.state.joueurs)
         self.vue.afficher_paires_joueurs(self.state.actual_round)
 
-    def entrer_scores(self):
-        scores = self.vue.entrer_scores(round=self.state.actual_round)
+    def entrer_scores(self, test_scores: Optional[List[Tuple[model.Joueur, model.Score]]] = None):
+        scores = self.vue.entrer_scores(round=self.state.actual_round, test_scores=test_scores)
         self.state.actual_round.match_liste = scores
 
 

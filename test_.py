@@ -186,5 +186,23 @@ def test_controller_mettre_a_jour_joueurs():
     assert controller_maj_joueurs.state.joueurs == [PLAYER1, PLAYER3, PLAYER4]
 
 
+def test_controller_entrer_scores():
+    """Function that test the controller.entrer_scores"""
+
+    # Given
+    controller_scores = controller.Controller()
+    liste_joueurs = [PLAYER1, PLAYER2, PLAYER3, PLAYER4]
+    scores = [([PLAYER1, model.Score.GAGNANT], [PLAYER2, model.Score.PERDANT]),
+                   ([PLAYER3, model.Score.MATCH_NUL], [PLAYER4, model.Score.MATCH_NUL])]
+    nouveau_round1 = ROUND1
+
+    # When
+    controller_scores.creer_nouveau_round(test_nouveau_round=nouveau_round1)
+    controller_scores.entrer_scores(test_scores=scores)
+
+    # Then
+    assert controller_scores.state.actual_round.match_liste == scores
+
+
 if __name__ == '__main__':
     pass
