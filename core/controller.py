@@ -24,13 +24,11 @@ class Controller:
         # Initialisation
         self.state.joueurs = []
         last_round = self.state.round_list[-1]
-        last_round_match_liste = getattr(last_round, 'match_liste')
         # Iteration sur tous les résultats de tous les matchs du précédent Round
-        for match in last_round_match_liste:
-            for resultat_field in list(match.__dict__.keys()):
-                resultat = getattr(match, resultat_field)  # utiliser un dictionnaire
-                if resultat.score != model.Score.PERDANT:
-                    self.state.joueurs.append(resultat.joueur)
+        for match in last_round.match_liste:
+            for resultat in match:
+                if resultat[1] != model.Score.PERDANT:
+                    self.state.joueurs.append(resultat[0])
 
     def mettre_a_jour_round_list(self):
         # In case it is the very first round of Tournament

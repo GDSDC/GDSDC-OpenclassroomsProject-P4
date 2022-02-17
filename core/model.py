@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Tuple, Optional
 from dataclasses import dataclass
 from enum import Enum
 from datetime import date, datetime
@@ -36,16 +36,16 @@ class Score(Enum):
     MATCH_NUL = 1 / 2
 
 
-@dataclass
-class Resultat:
-    joueur: Joueur
-    score: Optional[Score] = None
-
-
-@dataclass
-class Match:
-    resultat_1: Resultat
-    resultat_2: Resultat
+# @dataclass
+# class Resultat:
+#     joueur: Joueur
+#     score: Optional[Score] = None
+#
+#
+# @dataclass
+# class Match:
+#     resultat_1: Resultat
+#     resultat_2: Resultat
 
 
 # Classes décrivant le Round
@@ -59,8 +59,8 @@ class RoundName(Enum):
 
 @dataclass
 class Round:
-    nom: RoundName
-    match_liste: List[Match]
+    nom: Optional[RoundName]
+    match_liste: List[Tuple[Joueur, Score]]
     date_debut: datetime
     date_fin: datetime
 

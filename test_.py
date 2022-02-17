@@ -13,8 +13,14 @@ TOURNOI = model.Tournoi(nom='Tournoi_TEST',
                         description='Remarques_TEST',
                         rounds=[], )
 
-ROUND = model.Round(nom=model.RoundName.ROUND1, match_liste=[], date_debut=datetime.today(),
-                    date_fin=datetime.today())
+ROUND1 = model.Round(nom=model.RoundName.ROUND1, match_liste=[], date_debut=datetime.today(),
+                     date_fin=datetime.today())
+ROUND2 = model.Round(nom=model.RoundName.ROUND2, match_liste=[], date_debut=datetime.today(),
+                     date_fin=datetime.today())
+ROUND3 = model.Round(nom=model.RoundName.ROUND3, match_liste=[], date_debut=datetime.today(),
+                     date_fin=datetime.today())
+ROUND4 = model.Round(nom=model.RoundName.ROUND4, match_liste=[], date_debut=datetime.today(),
+                     date_fin=datetime.today())
 
 PLAYER1 = model.Joueur(nom_de_famille='Nom de famille TEST1', prenom='prenom TEST1',
                        date_de_naissance=date.today(), sexe=model.Sex.MALE, classement=1)
@@ -63,7 +69,7 @@ def test_model_creer_nouveau_round():
     # Given
     state = model.State()
 
-    nouveau_round = ROUND
+    nouveau_round = ROUND1
 
     # When
     state.creer_nouveau_round(nouveau_round)
@@ -83,7 +89,7 @@ def test_model_generer_paires_joueurs():
     player4 = PLAYER4
 
     # When
-    state.creer_nouveau_round(ROUND)
+    state.creer_nouveau_round(ROUND1)
     state.generer_paires_joueurs([player1, player2, player3, player4])
 
     # Then
@@ -126,33 +132,22 @@ def test_controller_creer_nouveau_round():
 
     # Given
     controller_round = controller.Controller()
-    nouveau_round = ROUND
+    [nouveau_round1, nouveau_round2, nouveau_round3, nouveau_round4] = [ROUND1, ROUND2, ROUND3, ROUND4]
 
     # When
-    controller_round.creer_nouveau_round(test_nouveau_round=nouveau_round)
+    # Round 1 creation
+    controller_round.creer_nouveau_round(test_nouveau_round=nouveau_round1)
+    # Round 2 creation
+    controller_round.creer_nouveau_round(test_nouveau_round=nouveau_round2)
+    # Round 3 creation
+    controller_round.creer_nouveau_round(test_nouveau_round=nouveau_round3)
+    # Round 4 creation
+    controller_round.creer_nouveau_round(test_nouveau_round=nouveau_round4)
 
     # Then
-    assert controller_round.state.actual_round == nouveau_round
+    assert controller_round.state.actual_round == ROUND4
+    assert controller_round.state.round_list == [ROUND1, ROUND2, ROUND3]
 
 
 if __name__ == '__main__':
     pass
-#
-#     init_controller = TestController()
-#     init_controller.test_creer_nouveau_tournoi()
-#     init_controller.test_ajouter_joueurs(nombre_joueur=4)
-#     # print(init_controller.state.joueurs)
-#     # print('acutal_round = ' + str(init_controller.state.actual_round))
-#     # print('round_liste = ' + str(init_controller.state.round_list))
-#     init_controller.creer_nouveau_round()
-#     init_controller.generer_paires_joueurs()
-#     init_controller.test_entrer_scores()
-#     # print(init_controller.state.actual_round.match_liste)
-#     # print('acutal_round = ' + str(init_controller.state.actual_round))
-#     # print('round_liste = ' + str(init_controller.state.round_list))
-#     init_controller.creer_nouveau_round()
-#     # print(init_controller.state.joueurs)
-#     # print('acutal_round = ' + str(init_controller.state.actual_round))
-#     # print('round_liste = ' + str(init_controller.state.round_list))
-#     init_controller.generer_paires_joueurs()
-#     # print(init_controller.state.joueurs)

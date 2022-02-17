@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Tuple, Optional
 from datetime import date, datetime
 
 import core.parse_validate_tools
@@ -199,6 +199,7 @@ Menu Principal
         """Affichage menu creer_nouveau_round"""
 
         if not test_nouveau_round:
+
             # Initialisation
             nouveau_round = {
                 'nom': '',
@@ -229,7 +230,7 @@ Menu Principal
 
         return nouveau_round
 
-    def entrer_scores(self, round: model.Round) -> List[model.Match]:
+    def entrer_scores(self, round: model.Round) -> List[Tuple[model.Joueur, model.Score]]:
 
         # Initialisation
         match_liste_scores = round.match_liste
