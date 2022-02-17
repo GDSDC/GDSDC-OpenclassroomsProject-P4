@@ -149,5 +149,42 @@ def test_controller_creer_nouveau_round():
     assert controller_round.state.round_list == [ROUND1, ROUND2, ROUND3]
 
 
+def test_controller_generer_paires_joueurs():
+    """Function to test the controller.creation of paires"""
+
+    # Given
+    controller_paires = controller.Controller()
+    liste_joueurs = [PLAYER1, PLAYER2, PLAYER3, PLAYER4]
+    nouveau_round1 = ROUND1
+
+    # When
+    controller_paires.ajouter_joueurs(test_liste_joueurs=liste_joueurs)
+    controller_paires.creer_nouveau_round(test_nouveau_round=nouveau_round1)
+
+    # Then
+    assert controller_paires.state.actual_round.match_liste == [([PLAYER1, None], [PLAYER2, None]),
+                                                                ([PLAYER3, None], [PLAYER4, None])]
+
+
+def test_controller_mettre_a_jour_joueurs():
+    """Function to test the update of players when creating new Round"""
+
+    # Given
+    controller_maj_joueurs = controller.Controller()
+    liste_joueurs = [PLAYER1, PLAYER2, PLAYER3, PLAYER4]
+    match_liste = [([PLAYER1, model.Score.GAGNANT], [PLAYER2, model.Score.PERDANT]),
+                   ([PLAYER3, model.Score.MATCH_NUL], [PLAYER4, model.Score.MATCH_NUL])]
+    last_round = model.Round(nom=model.RoundName.ROUND1, match_liste=match_liste, date_debut=datetime.today(),
+                             date_fin=datetime.today())
+
+    # When
+    controller_maj_joueurs.ajouter_joueurs(test_liste_joueurs=liste_joueurs)
+    controller_maj_joueurs.state.round_list = [last_round]
+    controller_maj_joueurs.mettre_a_jour_joueurs()
+
+    # Then
+    assert controller_maj_joueurs.state.joueurs == [PLAYER1, PLAYER3, PLAYER4]
+
+
 if __name__ == '__main__':
     pass
