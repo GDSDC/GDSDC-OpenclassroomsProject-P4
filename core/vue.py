@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 from datetime import date, datetime
 
 import core.parse_validate_tools
@@ -40,130 +40,138 @@ Menu Principal
 
         return choix_utilisateur_menu_principal
 
-    def menu_creer_nouveau_tournoi(self) -> model.Tournoi:
+    def menu_creer_nouveau_tournoi(self, test_tournoi: Optional[model.Tournoi]) -> model.Tournoi:
         """Création d'un nouveau tournoi en renseignant toutes les informations demandées."""
 
-        # Initialisation
-        nouveau_tournoi = {
-            'nom': '',
-            'lieu': '',
-            'date_debut': '',
-            'date_fin': '',
-            'nombre_tours': '',
-            'controle_du_temps': '',
-            'description': '',
-            'rounds': ''
-        }
+        if not test_tournoi:
+            # Initialisation
+            nouveau_tournoi = {
+                'nom': '',
+                'lieu': '',
+                'date_debut': '',
+                'date_fin': '',
+                'nombre_tours': '',
+                'controle_du_temps': '',
+                'description': '',
+                'rounds': ''
+            }
 
-        # Affichage de l'entête
-        affichage_menu_creer_nouveau_tournoi = """
-==============================
-Créer un nouveau Tournoi
-==============================
-"""
-        print(affichage_menu_creer_nouveau_tournoi)
+            # Affichage de l'entête
+            affichage_menu_creer_nouveau_tournoi = """
+    ==============================
+    Créer un nouveau Tournoi
+    ==============================
+    """
+            print(affichage_menu_creer_nouveau_tournoi)
 
-        # Définition du nom du tournoi
-        nouveau_tournoi_texte_nom = '\nRenseignez le Nom du tournoi : '
-        nouveau_tournoi['nom'] = pvt.parse_and_validate(explanation=nouveau_tournoi_texte_nom,
-                                                        parse=pvt.parse_string_not_empty, validate=pvt.no_validation)
+            # Définition du nom du tournoi
+            nouveau_tournoi_texte_nom = '\nRenseignez le Nom du tournoi : '
+            nouveau_tournoi['nom'] = pvt.parse_and_validate(explanation=nouveau_tournoi_texte_nom,
+                                                            parse=pvt.parse_string_not_empty, validate=pvt.no_validation)
 
-        # Définition du le lieu du tournoi
-        nouveau_tournoi_texte_lieu = '\nRenseignez le Lieu du tournoi : '
-        nouveau_tournoi['lieu'] = pvt.parse_and_validate(explanation=nouveau_tournoi_texte_lieu,
-                                                         parse=pvt.parse_string_not_empty, validate=pvt.no_validation)
+            # Définition du le lieu du tournoi
+            nouveau_tournoi_texte_lieu = '\nRenseignez le Lieu du tournoi : '
+            nouveau_tournoi['lieu'] = pvt.parse_and_validate(explanation=nouveau_tournoi_texte_lieu,
+                                                             parse=pvt.parse_string_not_empty, validate=pvt.no_validation)
 
-        # Définition date de début de tournoi
-        nouveau_tournoi['date_debut'] = date.today()
+            # Définition date de début de tournoi
+            nouveau_tournoi['date_debut'] = date.today()
 
-        # Définition date de fin de tournoi par defaut
-        # nouveau_tournoi['date_fin'] = date.today()
+            # Définition date de fin de tournoi par defaut
+            # nouveau_tournoi['date_fin'] = date.today()
 
-        # Définition le contrôle du temps
-        nouveau_tournoi_texte_controle_du_temps = '\nRenseignez le contrôle du temps ("bullet", "blitz" ou "coup rapide") : '
-        nouveau_tournoi['controle_du_temps'] = pvt.parse_and_validate(
-            explanation=nouveau_tournoi_texte_controle_du_temps, parse=pvt.parse_string_not_empty,
-            validate=pvt.validate_controle_du_temps)
+            # Définition le contrôle du temps
+            nouveau_tournoi_texte_controle_du_temps = '\nRenseignez le contrôle du temps ("bullet", "blitz" ou "coup rapide") : '
+            nouveau_tournoi['controle_du_temps'] = pvt.parse_and_validate(
+                explanation=nouveau_tournoi_texte_controle_du_temps, parse=pvt.parse_string_not_empty,
+                validate=pvt.validate_controle_du_temps)
 
-        # Description
-        nouveau_tournoi_texte_description = '\nRensignez les remarques générales du directeur du tournoi : '
-        nouveau_tournoi['description'] = pvt.parse_and_validate(explanation=nouveau_tournoi_texte_description,
-                                                                parse=pvt.parse_string_not_empty,
-                                                                validate=pvt.no_validation)
+            # Description
+            nouveau_tournoi_texte_description = '\nRensignez les remarques générales du directeur du tournoi : '
+            nouveau_tournoi['description'] = pvt.parse_and_validate(explanation=nouveau_tournoi_texte_description,
+                                                                    parse=pvt.parse_string_not_empty,
+                                                                    validate=pvt.no_validation)
 
-        # Formatage du resultat au format model.Tournoi
-        nouveau_tournoi = model.Tournoi(**nouveau_tournoi)
+            # Formatage du resultat au format model.Tournoi
+            nouveau_tournoi = model.Tournoi(**nouveau_tournoi)
+
+        else:
+            nouveau_tournoi = test_tournoi
 
         return nouveau_tournoi
 
-    def ajouter_joueurs(self) -> List[model.Joueur]:
+    def ajouter_joueurs(self, test_liste_joueurs: Optional[List[model.Joueur]], nb_joueurs: Optional[int] = model.NOMBRE_DE_JOUEURS) -> List[model.Joueur]:
         """AJout des informations de huit joueurs dans une liste de dictionnaires à destination du Controller."""
 
-        # Initialisation
-        # liste retournée contenant les informations des huit joueurs
-        nouveaux_joueurs = []
+        if not test_liste_joueurs:
+            # Initialisation
+            # liste retournée contenant les informations des huit joueurs
+            nouveaux_joueurs = []
 
-        # Affichage de l'entête
-        affichage_menu_ajouter_joueurs = """
-==============================
-Ajouter 8 joueurs
-==============================
-"""
-        print(affichage_menu_ajouter_joueurs)
+            # Affichage de l'entête
+            affichage_menu_ajouter_joueurs = """
+    ==============================
+    Ajouter 8 joueurs
+    ==============================
+    """
+            print(affichage_menu_ajouter_joueurs)
 
-        # Boucle sur les huits joueurs
-        for joueur in range(1, model.NOMBRE_DE_JOUEURS + 1):
-            # dictionnaire type contenant les informations d'un joueur
-            information_nouveau_joueur = {
-                'nom_de_famille': '',
-                'prenom': '',
-                'date_de_naissance': '',
-                'sexe': '',
-                'classement': ''
-            }
+            # Boucle sur les huits joueurs
+            for joueur in range(1, nb_joueurs + 1):
+                # dictionnaire type contenant les informations d'un joueur
+                information_nouveau_joueur = {
+                    'nom_de_famille': '',
+                    'prenom': '',
+                    'date_de_naissance': '',
+                    'sexe': '',
+                    'classement': ''
+                }
 
-            # ajout du dictionnaire type à la liste de nouveaux joueurs
-            nouveaux_joueurs.append(information_nouveau_joueur)
+                # ajout du dictionnaire type à la liste de nouveaux joueurs
+                nouveaux_joueurs.append(information_nouveau_joueur)
 
-            # Affichage de l'entête pour chaque nouveau joueur
-            affichage_nouveau_joueur = """
-    Renseigner les informations du joueur n°""" + str(joueur) + """
-    ==========================================
-            """
-            print(affichage_nouveau_joueur)
+                # Affichage de l'entête pour chaque nouveau joueur
+                affichage_nouveau_joueur = """
+        Renseigner les informations du joueur n°""" + str(joueur) + """
+        ==========================================
+                """
+                print(affichage_nouveau_joueur)
 
-            # Définition du nom de famille
-            nouveau_joueur_texte_nom = '\nRenseignez le Nom de famille du joueur n°' + str(joueur) + ' : '
-            nouveaux_joueurs[joueur - 1]['nom_de_famille'] = pvt.parse_and_validate(
-                explanation=nouveau_joueur_texte_nom, parse=pvt.parse_string_not_empty, validate=pvt.no_validation)
+                # Définition du nom de famille
+                nouveau_joueur_texte_nom = '\nRenseignez le Nom de famille du joueur n°' + str(joueur) + ' : '
+                nouveaux_joueurs[joueur - 1]['nom_de_famille'] = pvt.parse_and_validate(
+                    explanation=nouveau_joueur_texte_nom, parse=pvt.parse_string_not_empty, validate=pvt.no_validation)
 
-            # Définition le prénom
-            nouveau_joueur_texte_prenom = '\nRenseignez le Prénom du joueur n°' + str(joueur) + ' : '
-            nouveaux_joueurs[joueur - 1]['prenom'] = pvt.parse_and_validate(explanation=nouveau_joueur_texte_prenom,
-                                                                            parse=pvt.parse_string_not_empty,
-                                                                            validate=pvt.no_validation)
+                # Définition le prénom
+                nouveau_joueur_texte_prenom = '\nRenseignez le Prénom du joueur n°' + str(joueur) + ' : '
+                nouveaux_joueurs[joueur - 1]['prenom'] = pvt.parse_and_validate(explanation=nouveau_joueur_texte_prenom,
+                                                                                parse=pvt.parse_string_not_empty,
+                                                                                validate=pvt.no_validation)
 
-            # Définition de la date de naissance
-            nouveau_joueur_texte_date_naissance = '\nRenseignez la Date de naissance du joueur n°' + str(
-                joueur) + ' au format "jj/mm/aaaa" : '
-            nouveaux_joueurs[joueur - 1]['date_de_naissance'] = pvt.parse_and_validate(
-                explanation=nouveau_joueur_texte_date_naissance, parse=pvt.parse_date,
-                validate=pvt.validate_date_format)
+                # Définition de la date de naissance
+                nouveau_joueur_texte_date_naissance = '\nRenseignez la Date de naissance du joueur n°' + str(
+                    joueur) + ' au format "jj/mm/aaaa" : '
+                nouveaux_joueurs[joueur - 1]['date_de_naissance'] = pvt.parse_and_validate(
+                    explanation=nouveau_joueur_texte_date_naissance, parse=pvt.parse_date,
+                    validate=pvt.validate_date_format)
 
-            # Définition du sexe
-            nouveau_joueur_texte_sexe = '\nRenseignez le sexe du joueur n°' + str(joueur) + ' ("m"/"f") :'
-            nouveaux_joueurs[joueur - 1]['sexe'] = pvt.parse_and_validate(explanation=nouveau_joueur_texte_sexe,
-                                                                          parse=pvt.parse_string_not_empty,
-                                                                          validate=pvt.validate_sexe)
+                # Définition du sexe
+                nouveau_joueur_texte_sexe = '\nRenseignez le sexe du joueur n°' + str(joueur) + ' ("m"/"f") :'
+                nouveaux_joueurs[joueur - 1]['sexe'] = pvt.parse_and_validate(explanation=nouveau_joueur_texte_sexe,
+                                                                              parse=pvt.parse_string_not_empty,
+                                                                              validate=pvt.validate_sexe)
 
-            # Définition du classement
-            nouveau_joueur_texte_classement = '\nRenseignez le classement du joueur n°' + str(joueur) + ' : '
-            nouveaux_joueurs[joueur - 1]['classement'] = pvt.parse_and_validate(
-                explanation=nouveau_joueur_texte_classement, parse=pvt.parse_int,
-                validate=pvt.validate_integer_positive)
+                # Définition du classement
+                nouveau_joueur_texte_classement = '\nRenseignez le classement du joueur n°' + str(joueur) + ' : '
+                nouveaux_joueurs[joueur - 1]['classement'] = pvt.parse_and_validate(
+                    explanation=nouveau_joueur_texte_classement, parse=pvt.parse_int,
+                    validate=pvt.validate_integer_positive)
 
-            # Formatage des informations de joueurs au format model.Joueur
-            nouveaux_joueurs[joueur - 1] = model.Joueur(**nouveaux_joueurs[joueur - 1])
+                # Formatage des informations de joueurs au format model.Joueur
+                nouveaux_joueurs[joueur - 1] = model.Joueur(**nouveaux_joueurs[joueur - 1])
+
+        else:
+            nouveaux_joueurs = test_liste_joueurs
 
         return nouveaux_joueurs
 

@@ -25,6 +25,8 @@ PLAYER3 = model.Joueur(nom_de_famille='Nom de famille TEST3', prenom='prenom TES
 PLAYER4 = model.Joueur(nom_de_famille='Nom de famille TEST4', prenom='prenom TEST4',
                        date_de_naissance=date.today(), sexe=model.Sex.FEMALE, classement=4)
 
+# MODEL TESTS
+
 def test_model_creer_nouveau_tournoi():
     """Function to test the state.creation of tournament"""
 
@@ -86,6 +88,32 @@ def test_model_generer_paires_joueurs():
     # Then
     assert state.actual_round.match_liste == [([player1, None], [player2, None]), ([player3, None], [player4, None])]
 
+# CONTROLLER TESTS
+
+def test_controller_creer_nouveau_tournoi(nouveau_tournoi = TOURNOI):
+    """Function to test the controller.creation of tournament"""
+
+    # Given
+    controller_tournoi = controller.Controller()
+
+    # When
+    controller_tournoi.creer_nouveau_tournoi(test_tournoi=nouveau_tournoi)
+
+    # Then
+    assert controller_tournoi.state.tournoi == nouveau_tournoi
+
+def test_controller_ajouter_joueurs(liste_joueurs = [PLAYER1, PLAYER2, PLAYER3, PLAYER4]):
+    """Function to test the controller.creation of players"""
+
+    # Given
+    controller_joueurs = controller.Controller()
+
+    # When
+    controller_joueurs.ajouter_joueurs(test_liste_joueurs=liste_joueurs)
+
+    # Then
+    assert controller_joueurs.state.joueurs == liste_joueurs
+    assert controller_joueurs.state.nombre_joueurs == len(liste_joueurs)
 
 # class TestVue(vue.Vue):
 #     """Class Vue with test functions"""

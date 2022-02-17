@@ -1,4 +1,5 @@
 from core import model, vue
+from typing import List, Optional
 
 
 class Controller:
@@ -9,12 +10,12 @@ class Controller:
         self.state = model.State()
         self.vue = vue.Vue()
 
-    def creer_nouveau_tournoi(self):
-        nouveau_tournoi = self.vue.menu_creer_nouveau_tournoi()
+    def creer_nouveau_tournoi(self, test_tournoi: Optional[model.Tournoi]):
+        nouveau_tournoi = self.vue.menu_creer_nouveau_tournoi(test_tournoi)
         self.state.creer_nouveau_tournoi(nouveau_tournoi)
 
-    def ajouter_joueurs(self):
-        joueurs = self.vue.ajouter_joueurs()
+    def ajouter_joueurs(self, test_liste_joueurs: Optional[List[model.Joueur]]):
+        joueurs = self.vue.ajouter_joueurs(test_liste_joueurs=test_liste_joueurs)
         self.state.ajouter_joueurs(joueurs)
 
     def mettre_a_jour_joueurs(self):
