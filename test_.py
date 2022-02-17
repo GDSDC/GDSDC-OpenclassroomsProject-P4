@@ -191,9 +191,8 @@ def test_controller_entrer_scores():
 
     # Given
     controller_scores = controller.Controller()
-    liste_joueurs = [PLAYER1, PLAYER2, PLAYER3, PLAYER4]
     scores = [([PLAYER1, model.Score.GAGNANT], [PLAYER2, model.Score.PERDANT]),
-                   ([PLAYER3, model.Score.MATCH_NUL], [PLAYER4, model.Score.MATCH_NUL])]
+              ([PLAYER3, model.Score.MATCH_NUL], [PLAYER4, model.Score.MATCH_NUL])]
     nouveau_round1 = ROUND1
 
     # When
