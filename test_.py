@@ -13,15 +13,6 @@ TOURNOI = model.Tournoi(nom='Tournoi_TEST',
                         description='Remarques_TEST',
                         rounds=[], )
 
-ROUND1 = model.Round(nom=model.RoundName.ROUND1, match_liste=[], date_debut=datetime.today(),
-                     date_fin=datetime.today())
-ROUND2 = model.Round(nom=model.RoundName.ROUND2, match_liste=[], date_debut=datetime.today(),
-                     date_fin=datetime.today())
-ROUND3 = model.Round(nom=model.RoundName.ROUND3, match_liste=[], date_debut=datetime.today(),
-                     date_fin=datetime.today())
-ROUND4 = model.Round(nom=model.RoundName.ROUND4, match_liste=[], date_debut=datetime.today(),
-                     date_fin=datetime.today())
-
 PLAYER1 = model.Joueur(nom_de_famille='Nom de famille TEST1', prenom='prenom TEST1',
                        date_de_naissance=date.today(), sexe=model.Sex.MALE, classement=1)
 PLAYER2 = model.Joueur(nom_de_famille='Nom de famille TEST2', prenom='prenom TEST2',
@@ -30,6 +21,18 @@ PLAYER3 = model.Joueur(nom_de_famille='Nom de famille TEST3', prenom='prenom TES
                        date_de_naissance=date.today(), sexe=model.Sex.MALE, classement=3)
 PLAYER4 = model.Joueur(nom_de_famille='Nom de famille TEST4', prenom='prenom TEST4',
                        date_de_naissance=date.today(), sexe=model.Sex.FEMALE, classement=4)
+
+MATCH_LISTE1 = [([PLAYER1, model.Score.GAGNANT], [PLAYER2, model.Score.PERDANT])]
+MATCH_LISTE2 = [([PLAYER3, model.Score.GAGNANT], [PLAYER4, model.Score.PERDANT])]
+
+ROUND1 = model.Round(nom=model.RoundName.ROUND1, match_liste=[], date_debut=datetime.today(),
+                     date_fin=datetime.today())
+ROUND2 = model.Round(nom=model.RoundName.ROUND2, match_liste=[], date_debut=datetime.today(),
+                     date_fin=datetime.today())
+ROUND3 = model.Round(nom=model.RoundName.ROUND3, match_liste=[], date_debut=datetime.today(),
+                     date_fin=datetime.today())
+ROUND4 = model.Round(nom=model.RoundName.ROUND4, match_liste=MATCH_LISTE1, date_debut=datetime.today(),
+                     date_fin=datetime.today())
 
 
 # MODEL TESTS
@@ -191,8 +194,7 @@ def test_controller_entrer_scores():
 
     # Given
     controller_scores = controller.Controller()
-    scores = [([PLAYER1, model.Score.GAGNANT], [PLAYER2, model.Score.PERDANT]),
-              ([PLAYER3, model.Score.MATCH_NUL], [PLAYER4, model.Score.MATCH_NUL])]
+    scores = [MATCH_LISTE1, MATCH_LISTE2]
     nouveau_round1 = ROUND1
 
     # When

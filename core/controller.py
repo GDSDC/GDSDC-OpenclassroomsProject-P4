@@ -57,6 +57,7 @@ class Controller:
         """Function to close tournament"""
 
         # Send Sate to database
+        self.mettre_a_jour_round_list()
 
         # Init the actual instance
         self.__init__()
@@ -64,4 +65,3 @@ class Controller:
 
 if __name__ == '__main__':
     pass
-
