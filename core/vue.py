@@ -100,7 +100,7 @@ Menu Principal
 
         return nouveau_tournoi
 
-    def ajouter_joueurs(self, test_liste_joueurs: Optional[List[model.Joueur]], nb_joueurs: Optional[int] = model.NOMBRE_DE_JOUEURS) -> List[model.Joueur]:
+    def ajouter_joueurs(self, test_liste_joueurs: Optional[List[model.Joueur]], nb_joueurs: Optional[int]) -> List[model.Joueur]:
         """AJout des informations de huit joueurs dans une liste de dictionnaires à destination du Controller."""
 
         if not test_liste_joueurs:
@@ -111,7 +111,7 @@ Menu Principal
             # Affichage de l'entête
             affichage_menu_ajouter_joueurs = """
     ==============================
-    Ajouter 8 joueurs
+    Ajouter """ + str(nb_joueurs) + """ joueurs
     ==============================
     """
             print(affichage_menu_ajouter_joueurs)
@@ -245,7 +245,7 @@ Entrez les scores des ''' + str(nombre_de_paires) + ''' matchs :
             # Boucle sur les résultats du match
             for joueur in range(2):
                 match_texte = ' Veuillez renseigner le score du joueur ' + match_liste_scores[paires - 1][joueur][
-                    0].prenom + ' ' + match_liste_scores[paires - 1][joueur][0].joueur.nom_de_famille + ' : '
+                    0].prenom + ' ' + match_liste_scores[paires - 1][joueur][0].nom_de_famille + ' : '
                 score = pvt.parse_and_validate(explanation=match_texte, parse=pvt.parse_float,
                                                validate=pvt.validate_score)
                 match_liste_scores[paires - 1][joueur][0] = score
