@@ -195,33 +195,37 @@ Menu Principal
                 round.match_liste[paires - 1][1][0].prenom) + ' ' + str(
                 round.match_liste[paires - 1][1][0].nom_de_famille))
 
-    def creer_nouveau_round(self, numero_round: int) -> model.Round:
+    def creer_nouveau_round(self, numero_round: int, test_nouveau_round: Optional[model.Round]) -> model.Round:
         """Affichage menu creer_nouveau_round"""
 
-        # Initialisation
-        nouveau_round = {
-            'nom': '',
-            'match_liste': [],
-            'date_debut': '',
-            'date_fin': ''
-        }
+        if not test_nouveau_round:
+            # Initialisation
+            nouveau_round = {
+                'nom': '',
+                'match_liste': [],
+                'date_debut': '',
+                'date_fin': ''
+            }
 
-        # Définition du nom du Round
-        nouveau_round['nom'] = model.RoundName('Round ' + str(numero_round))
+            # Définition du nom du Round
+            nouveau_round['nom'] = model.RoundName('Round ' + str(numero_round))
 
-        # Affichage
-        affichage_creer_nouveau_round = '''
-==============================
-Création du ''' + nouveau_round['nom'].value + ''' avec succès !
-==============================
-'''
-        print(affichage_creer_nouveau_round)
+            # Affichage
+            affichage_creer_nouveau_round = '''
+    ==============================
+    Création du ''' + nouveau_round['nom'].value + ''' avec succès !
+    ==============================
+    '''
+            print(affichage_creer_nouveau_round)
 
-        # Définition date de début de round
-        nouveau_round['date_debut'] = datetime.today()
+            # Définition date de début de round
+            nouveau_round['date_debut'] = datetime.today()
 
-        # Formatage du resultat au format model.Round
-        nouveau_round = model.Round(**nouveau_round)
+            # Formatage du resultat au format model.Round
+            nouveau_round = model.Round(**nouveau_round)
+
+        else:
+            nouveau_round = test_nouveau_round
 
         return nouveau_round
 

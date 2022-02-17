@@ -14,7 +14,8 @@ class Controller:
         nouveau_tournoi = self.vue.menu_creer_nouveau_tournoi(test_tournoi=test_tournoi)
         self.state.creer_nouveau_tournoi(nouveau_tournoi)
 
-    def ajouter_joueurs(self, test_liste_joueurs: Optional[List[model.Joueur]] = None, nb_joueurs: Optional[int] = model.NOMBRE_DE_JOUEURS):
+    def ajouter_joueurs(self, test_liste_joueurs: Optional[List[model.Joueur]] = None,
+                        nb_joueurs: Optional[int] = model.NOMBRE_DE_JOUEURS):
         joueurs = self.vue.ajouter_joueurs(test_liste_joueurs=test_liste_joueurs, nb_joueurs=nb_joueurs)
         self.state.ajouter_joueurs(joueurs)
 
@@ -40,10 +41,10 @@ class Controller:
             self.state.round_list.append(self.state.actual_round)
             self.mettre_a_jour_joueurs()
 
-    def creer_nouveau_round(self):
+    def creer_nouveau_round(self, test_nouveau_round: Optional[model.Round] = None):
         self.mettre_a_jour_round_list()
         numero_round = len(self.state.round_list) + 1
-        nouveau_round = self.vue.creer_nouveau_round(numero_round=numero_round)
+        nouveau_round = self.vue.creer_nouveau_round(numero_round=numero_round, test_nouveau_round=test_nouveau_round)
         self.state.creer_nouveau_round(nouveau_round)
 
     def generer_paires_joueurs(self):
