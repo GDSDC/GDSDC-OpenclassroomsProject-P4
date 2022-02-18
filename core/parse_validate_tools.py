@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Tuple, Optional, Callable
+from typing import Any, Tuple, Optional, Callable
 from datetime import date
 from core import model as md
 
@@ -110,19 +110,31 @@ def validate_sexe(user_input: str):
             f'"{user_input}" n\'est pas un choix de sexe valide. Veuillez choisir un élément dans la liste {exemple_sexe}.',
         )
 
-
-def validate_score(user_input: int):
-    """Function that verify if user_intput is in Score(Enum)"""
-    try:
-        res = md.Score(user_input)
+def validate_oui_non(user_input: str):
+    """Function that verify if user_input is 'Oui' or 'Non'"""
+    if user_input == 'Oui' or user_input == 'Non':
+        res = user_input
         return res, True, ''
-    except ValueError:
-        exemple_score = [score.value for score in md.Score]
+    else:
         return (
             None,
             False,
-            f'"{user_input}" n\'est pas un choix de score valide. Veuillez choisir un élément dans la liste {exemple_score}.',
+            f'"{user_input}" n\'est pas un choix valide. Veuillez répondre par "Oui" ou par "Non".'
         )
+
+
+# def validate_score(user_input: int):
+#     """Function that verify if user_intput is in Score(Enum)"""
+#     try:
+#         res = md.Score(user_input)
+#         return res, True, ''
+#     except ValueError:
+#         exemple_score = [score.value for score in md.Score]
+#         return (
+#             None,
+#             False,
+#             f'"{user_input}" n\'est pas un choix de score valide. Veuillez choisir un élément dans la liste {exemple_score}.',
+#         )
 
 
 def no_validation(user_input):
