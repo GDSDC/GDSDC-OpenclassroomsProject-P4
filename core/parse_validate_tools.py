@@ -58,7 +58,7 @@ def validate_date_format(parsed_date: date):
 
 
 def validate_integer_interval(
-        parsed_int: int, interval: Tuple[int, int] = [1, MENU_LENGTH]
+        parsed_int: int, interval: Tuple[int, int] = (1, MENU_LENGTH)
 ):
     """Function that verify if the integer is in the interval"""
     res = parsed_int
@@ -110,31 +110,10 @@ def validate_sexe(user_input: str):
             f'"{user_input}" n\'est pas un choix de sexe valide. Veuillez choisir un élément dans la liste {exemple_sexe}.',
         )
 
-def validate_oui_non(user_input: str):
-    """Function that verify if user_input is 'Oui' or 'Non'"""
-    if user_input == 'Oui' or user_input == 'Non':
-        res = user_input
-        return res, True, ''
-    else:
-        return (
-            None,
-            False,
-            f'"{user_input}" n\'est pas un choix valide. Veuillez répondre par "Oui" ou par "Non".'
-        )
 
-
-# def validate_score(user_input: int):
-#     """Function that verify if user_intput is in Score(Enum)"""
-#     try:
-#         res = md.Score(user_input)
-#         return res, True, ''
-#     except ValueError:
-#         exemple_score = [score.value for score in md.Score]
-#         return (
-#             None,
-#             False,
-#             f'"{user_input}" n\'est pas un choix de score valide. Veuillez choisir un élément dans la liste {exemple_score}.',
-#         )
+def validate_score(user_input: int):
+    score_choice_interval = (1,3)
+    return validate_integer_interval(parsed_int=user_input, interval=score_choice_interval)
 
 
 def no_validation(user_input):
