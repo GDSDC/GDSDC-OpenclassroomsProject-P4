@@ -1,6 +1,6 @@
 from typing import Any, Tuple, Optional, Callable
 from datetime import date
-from core import model as md
+from core.model import Sex, ControleDuTemps
 
 # Global constant
 MENU_LENGTH = 6  # -> Find a way to get the data from the length of dictionnary CHOIX_MENU_PRINCIPAL
@@ -84,11 +84,11 @@ def validate_integer_positive(parsed_int: int):
 def validate_controle_du_temps(user_input: str):
     """Function that verify if user_input is in Controle_du_temps(Enum)"""
     try:
-        res = md.ControleDuTemps(user_input)
+        res = ControleDuTemps(user_input)
         return res, True, ''
     except ValueError:
         exemple_controle_du_temps = [
-            controle_du_temps.value for controle_du_temps in md.ControleDuTemps
+            controle_du_temps.value for controle_du_temps in ControleDuTemps
         ]
         return (
             None,
@@ -100,10 +100,10 @@ def validate_controle_du_temps(user_input: str):
 def validate_sexe(user_input: str):
     """Function that verify if user_intpu is in Sex(Enum)"""
     try:
-        res = md.Sex(user_input)
+        res = Sex(user_input)
         return res, True, ''
     except ValueError:
-        exemple_sexe = [sexe.value for sexe in md.Sex]
+        exemple_sexe = [sexe.value for sexe in Sex]
         return (
             None,
             False,

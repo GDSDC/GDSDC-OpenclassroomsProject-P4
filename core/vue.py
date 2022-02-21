@@ -1,7 +1,7 @@
 from typing import List, Tuple, Optional
 from datetime import date, datetime
 
-from core import model
+from core.model import Joueur, Tournoi, Score, Round, RoundName
 from core import parse_validate_tools as pvt
 
 # Constantes Globales
@@ -39,7 +39,7 @@ Menu Principal
 
         return choix_utilisateur_menu_principal
 
-    def menu_creer_nouveau_tournoi(self, test_tournoi: Optional[model.Tournoi]) -> model.Tournoi:
+    def menu_creer_nouveau_tournoi(self, test_tournoi: Optional[Tournoi]) -> Tournoi:
         """Création d'un nouveau tournoi en renseignant toutes les informations demandées."""
 
         if not test_tournoi:
@@ -93,16 +93,16 @@ Menu Principal
                                                                     parse=pvt.parse_string_not_empty,
                                                                     validate=pvt.no_validation)
 
-            # Formatage du resultat au format model.Tournoi
-            nouveau_tournoi = model.Tournoi(**nouveau_tournoi)
+            # Formatage du resultat au format Tournoi
+            nouveau_tournoi = Tournoi(**nouveau_tournoi)
 
         else:
             nouveau_tournoi = test_tournoi
 
         return nouveau_tournoi
 
-    def ajouter_joueurs(self, test_liste_joueurs: Optional[List[model.Joueur]], nb_joueurs: Optional[int]) -> List[
-        model.Joueur]:
+    def ajouter_joueurs(self, test_liste_joueurs: Optional[List[Joueur]], nb_joueurs: Optional[int]) -> List[
+        Joueur]:
         """AJout des informations de huit joueurs dans une liste de dictionnaires à destination du Controller."""
 
         if not test_liste_joueurs:
@@ -170,15 +170,15 @@ Menu Principal
                     explanation=nouveau_joueur_texte_classement, parse=pvt.parse_int,
                     validate=pvt.validate_integer_positive)
 
-                # Formatage des informations de joueurs au format model.Joueur
-                nouveaux_joueurs[joueur - 1] = model.Joueur(**nouveaux_joueurs[joueur - 1])
+                # Formatage des informations de joueurs au format Joueur
+                nouveaux_joueurs[joueur - 1] = Joueur(**nouveaux_joueurs[joueur - 1])
 
         else:
             nouveaux_joueurs = test_liste_joueurs
 
         return nouveaux_joueurs
 
-    def afficher_paires_joueurs(self, round: model.Round):
+    def afficher_paires_joueurs(self, round: Round):
 
         nombre_de_paires = len(round.match_liste)
 
@@ -198,7 +198,7 @@ Menu Principal
                 round.match_liste[paires - 1][1][0].prenom) + ' ' + str(
                 round.match_liste[paires - 1][1][0].nom_de_famille))
 
-    def creer_nouveau_round(self, numero_round: int, test_nouveau_round: Optional[model.Round]) -> model.Round:
+    def creer_nouveau_round(self, numero_round: int, test_nouveau_round: Optional[Round]) -> Round:
         """Affichage menu creer_nouveau_round"""
 
         if not test_nouveau_round:
@@ -212,7 +212,7 @@ Menu Principal
             }
 
             # Définition du nom du Round
-            nouveau_round['nom'] = model.RoundName('Round ' + str(numero_round))
+            nouveau_round['nom'] = RoundName('Round ' + str(numero_round))
 
             # Affichage
             affichage_creer_nouveau_round = '''
@@ -225,16 +225,16 @@ Menu Principal
             # Définition date de début de round
             nouveau_round['date_debut'] = datetime.today()
 
-            # Formatage du resultat au format model.Round
-            nouveau_round = model.Round(**nouveau_round)
+            # Formatage du resultat au format Round
+            nouveau_round = Round(**nouveau_round)
 
         else:
             nouveau_round = test_nouveau_round
 
         return nouveau_round
 
-    def entrer_scores(self, round: model.Round, test_scores: Optional[List[Tuple[model.Joueur, model.Score]]]) -> List[
-        Tuple[model.Joueur, model.Score]]:
+    def entrer_scores(self, round: Round, test_scores: Optional[List[Tuple[Joueur, Score]]]) -> List[
+        Tuple[Joueur, Score]]:
 
         if not test_scores:
             # Initialisation
@@ -263,20 +263,20 @@ Menu Principal
                                                         validate=pvt.validate_score)
                 # Score attribution
                 if resultat_match == 1:
-                    match_liste_scores[paires - 1][0][1] = model.Score.GAGNANT
-                    match_liste_scores[paires - 1][1][1] = model.Score.PERDANT
+                    match_liste_scores[paires - 1][0][1] = Score.GAGNANT
+                    match_liste_scores[paires - 1][1][1] = Score.PERDANT
                 elif resultat_match == 2:
-                    match_liste_scores[paires - 1][0][1] = model.Score.PERDANT
-                    match_liste_scores[paires - 1][1][1] = model.Score.GAGNANT
+                    match_liste_scores[paires - 1][0][1] = Score.PERDANT
+                    match_liste_scores[paires - 1][1][1] = Score.GAGNANT
                 else:
-                    match_liste_scores[paires - 1][0][1] = model.Score.MATCH_NUL
-                    match_liste_scores[paires - 1][1][1] = model.Score.MATCH_NUL
+                    match_liste_scores[paires - 1][0][1] = Score.MATCH_NUL
+                    match_liste_scores[paires - 1][1][1] = Score.MATCH_NUL
         else:
             match_liste_scores = test_scores
 
         return match_liste_scores
 
-    def afficher_resultats(self, scores_results: List[model.Round]):
+    def afficher_resultats(self, scores_results: List[Round]):
         """Function that shows all scores of the Tournament"""
 
         # Affichage de l'entête
@@ -306,7 +306,7 @@ Scores du round : """ + str(round.nom.value) + """
 """ + str(match[1][0].prenom) + " " + str(match[1][0].nom_de_famille) + " : " + str(match[1][1].value) + " points"
                 print(affichage_scores_match)
 
-    def modifier_classement(self, joueurs_classement: List[model.Joueur] , test_classement: Optional[List[model.Joueur]]) -> List[model.Joueur]:
+    def modifier_classement(self, joueurs_classement: List[Joueur] , test_classement: Optional[List[Joueur]]) -> List[Joueur]:
         """Function to update players ranking"""
 
         if not test_classement:
