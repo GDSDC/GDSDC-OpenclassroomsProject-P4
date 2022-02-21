@@ -20,15 +20,15 @@ class Controller:
         self.state.ajouter_joueurs(joueurs)
 
     def mettre_a_jour_joueurs(self):
-        """ Generation of new state.joueurs list"""
+        """ Generation of new state.joueurs_en_jeux list"""
         # Initialisation
-        self.state.joueurs = []
+        self.state.joueurs_en_jeux = []
         last_round = self.state.round_list[-1]
         # Iteration sur tous les résultats de tous les matchs du précédent Round
         for match in last_round.match_liste:
             for resultat in match:
                 if resultat[1] != model.Score.PERDANT:
-                    self.state.joueurs.append(resultat[0])
+                    self.state.joueurs_en_jeux.append(resultat[0])
 
     def mettre_a_jour_round_list(self):
         # In case it is the very first round of Tournament
@@ -46,12 +46,12 @@ class Controller:
         self.state.creer_nouveau_round(nouveau_round)
 
     def generer_paires_joueurs(self):
-        self.state.generer_paires_joueurs(self.state.joueurs)
+        self.state.generer_paires_joueurs(self.state.joueurs_en_jeux)
         self.vue.afficher_paires_joueurs(self.state.actual_round)
 
     def entrer_scores(self, test_scores: Optional[List[Tuple[model.Joueur, model.Score]]] = None):
         scores = self.vue.entrer_scores(round=self.state.actual_round, test_scores=test_scores)
-        self.state.actual_round.match_liste = scores
+        self.state.entrer_scores(scores)
 
     def afficher_resultats(self):
         """Function that shows all scores of the Tournament"""
@@ -68,6 +68,11 @@ class Controller:
         else:
             scores_results.append(self.state.actual_round)
         self.vue.afficher_resultats(scores_results)
+
+    def modifier_classement(self, test_classement: Optional[List[model.Joueur]] = None):
+        """Function to update players ranking"""
+        joueurs_classement = self.vue.modifier_classement(test_classement=test_classement)
+        self.state.modifier_classement(joueurs_classement)
 
     def terminer_tournoi(self):
         """Function to close tournament"""

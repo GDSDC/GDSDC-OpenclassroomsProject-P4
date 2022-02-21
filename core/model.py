@@ -76,7 +76,8 @@ class Tournoi:
 
 class State:
     def __init__(self):
-        self.joueurs = []
+        self.joueurs_du_tournoi = []
+        self.joueurs_en_jeux = []
         self.nombre_joueurs = 0
         self.tournoi = None
         self.actual_round = None
@@ -85,7 +86,8 @@ class State:
     # for instance comparison in testing
     def __eq__(self, other):
         if isinstance(other, State):
-            return self.joueurs == other.joueurs \
+            return self.joueurs_du_tournoi == other.joueurs_du_tournoi \
+                   and self.joueurs_en_jeux == other.joueurs_en_jeux \
                    and self.nombre_joueurs == other.nombre_joueurs \
                    and self.tournoi == other.tournoi \
                    and self.actual_round == other.actual_round \
@@ -97,7 +99,8 @@ class State:
         self.tournoi = nouveau_tournoi
 
     def ajouter_joueurs(self, joueurs: List[Joueur]):
-        self.joueurs = joueurs
+        self.joueurs_du_tournoi = joueurs
+        self.joueurs_en_jeux = joueurs
         self.nombre_joueurs = len(joueurs)
 
     def creer_nouveau_round(self, nouveau_round: Round):
@@ -112,6 +115,12 @@ class State:
         while i < len(joueurs) - 1:  # -1 pour se proteger d'indexError
             self.actual_round.match_liste.append(([joueurs[i], None], [joueurs[i + 1], None]))
             i += 2
+
+    def entrer_scores(self, scores: List[Tuple[Joueur,Score]]):
+        self.actual_round.match_liste = scores
+
+    def modifier_classement(self, joueurs_classement: List[Joueur]):
+        self.joueurs_du_tournoi = joueurs_classement
 
 
 if __name__ == '__main__':

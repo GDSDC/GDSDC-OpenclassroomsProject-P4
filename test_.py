@@ -59,7 +59,7 @@ def test_model_ajouter_joueurs():
     state.ajouter_joueurs([player1, player2])
 
     # Then
-    assert state.joueurs == [player1, player2]
+    assert state.joueurs_en_jeux == [player1, player2]
     assert state.nombre_joueurs == 2
 
 
@@ -123,7 +123,7 @@ def test_controller_ajouter_joueurs():
     controller_joueurs.ajouter_joueurs(test_liste_joueurs=liste_joueurs)
 
     # Then
-    assert controller_joueurs.state.joueurs == liste_joueurs
+    assert controller_joueurs.state.joueurs_en_jeux == liste_joueurs
     assert controller_joueurs.state.nombre_joueurs == len(liste_joueurs)
 
 
@@ -183,7 +183,7 @@ def test_controller_mettre_a_jour_joueurs():
     controller_maj_joueurs.mettre_a_jour_joueurs()
 
     # Then
-    assert controller_maj_joueurs.state.joueurs == [PLAYER1, PLAYER3, PLAYER4]
+    assert controller_maj_joueurs.state.joueurs_en_jeux == [PLAYER1, PLAYER3, PLAYER4]
 
 
 def test_controller_entrer_scores():
