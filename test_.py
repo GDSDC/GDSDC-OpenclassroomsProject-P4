@@ -1,8 +1,6 @@
-from core import model, controller, vue
+from core import model, controller
 from datetime import datetime, date
-import random
-from typing import List
-import pytest
+
 
 # Global Constants
 TOURNOI = model.Tournoi(nom='Tournoi_TEST',

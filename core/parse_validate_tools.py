@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Tuple, Optional, Callable
+from typing import Any, Tuple, Optional, Callable
 from datetime import date
 from core import model as md
 
@@ -58,7 +58,7 @@ def validate_date_format(parsed_date: date):
 
 
 def validate_integer_interval(
-        parsed_int: int, interval: Tuple[int, int] = [1, MENU_LENGTH]
+        parsed_int: int, interval: Tuple[int, int] = (1, MENU_LENGTH)
 ):
     """Function that verify if the integer is in the interval"""
     res = parsed_int
@@ -112,17 +112,8 @@ def validate_sexe(user_input: str):
 
 
 def validate_score(user_input: int):
-    """Function that verify if user_intput is in Score(Enum)"""
-    try:
-        res = md.Score(user_input)
-        return res, True, ''
-    except ValueError:
-        exemple_score = [score.value for score in md.Score]
-        return (
-            None,
-            False,
-            f'"{user_input}" n\'est pas un choix de score valide. Veuillez choisir un élément dans la liste {exemple_score}.',
-        )
+    score_choice_interval = (1,3)
+    return validate_integer_interval(parsed_int=user_input, interval=score_choice_interval)
 
 
 def no_validation(user_input):

@@ -1,7 +1,6 @@
 from typing import List, Tuple, Optional
 from datetime import date, datetime
 
-import core.parse_validate_tools
 from core import model
 from core import parse_validate_tools as pvt
 
@@ -67,12 +66,14 @@ Menu Principal
             # Définition du nom du tournoi
             nouveau_tournoi_texte_nom = '\nRenseignez le Nom du tournoi : '
             nouveau_tournoi['nom'] = pvt.parse_and_validate(explanation=nouveau_tournoi_texte_nom,
-                                                            parse=pvt.parse_string_not_empty, validate=pvt.no_validation)
+                                                            parse=pvt.parse_string_not_empty,
+                                                            validate=pvt.no_validation)
 
             # Définition du le lieu du tournoi
             nouveau_tournoi_texte_lieu = '\nRenseignez le Lieu du tournoi : '
             nouveau_tournoi['lieu'] = pvt.parse_and_validate(explanation=nouveau_tournoi_texte_lieu,
-                                                             parse=pvt.parse_string_not_empty, validate=pvt.no_validation)
+                                                             parse=pvt.parse_string_not_empty,
+                                                             validate=pvt.no_validation)
 
             # Définition date de début de tournoi
             nouveau_tournoi['date_debut'] = date.today()
@@ -100,7 +101,8 @@ Menu Principal
 
         return nouveau_tournoi
 
-    def ajouter_joueurs(self, test_liste_joueurs: Optional[List[model.Joueur]], nb_joueurs: Optional[int]) -> List[model.Joueur]:
+    def ajouter_joueurs(self, test_liste_joueurs: Optional[List[model.Joueur]], nb_joueurs: Optional[int]) -> List[
+        model.Joueur]:
         """AJout des informations de huit joueurs dans une liste de dictionnaires à destination du Controller."""
 
         if not test_liste_joueurs:
@@ -230,7 +232,8 @@ Menu Principal
 
         return nouveau_round
 
-    def entrer_scores(self, round: model.Round, test_scores: Optional[List[Tuple[model.Joueur, model.Score]]]) -> List[Tuple[model.Joueur, model.Score]]:
+    def entrer_scores(self, round: model.Round, test_scores: Optional[List[Tuple[model.Joueur, model.Score]]]) -> List[
+        Tuple[model.Joueur, model.Score]]:
 
         if not test_scores:
             # Initialisation
@@ -247,15 +250,26 @@ Menu Principal
 
             # Boucle sur les matchs
             for paires in range(1, nombre_de_paires + 1):
-                print('Match ' + str(paires) + ' : ')
-                # Boucle sur les résultats du match
-                for joueur in range(2):
-                    match_texte = ' Veuillez renseigner le score du joueur ' + match_liste_scores[paires - 1][joueur][
-                        0].prenom + ' ' + match_liste_scores[paires - 1][joueur][0].nom_de_famille + ' : '
-                    score = pvt.parse_and_validate(explanation=match_texte, parse=pvt.parse_float,
-                                                   validate=pvt.validate_score)
-                    match_liste_scores[paires - 1][joueur][0] = score
-
+                print('Match n°' + str(paires) + ' : ')
+                print('Qui est le vainqueur ?')
+                print('1. ' + match_liste_scores[paires - 1][0][0].prenom + ' ' + match_liste_scores[paires - 1][0][
+                    0].nom_de_famille)
+                print('2. ' + match_liste_scores[paires - 1][1][0].prenom + ' ' + match_liste_scores[paires - 1][1][
+                    0].nom_de_famille)
+                print('3. Match-Nul')
+                match_texte = 'Veuillez choisir le résultat du match n°' + str(paires) + ' (1, 2, ou 3) : '
+                resultat_match = pvt.parse_and_validate(explanation=match_texte, parse=pvt.parse_int,
+                                                        validate=pvt.validate_score)
+                # Score attribution
+                if resultat_match == 1:
+                    match_liste_scores[paires - 1][0][1] = model.Score.GAGNANT
+                    match_liste_scores[paires - 1][1][1] = model.Score.PERDANT
+                elif resultat_match == 2:
+                    match_liste_scores[paires - 1][0][1] = model.Score.PERDANT
+                    match_liste_scores[paires - 1][1][1] = model.Score.GAGNANT
+                else:
+                    match_liste_scores[paires - 1][0][1] = model.Score.MATCH_NUL
+                    match_liste_scores[paires - 1][1][1] = model.Score.MATCH_NUL
         else:
             match_liste_scores = test_scores
 
