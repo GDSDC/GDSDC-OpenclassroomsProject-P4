@@ -26,10 +26,13 @@ class Controller:
         self.state.joueurs_en_jeux = []
         last_round = self.state.round_list[-1]
         # Iteration sur tous les résultats de tous les matchs du précédent Round
+        joueurs_qui_passent_au_prochain_tour = []
         for match in last_round.match_liste:
-            for resultat in match:
-                if resultat[1] != Score.PERDANT:
-                    self.state.joueurs_en_jeux.append(resultat[0])
+            for (joueur,score) in match:
+                if score != Score.PERDANT:
+                    joueurs_qui_passent_au_prochain_tour.append(joueur)
+
+        self.state.joueurs_en_jeux = joueurs_qui_passent_au_prochain_tour
 
     def mettre_a_jour_round_list(self):
         # In case it is the very first round of Tournament
