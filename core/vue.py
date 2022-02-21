@@ -146,9 +146,10 @@ Menu Principal
 
                 # Définition le prénom
                 nouveau_joueur_texte_prenom = '\nRenseignez le Prénom du joueur n°' + str(joueur) + ' : '
-                nouveaux_joueurs[joueur - 1]['prenom'] = pvt.parse_and_validate(explanation=nouveau_joueur_texte_prenom,
-                                                                                parse=pvt.parse_string_not_empty,
-                                                                                validate=pvt.no_validation)
+                nouveaux_joueurs[joueur - 1]['prenom'] = pvt.parse_and_validate(
+                    explanation=nouveau_joueur_texte_prenom,
+                    parse=pvt.parse_string_not_empty,
+                    validate=pvt.no_validation)
 
                 # Définition de la date de naissance
                 nouveau_joueur_texte_date_naissance = '\nRenseignez la Date de naissance du joueur n°' + str(
@@ -274,6 +275,36 @@ Menu Principal
             match_liste_scores = test_scores
 
         return match_liste_scores
+
+    def afficher_resultats(self, scores_results: List[model.Round]):
+        """Function that shows all scores of the Tournament"""
+
+        # Affichage de l'entête
+        affichage_scores_entete = """
+==========================================================
+Affichage des scores
+==========================================================
+"""
+        print(affichage_scores_entete)
+
+        # Iteration sur les rounds
+        for round in scores_results:
+            # Affichage entête par round
+            affichage_round = """
+==========================================================
+Scores du round : """ + str(round.nom.value) + """
+==========================================================
+"""
+            print(affichage_round)
+
+            # Iteration sur tous les matchs du rounds
+            for match in round.match_liste:
+                # Affichage scores par match
+                affichage_scores_match = """
+----------------------------------------------------------
+""" + str(match[0][0].prenom) + " " + str(match[0][0].nom_de_famille) + " : " + str(match[0][1].value) + """ points
+""" + str(match[1][0].prenom) + " " + str(match[1][0].nom_de_famille) + " : " + str(match[1][1].value) + " points"
+                print(affichage_scores_match)
 
 
 if __name__ == '__main__':

@@ -1,7 +1,6 @@
 from core import model, controller
 from datetime import datetime, date
 
-
 # Global Constants
 TOURNOI = model.Tournoi(nom='Tournoi_TEST',
                         lieu='lieu_TEST',

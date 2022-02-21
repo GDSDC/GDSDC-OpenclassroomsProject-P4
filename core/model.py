@@ -36,18 +36,6 @@ class Score(Enum):
     MATCH_NUL = 1 / 2
 
 
-# @dataclass
-# class Resultat:
-#     joueur: Joueur
-#     score: Optional[Score] = None
-#
-#
-# @dataclass
-# class Match:
-#     resultat_1: Resultat
-#     resultat_2: Resultat
-
-
 # Classes décrivant le Round
 class RoundName(Enum):
     """Classe Enum décrivant les noms de Rounds utilisés"""

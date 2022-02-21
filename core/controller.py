@@ -53,6 +53,22 @@ class Controller:
         scores = self.vue.entrer_scores(round=self.state.actual_round, test_scores=test_scores)
         self.state.actual_round.match_liste = scores
 
+    def afficher_resultats(self):
+        """Function that shows all scores of the Tournament"""
+        # Initialisation
+        scores_results = []
+        # Appending round_list if not empty
+        if self.state.round_list == []:
+            pass
+        else:
+            scores_results.append(self.state.round_list)
+        # Updating scores with actual_round
+        if self.state.actual_round.match_liste[0][0][1] is None:
+            pass
+        else:
+            scores_results.append(self.state.actual_round)
+        self.vue.afficher_resultats(scores_results)
+
     def terminer_tournoi(self):
         """Function to close tournament"""
 
