@@ -252,27 +252,29 @@ Menu Principal
             print(affichage_menu_entrer_scores)
 
             # Boucle sur les matchs
-            for paires in range(1, nombre_de_paires + 1):
+            paires = 1
+            for ([joueur1, score_joueur1], [joueur2, score_joueur2]) in match_liste_scores:
                 print('Match n°' + str(paires) + ' : ')
                 print('Qui est le vainqueur ?')
-                print('1. ' + match_liste_scores[paires - 1][0][0].prenom + ' ' + match_liste_scores[paires - 1][0][
-                    0].nom_de_famille)
-                print('2. ' + match_liste_scores[paires - 1][1][0].prenom + ' ' + match_liste_scores[paires - 1][1][
-                    0].nom_de_famille)
+                print('1. ' + joueur1.prenom + ' ' +joueur1.nom_de_famille)
+                print('2. ' + joueur2.prenom + ' ' + joueur2.nom_de_famille)
                 print('3. Match-Nul')
                 match_texte = 'Veuillez choisir le résultat du match n°' + str(paires) + ' (1, 2, ou 3) : '
                 resultat_match = pvt.parse_and_validate(explanation=match_texte, parse=pvt.parse_int,
                                                         validate=pvt.validate_score)
+
                 # Score attribution
+                # TODO -> trouver façon d'assigner correctement -> actuelement les scores sortent en None
                 if resultat_match == 1:
-                    match_liste_scores[paires - 1][0][1] = Score.GAGNANT
-                    match_liste_scores[paires - 1][1][1] = Score.PERDANT
+                    score_joueur1 = Score.GAGNANT
+                    score_joueur2 = Score.PERDANT
                 elif resultat_match == 2:
-                    match_liste_scores[paires - 1][0][1] = Score.PERDANT
-                    match_liste_scores[paires - 1][1][1] = Score.GAGNANT
+                    score_joueur1 = Score.PERDANT
+                    score_joueur2 = Score.GAGNANT
                 else:
-                    match_liste_scores[paires - 1][0][1] = Score.MATCH_NUL
-                    match_liste_scores[paires - 1][1][1] = Score.MATCH_NUL
+                    score_joueur1 = Score.MATCH_NUL
+                    score_joueur2 = Score.MATCH_NUL
+                paires += 1
         else:
             match_liste_scores = test_scores
 
