@@ -19,6 +19,15 @@ PLAYER3 = model.Joueur(nom_de_famille='Nom de famille TEST3', prenom='prenom TES
 PLAYER4 = model.Joueur(nom_de_famille='Nom de famille TEST4', prenom='prenom TEST4',
                        date_de_naissance=date.today(), sexe=model.Sex.FEMALE, classement=4)
 
+PLAYER_NOUVEAU_CLASSEMENT1 = model.Joueur(nom_de_famille='Nom de famille TEST1', prenom='prenom TEST1',
+                                          date_de_naissance=date.today(), sexe=model.Sex.MALE, classement=10)
+PLAYER_NOUVEAU_CLASSEMENT2 = model.Joueur(nom_de_famille='Nom de famille TEST2', prenom='prenom TEST2',
+                                          date_de_naissance=date.today(), sexe=model.Sex.FEMALE, classement=20)
+PLAYER_NOUVEAU_CLASSEMENT3 = model.Joueur(nom_de_famille='Nom de famille TEST3', prenom='prenom TEST3',
+                                          date_de_naissance=date.today(), sexe=model.Sex.MALE, classement=30)
+PLAYER_NOUVEAU_CLASSEMENT4 = model.Joueur(nom_de_famille='Nom de famille TEST4', prenom='prenom TEST4',
+                                          date_de_naissance=date.today(), sexe=model.Sex.FEMALE, classement=40)
+
 MATCH_LISTE1 = [([PLAYER1, model.Score.GAGNANT], [PLAYER2, model.Score.PERDANT])]
 MATCH_LISTE2 = [([PLAYER3, model.Score.GAGNANT], [PLAYER4, model.Score.PERDANT])]
 
@@ -200,6 +209,23 @@ def test_controller_entrer_scores():
 
     # Then
     assert controller_scores.state.actual_round.match_liste == scores
+
+
+def test_modifier_classement():
+    """Function that test the controller.modifier_classement"""
+
+    # Given
+    controller_classement = controller.Controller()
+    players_initial_classement = [PLAYER1, PLAYER2, PLAYER3, PLAYER4]
+    players_new_classement = [PLAYER_NOUVEAU_CLASSEMENT1, PLAYER_NOUVEAU_CLASSEMENT2, PLAYER_NOUVEAU_CLASSEMENT3,
+                              PLAYER_NOUVEAU_CLASSEMENT4]
+
+    # When
+    controller_classement.ajouter_joueurs(test_liste_joueurs=players_initial_classement)
+    controller_classement.modifier_classement(test_classement=players_new_classement)
+
+    # Then
+    assert controller_classement.state.joueurs_du_tournoi == players_new_classement
 
 
 def test_controller_terminer_tournoi():
