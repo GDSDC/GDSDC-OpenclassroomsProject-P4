@@ -71,7 +71,7 @@ class Controller:
 
     def modifier_classement(self, test_classement: Optional[List[model.Joueur]] = None):
         """Function to update players ranking"""
-        joueurs_classement = self.vue.modifier_classement(test_classement=test_classement)
+        joueurs_classement = self.vue.modifier_classement(joueurs_classement=self.state.joueurs_du_tournoi,test_classement=test_classement)
         self.state.modifier_classement(joueurs_classement)
 
     def terminer_tournoi(self):
