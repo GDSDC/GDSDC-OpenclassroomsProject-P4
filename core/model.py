@@ -116,7 +116,7 @@ class State:
             self.actual_round.match_liste.append(([joueurs[i], None], [joueurs[i + 1], None]))
             i += 2
 
-    def entrer_scores(self, scores: List[Tuple[Joueur,Score]]):
+    def entrer_scores(self, scores: List[Tuple[Joueur, Score]]):
         self.actual_round.match_liste = scores
 
     def modifier_classement(self, joueurs_classement: List[Joueur]):

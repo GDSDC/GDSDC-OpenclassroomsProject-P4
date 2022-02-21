@@ -4,42 +4,42 @@ from datetime import datetime, date
 
 # Global Constants
 TOURNOI = Tournoi(nom='Tournoi_TEST',
-                        lieu='lieu_TEST',
-                        date_debut=date.today(),
-                        date_fin=date.today(),
-                        controle_du_temps=ControleDuTemps.BLITZ,
-                        description='Remarques_TEST',
-                        rounds=[], )
+                  lieu='lieu_TEST',
+                  date_debut=date.today(),
+                  date_fin=date.today(),
+                  controle_du_temps=ControleDuTemps.BLITZ,
+                  description='Remarques_TEST',
+                  rounds=[], )
 
 PLAYER1 = Joueur(nom_de_famille='Nom de famille TEST1', prenom='prenom TEST1',
-                       date_de_naissance=date.today(), sexe=Sex.MALE, classement=1)
+                 date_de_naissance=date.today(), sexe=Sex.MALE, classement=1)
 PLAYER2 = Joueur(nom_de_famille='Nom de famille TEST2', prenom='prenom TEST2',
-                       date_de_naissance=date.today(), sexe=Sex.FEMALE, classement=2)
+                 date_de_naissance=date.today(), sexe=Sex.FEMALE, classement=2)
 PLAYER3 = Joueur(nom_de_famille='Nom de famille TEST3', prenom='prenom TEST3',
-                       date_de_naissance=date.today(), sexe=Sex.MALE, classement=3)
+                 date_de_naissance=date.today(), sexe=Sex.MALE, classement=3)
 PLAYER4 = Joueur(nom_de_famille='Nom de famille TEST4', prenom='prenom TEST4',
-                       date_de_naissance=date.today(), sexe=Sex.FEMALE, classement=4)
+                 date_de_naissance=date.today(), sexe=Sex.FEMALE, classement=4)
 
 PLAYER_NOUVEAU_CLASSEMENT1 = Joueur(nom_de_famille='Nom de famille TEST1', prenom='prenom TEST1',
-                                          date_de_naissance=date.today(), sexe=Sex.MALE, classement=10)
+                                    date_de_naissance=date.today(), sexe=Sex.MALE, classement=10)
 PLAYER_NOUVEAU_CLASSEMENT2 = Joueur(nom_de_famille='Nom de famille TEST2', prenom='prenom TEST2',
-                                          date_de_naissance=date.today(), sexe=Sex.FEMALE, classement=20)
+                                    date_de_naissance=date.today(), sexe=Sex.FEMALE, classement=20)
 PLAYER_NOUVEAU_CLASSEMENT3 = Joueur(nom_de_famille='Nom de famille TEST3', prenom='prenom TEST3',
-                                          date_de_naissance=date.today(), sexe=Sex.MALE, classement=30)
+                                    date_de_naissance=date.today(), sexe=Sex.MALE, classement=30)
 PLAYER_NOUVEAU_CLASSEMENT4 = Joueur(nom_de_famille='Nom de famille TEST4', prenom='prenom TEST4',
-                                          date_de_naissance=date.today(), sexe=Sex.FEMALE, classement=40)
+                                    date_de_naissance=date.today(), sexe=Sex.FEMALE, classement=40)
 
 MATCH_LISTE1 = [([PLAYER1, Score.GAGNANT], [PLAYER2, Score.PERDANT])]
 MATCH_LISTE2 = [([PLAYER3, Score.GAGNANT], [PLAYER4, Score.PERDANT])]
 
 ROUND1 = Round(nom=RoundName.ROUND1, match_liste=[], date_debut=datetime.today(),
-                     date_fin=datetime.today())
+               date_fin=datetime.today())
 ROUND2 = Round(nom=RoundName.ROUND2, match_liste=[], date_debut=datetime.today(),
-                     date_fin=datetime.today())
+               date_fin=datetime.today())
 ROUND3 = Round(nom=RoundName.ROUND3, match_liste=[], date_debut=datetime.today(),
-                     date_fin=datetime.today())
+               date_fin=datetime.today())
 ROUND4 = Round(nom=RoundName.ROUND4, match_liste=MATCH_LISTE1, date_debut=datetime.today(),
-                     date_fin=datetime.today())
+               date_fin=datetime.today())
 
 
 # MODEL TESTS
@@ -185,7 +185,7 @@ def test_controller_mettre_a_jour_joueurs():
     match_liste = [([PLAYER1, Score.GAGNANT], [PLAYER2, Score.PERDANT]),
                    ([PLAYER3, Score.MATCH_NUL], [PLAYER4, Score.MATCH_NUL])]
     last_round = Round(nom=RoundName.ROUND1, match_liste=match_liste, date_debut=datetime.today(),
-                             date_fin=datetime.today())
+                       date_fin=datetime.today())
 
     # When
     controller_maj_joueurs.ajouter_joueurs(test_liste_joueurs=liste_joueurs)

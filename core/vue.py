@@ -306,7 +306,8 @@ Scores du round : """ + str(round.nom.value) + """
 """ + str(match[1][0].prenom) + " " + str(match[1][0].nom_de_famille) + " : " + str(match[1][1].value) + " points"
                 print(affichage_scores_match)
 
-    def modifier_classement(self, joueurs_classement: List[Joueur] , test_classement: Optional[List[Joueur]]) -> List[Joueur]:
+    def modifier_classement(self, joueurs_classement: List[Joueur], test_classement: Optional[List[Joueur]]) -> List[
+        Joueur]:
         """Function to update players ranking"""
 
         if not test_classement:
@@ -324,8 +325,11 @@ Scores du round : """ + str(round.nom.value) + """
 
             # Iteration sur les joueurs du tournoi
             for joueur in joueurs_classement_updated:
-                joueur_classement_texte = str(joueur.prenom) + ' ' + str(joueur.nom_de_famille) + ' / Classement actuel = ' + str(joueur.classement) + ' --> Nouveau classement : '
-                nouveau_classement = pvt.parse_and_validate(explanation=joueur_classement_texte, parse = pvt.parse_int, validate=pvt.validate_integer_positive)
+                joueur_classement_texte = str(joueur.prenom) + ' ' + str(
+                    joueur.nom_de_famille) + ' / Classement actuel = ' + str(
+                    joueur.classement) + ' --> Nouveau classement : '
+                nouveau_classement = pvt.parse_and_validate(explanation=joueur_classement_texte, parse=pvt.parse_int,
+                                                            validate=pvt.validate_integer_positive)
                 joueur.classement = nouveau_classement
 
             # Message Validation
@@ -339,7 +343,6 @@ Scores du round : """ + str(round.nom.value) + """
             joueurs_classement_updated = test_classement
 
         return joueurs_classement_updated
-
 
 
 if __name__ == '__main__':

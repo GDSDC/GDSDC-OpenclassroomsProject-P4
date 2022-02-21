@@ -112,7 +112,7 @@ def validate_sexe(user_input: str):
 
 
 def validate_score(user_input: int):
-    score_choice_interval = (1,3)
+    score_choice_interval = (1, 3)
     return validate_integer_interval(parsed_int=user_input, interval=score_choice_interval)
 
 
