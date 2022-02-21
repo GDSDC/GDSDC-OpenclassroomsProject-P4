@@ -191,12 +191,14 @@ Menu Principal
         print(affichage_paires_joueurs_entete)
 
         # Boucle pour afficher toutes les paires de joueurs
-        for paires in range(1, nombre_de_paires + 1):
+        paires = 1
+        for ((joueur1, score1), (joueur2, score2)) in round.match_liste:
             print('Paire n°' + str(paires) + ' : ' + str(
-                round.match_liste[paires - 1][0][0].prenom) + ' ' + str(
-                round.match_liste[paires - 1][0][0].nom_de_famille) + ' / ' + str(
-                round.match_liste[paires - 1][1][0].prenom) + ' ' + str(
-                round.match_liste[paires - 1][1][0].nom_de_famille))
+                joueur1.prenom) + ' ' + str(
+                joueur1.nom_de_famille) + ' / ' + str(
+                joueur2.prenom) + ' ' + str(
+                joueur2.nom_de_famille))
+            paires += 1
 
     def creer_nouveau_round(self, numero_round: int, test_nouveau_round: Optional[Round]) -> Round:
         """Affichage menu creer_nouveau_round"""
