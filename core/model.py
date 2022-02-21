@@ -1,4 +1,4 @@
-from typing import List, Tuple, Optional
+from typing import Dict, List, Tuple, Optional
 from dataclasses import dataclass
 from enum import Enum
 from datetime import date, datetime
@@ -45,10 +45,13 @@ class RoundName(Enum):
     ROUND4 = 'Round 4'
 
 
+Match = Tuple[Tuple[Joueur, Optional[Score]], Tuple[Joueur, Optional[Score]]]
+
+
 @dataclass
 class Round:
     nom: Optional[RoundName]
-    match_liste: List[Tuple[Joueur, Score]]
+    matchs: List[Match]
     date_debut: datetime
     date_fin: datetime
 
@@ -70,18 +73,18 @@ class Tournoi:
     date_fin: date
     controle_du_temps: ControleDuTemps
     description: str
+    joueurs: List[Joueur]
     rounds: List[Round]
     nombre_tours: int = NOMBRE_DE_TOURS
 
 
+
 class State:
     def __init__(self):
-        self.joueurs_du_tournoi = []
-        self.joueurs_en_jeux = []
-        self.nombre_joueurs = 0
-        self.tournoi = None
-        self.actual_round = None
-        self.round_list = []
+        self.acteurs: Dict[int, Joueur] = {}
+        self.tournois: List[Tournoi] = []
+        self.tournoi: Optional[Tournoi] = None
+
 
     # for instance comparison in testing
     def __eq__(self, other):
@@ -93,10 +96,13 @@ class State:
                    and self.actual_round == other.actual_round \
                    and self.round_list == other.round_list
         else:
-            return false
+            return False
 
     def creer_nouveau_tournoi(self, nouveau_tournoi: Tournoi):
         self.tournoi = nouveau_tournoi
+
+    def nombre_joueurs(self):
+        return len(self.joueurs)
 
     def ajouter_joueurs(self, joueurs: List[Joueur]):
         self.joueurs_du_tournoi = joueurs
@@ -116,12 +122,13 @@ class State:
             self.actual_round.match_liste.append(([joueurs[i], None], [joueurs[i + 1], None]))
             i += 2
 
-    def entrer_scores(self, scores: List[Tuple[Joueur,Score]]):
+    def entrer_scores(self, scores: List[Tuple[Joueur, Score]]):
         self.actual_round.match_liste = scores
 
     def modifier_classement(self, joueurs_classement: List[Joueur]):
         self.joueurs_du_tournoi = joueurs_classement
 
+    def reinitialiser_liste_joueurs_en_jeux(self, joueurs: List[Joueur]):
+        self.joueurs_en_jeux = joueurs
 
-if __name__ == '__main__':
-    pass
+

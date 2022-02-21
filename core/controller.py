@@ -1,21 +1,34 @@
-from core import model, vue
+from core.vue import Vue
+from core.model import Joueur, NOMBRE_DE_JOUEURS, Round, Tournoi, Score, State
 from typing import List, Optional, Tuple
 
 
 class Controller:
     """Contrôleur principal."""
 
-    def __init__(self):
+    def __init__(self, state: Optional[State] = None, vue: Optional[Vue] = None):
         """Initialise les modèles et les vues."""
-        self.state = model.State()
-        self.vue = vue.Vue()
+        self.state = state or State()
+        self.vue = vue or Vue()
 
-    def creer_nouveau_tournoi(self, test_tournoi: Optional[model.Tournoi] = None):
-        nouveau_tournoi = self.vue.menu_creer_nouveau_tournoi(test_tournoi=test_tournoi)
+    def demarrer(self):
+        choix_menu = None
+        while choix_menu != 7:
+            choix_menu = self.vue.menu_principal()
+            if choix_menu == 1:
+                self.creer_nouveau_tournoi()
+            else:
+                raise NotImplementedError("Code me!")
+
+
+    def creer_nouveau_tournoi(self):
+        nouveau_tournoi = self.vue.menu_creer_nouveau_tournoi(self.state.acteurs)
         self.state.creer_nouveau_tournoi(nouveau_tournoi)
 
-    def ajouter_joueurs(self, test_liste_joueurs: Optional[List[model.Joueur]] = None,
-                        nb_joueurs: Optional[int] = model.NOMBRE_DE_JOUEURS):
+        self.vue.menu_principal()
+
+    def ajouter_joueurs(self, test_liste_joueurs: Optional[List[Joueur]] = None,
+                        nb_joueurs: Optional[int] = NOMBRE_DE_JOUEURS):
         joueurs = self.vue.ajouter_joueurs(test_liste_joueurs=test_liste_joueurs, nb_joueurs=nb_joueurs)
         self.state.ajouter_joueurs(joueurs)
 
@@ -25,10 +38,13 @@ class Controller:
         self.state.joueurs_en_jeux = []
         last_round = self.state.round_list[-1]
         # Iteration sur tous les résultats de tous les matchs du précédent Round
+        joueurs_qui_passent_au_prochain_tour = []
         for match in last_round.match_liste:
-            for resultat in match:
-                if resultat[1] != model.Score.PERDANT:
-                    self.state.joueurs_en_jeux.append(resultat[0])
+            for (joueur, score) in match:
+                if score != Score.PERDANT:
+                    joueurs_qui_passent_au_prochain_tour.append(joueur)
+
+        self.state.reinitialiser_liste_joueurs_en_jeux(joueurs_qui_passent_au_prochain_tour)
 
     def mettre_a_jour_round_list(self):
         # In case it is the very first round of Tournament
@@ -39,7 +55,7 @@ class Controller:
             self.state.round_list.append(self.state.actual_round)
             self.mettre_a_jour_joueurs()
 
-    def creer_nouveau_round(self, test_nouveau_round: Optional[model.Round] = None):
+    def creer_nouveau_round(self, test_nouveau_round: Optional[Round] = None):
         self.mettre_a_jour_round_list()
         numero_round = len(self.state.round_list) + 1
         nouveau_round = self.vue.creer_nouveau_round(numero_round=numero_round, test_nouveau_round=test_nouveau_round)
@@ -49,7 +65,7 @@ class Controller:
         self.state.generer_paires_joueurs(self.state.joueurs_en_jeux)
         self.vue.afficher_paires_joueurs(self.state.actual_round)
 
-    def entrer_scores(self, test_scores: Optional[List[Tuple[model.Joueur, model.Score]]] = None):
+    def entrer_scores(self, test_scores: Optional[List[Tuple[Joueur, Score]]] = None):
         scores = self.vue.entrer_scores(round=self.state.actual_round, test_scores=test_scores)
         self.state.entrer_scores(scores)
 
@@ -69,9 +85,14 @@ class Controller:
             scores_results.append(self.state.actual_round)
         self.vue.afficher_resultats(scores_results)
 
-    def modifier_classement(self, test_classement: Optional[List[model.Joueur]] = None):
+    def modifier_classement(self, test_classement: Optional[List[Joueur]] = None):
         """Function to update players ranking"""
+<<<<<<< Updated upstream
         joueurs_classement = self.vue.modifier_classement(test_classement=test_classement)
+=======
+        joueurs_classement = self.vue.modifier_classement(joueurs_classement=self.state.joueurs_du_tournoi,
+                                                          test_classement=test_classement)
+>>>>>>> Stashed changes
         self.state.modifier_classement(joueurs_classement)
 
     def terminer_tournoi(self):

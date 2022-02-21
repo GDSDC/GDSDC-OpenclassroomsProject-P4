@@ -1,16 +1,20 @@
-from typing import List, Tuple, Optional
+from typing import Dict, List, Tuple, Optional
 from datetime import date, datetime
 
 from core import model
 from core import parse_validate_tools as pvt
 
 # Constantes Globales
+from core.model import Joueur, Score, State
+
 CHOIX_MENU_PRINCIPAL = {1: 'Créer un nouveau tournoi',
                         2: 'Ajouter huit joueurs',
                         3: 'Démarrer nouveau Round',
                         4: 'Entrer les résultats',
                         5: 'Terminer le tournoi',
-                        6: 'Quitter'}
+                        6: 'Sauvegarder l\'etat actuel',
+                        7: 'Charger',
+                        8: 'Quitter'}
 
 
 class Vue:
@@ -39,65 +43,74 @@ Menu Principal
 
         return choix_utilisateur_menu_principal
 
-    def menu_creer_nouveau_tournoi(self, test_tournoi: Optional[model.Tournoi]) -> model.Tournoi:
+    def menu_creer_nouveau_tournoi(self, acteurs: Dict[int, Joueur]) -> model.Tournoi:
         """Création d'un nouveau tournoi en renseignant toutes les informations demandées."""
 
-        if not test_tournoi:
-            # Initialisation
-            nouveau_tournoi = {
-                'nom': '',
-                'lieu': '',
-                'date_debut': '',
-                'date_fin': '',
-                'nombre_tours': '',
-                'controle_du_temps': '',
-                'description': '',
-                'rounds': ''
-            }
+        # Initialisation
+        nouveau_tournoi = {
+            'nom': '',
+            'lieu': '',
+            'date_debut': '',
+            'date_fin': '',
+            'nombre_tours': '',
+            'controle_du_temps': '',
+            'description': '',
+            'rounds': ''
+        }
+        # TODO update me
 
-            # Affichage de l'entête
-            affichage_menu_creer_nouveau_tournoi = """
-    ==============================
-    Créer un nouveau Tournoi
-    ==============================
-    """
-            print(affichage_menu_creer_nouveau_tournoi)
+        # Affichage de l'entête
+        affichage_menu_creer_nouveau_tournoi = """
+==============================
+Créer un nouveau Tournoi
+==============================
+"""
+        print(affichage_menu_creer_nouveau_tournoi)
 
-            # Définition du nom du tournoi
-            nouveau_tournoi_texte_nom = '\nRenseignez le Nom du tournoi : '
-            nouveau_tournoi['nom'] = pvt.parse_and_validate(explanation=nouveau_tournoi_texte_nom,
-                                                            parse=pvt.parse_string_not_empty,
-                                                            validate=pvt.no_validation)
+        # Définition du nom du tournoi
+        nouveau_tournoi_texte_nom = '\nRenseignez le Nom du tournoi : '
+        nouveau_tournoi['nom'] = pvt.parse_and_validate(explanation=nouveau_tournoi_texte_nom,
+                                                        parse=pvt.parse_string_not_empty,
+                                                        validate=pvt.no_validation)
 
-            # Définition du le lieu du tournoi
-            nouveau_tournoi_texte_lieu = '\nRenseignez le Lieu du tournoi : '
-            nouveau_tournoi['lieu'] = pvt.parse_and_validate(explanation=nouveau_tournoi_texte_lieu,
-                                                             parse=pvt.parse_string_not_empty,
-                                                             validate=pvt.no_validation)
+        # Définition du le lieu du tournoi
+        nouveau_tournoi_texte_lieu = '\nRenseignez le Lieu du tournoi : '
+        nouveau_tournoi['lieu'] = pvt.parse_and_validate(explanation=nouveau_tournoi_texte_lieu,
+                                                         parse=pvt.parse_string_not_empty,
+                                                         validate=pvt.no_validation)
 
-            # Définition date de début de tournoi
-            nouveau_tournoi['date_debut'] = date.today()
+        # Définition date de début de tournoi
+        nouveau_tournoi['date_debut'] = date.today()
 
-            # Définition date de fin de tournoi par defaut
-            # nouveau_tournoi['date_fin'] = date.today()
+        # Définition date de fin de tournoi par defaut
+        # nouveau_tournoi['date_fin'] = date.today()
 
-            # Définition le contrôle du temps
-            nouveau_tournoi_texte_controle_du_temps = '\nRenseignez le contrôle du temps ("bullet", "blitz" ou "coup rapide") : '
-            nouveau_tournoi['controle_du_temps'] = pvt.parse_and_validate(
-                explanation=nouveau_tournoi_texte_controle_du_temps, parse=pvt.parse_string_not_empty,
-                validate=pvt.validate_controle_du_temps)
+        # Définition le contrôle du temps
+        nouveau_tournoi_texte_controle_du_temps = '\nRenseignez le contrôle du temps ("bullet", "blitz" ou "coup rapide") : '
+        nouveau_tournoi['controle_du_temps'] = pvt.parse_and_validate(
+            explanation=nouveau_tournoi_texte_controle_du_temps, parse=pvt.parse_string_not_empty,
+            validate=pvt.validate_controle_du_temps)
 
-            # Description
-            nouveau_tournoi_texte_description = '\nRensignez les remarques générales du directeur du tournoi : '
-            nouveau_tournoi['description'] = pvt.parse_and_validate(explanation=nouveau_tournoi_texte_description,
-                                                                    parse=pvt.parse_string_not_empty,
-                                                                    validate=pvt.no_validation)
+        # Description
+        nouveau_tournoi_texte_description = '\nRensignez les remarques générales du directeur du tournoi : '
+        nouveau_tournoi['description'] = pvt.parse_and_validate(explanation=nouveau_tournoi_texte_description,
+                                                                parse=pvt.parse_string_not_empty,
+                                                                validate=pvt.no_validation)
 
-            # Formatage du resultat au format model.Tournoi
-            nouveau_tournoi = model.Tournoi(**nouveau_tournoi)
+        # Formatage du resultat au format model.Tournoi
+        nouveau_tournoi = model.Tournoi(**nouveau_tournoi)
 
-        else:
-            nouveau_tournoi = test_tournoi
+        # Joueurs du tournoi
+        joueurs_du_tournoi = []
+        while len(joueurs_du_tournoi) < 8:
+            num_joueur = len(joueurs_du_tournoi) + 1
+            identifiant_joueur = pvt.parse_and_validate(explanation=f'Identifiant du joueur numéro {num_joueur} : ',
+                                                        parse=pvt.parse_int)
+            joueur: Optional[Joueur] = acteurs.get(identifiant_joueur)
+            if joueur is None:
+                print(f'Joueur id={identifiant_joueur} non trouvé!')
+            else:
+                joueurs_du_tournoi.append(joueur)
 
         return nouveau_tournoi
 
@@ -237,9 +250,9 @@ Menu Principal
         Tuple[model.Joueur, model.Score]]:
 
         if not test_scores:
+            match = None
             # Initialisation
-            match_liste_scores = round.match_liste
-            nombre_de_paires = len(match_liste_scores)
+            nombre_de_paires = len(round.match_liste)
 
             # Affichage menu entrer scores
             affichage_menu_entrer_scores = '''
@@ -250,31 +263,33 @@ Menu Principal
             print(affichage_menu_entrer_scores)
 
             # Boucle sur les matchs
-            for paires in range(1, nombre_de_paires + 1):
-                print('Match n°' + str(paires) + ' : ')
+            for match_idx, match in enumerate(round.match_liste):
+                (joueur1, score1), (joueur2, score2) = match
+                print(f'Match n°{match_idx} : ')
                 print('Qui est le vainqueur ?')
-                print('1. ' + match_liste_scores[paires - 1][0][0].prenom + ' ' + match_liste_scores[paires - 1][0][
-                    0].nom_de_famille)
-                print('2. ' + match_liste_scores[paires - 1][1][0].prenom + ' ' + match_liste_scores[paires - 1][1][
-                    0].nom_de_famille)
+                print(f'1. {joueur1.prenom} {joueur1.nom_de_famille}')
+                print(f'2. {joueur2.prenom} {joueur2.nom_de_famille}')
                 print('3. Match-Nul')
-                match_texte = 'Veuillez choisir le résultat du match n°' + str(paires) + ' (1, 2, ou 3) : '
+                match_texte = f'Veuillez choisir le résultat du match n°{match_idx} (1, 2, ou 3) : '
                 resultat_match = pvt.parse_and_validate(explanation=match_texte, parse=pvt.parse_int,
                                                         validate=pvt.validate_score)
                 # Score attribution
                 if resultat_match == 1:
-                    match_liste_scores[paires - 1][0][1] = model.Score.GAGNANT
-                    match_liste_scores[paires - 1][1][1] = model.Score.PERDANT
+                    score1 = model.Score.GAGNANT
+                    score2 = model.Score.PERDANT
                 elif resultat_match == 2:
-                    match_liste_scores[paires - 1][0][1] = model.Score.PERDANT
-                    match_liste_scores[paires - 1][1][1] = model.Score.GAGNANT
+                    score1 = model.Score.PERDANT
+                    score2 = model.Score.GAGNANT
                 else:
-                    match_liste_scores[paires - 1][0][1] = model.Score.MATCH_NUL
-                    match_liste_scores[paires - 1][1][1] = model.Score.MATCH_NUL
-        else:
-            match_liste_scores = test_scores
+                    score1 = model.Score.MATCH_NUL
+                    score2 = model.Score.MATCH_NUL
 
-        return match_liste_scores
+                match = ((joueur1, score1), (joueur2, score2),)
+
+        else:
+            match = test_scores
+
+        return match
 
     def afficher_resultats(self, scores_results: List[model.Round]):
         """Function that shows all scores of the Tournament"""
@@ -306,7 +321,12 @@ Scores du round : """ + str(round.nom.value) + """
 """ + str(match[1][0].prenom) + " " + str(match[1][0].nom_de_famille) + " : " + str(match[1][1].value) + " points"
                 print(affichage_scores_match)
 
+<<<<<<< Updated upstream
     def modifier_classement(self, test_classement: Optional[List[model.Joueur]]) -> List[model.Joueur]:
+=======
+    def modifier_classement(self, joueurs_classement: List[model.Joueur],
+                            test_classement: Optional[List[model.Joueur]]) -> List[model.Joueur]:
+>>>>>>> Stashed changes
         """Function to update players ranking"""
 
         if not test_classement:
@@ -323,9 +343,18 @@ Scores du round : """ + str(round.nom.value) + """
             print(affichage_classement_entete)
 
             # Iteration sur les joueurs du tournoi
+<<<<<<< Updated upstream
             for joueur in joueurs_classement:
                 joueur_classement_texte = str(joueur.prenom) + ' ' + str(joueur.nom_de_famille) + ' / Classement actuel = ' + str(joueur.classement) + ' --> Nouveau classement : '
                 nouveau_classement = pvt.parse_and_validate(explanation=joueur_classement_texte, parse = pvt.parse_int, validate=pvt.validate_integer_positive)
+=======
+            for joueur in joueurs_classement_updated:
+                joueur_classement_texte = str(joueur.prenom) + ' ' + str(
+                    joueur.nom_de_famille) + ' / Classement actuel = ' + str(
+                    joueur.classement) + ' --> Nouveau classement : '
+                nouveau_classement = pvt.parse_and_validate(explanation=joueur_classement_texte, parse=pvt.parse_int,
+                                                            validate=pvt.validate_integer_positive)
+>>>>>>> Stashed changes
                 joueur.classement = nouveau_classement
 
             # Message Validation
@@ -340,6 +369,11 @@ Scores du round : """ + str(round.nom.value) + """
 
         return joueurs_classement
 
+    def load_state_from_database(filepath: str) -> State:
+        # open file in read mode
+
+        # create a new State from the file data
+        pass
 
 
 if __name__ == '__main__':
