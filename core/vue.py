@@ -293,20 +293,21 @@ Affichage des scores
         # Iteration sur les rounds
         for round in scores_results:
             # Affichage entête par round
-            affichage_round = """
+            affichage_round = f"""
 ==========================================================
-Scores du round : """ + str(round.nom.value) + """
+Scores du round : {round.nom.value}
 ==========================================================
 """
             print(affichage_round)
 
             # Iteration sur tous les matchs du rounds
-            for match in round.match_liste:
+            for ((joueur1, score_joueur1), (joueur2, score_joueur2)) in round.match_liste:
                 # Affichage scores par match
-                affichage_scores_match = """
+                affichage_scores_match = f"""
 ----------------------------------------------------------
-""" + str(match[0][0].prenom) + " " + str(match[0][0].nom_de_famille) + " : " + str(match[0][1].value) + """ points
-""" + str(match[1][0].prenom) + " " + str(match[1][0].nom_de_famille) + " : " + str(match[1][1].value) + " points"
+{joueur1.prenom} {joueur1.nom_de_famille} : {score_joueur1.value} points
+{joueur2.prenom} {joueur2.nom_de_famille} : {score_joueur2.value} points
+"""
                 print(affichage_scores_match)
 
     def modifier_classement(self, joueurs_classement: List[Joueur], test_classement: Optional[List[Joueur]]) -> List[
