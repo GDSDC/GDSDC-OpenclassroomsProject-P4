@@ -111,10 +111,10 @@ Menu Principal
             nouveaux_joueurs = []
 
             # Affichage de l'entête
-            affichage_menu_ajouter_joueurs = """
-    ==============================
-    Ajouter """ + str(nb_joueurs) + """ joueurs
-    ==============================
+            affichage_menu_ajouter_joueurs = f"""
+==============================
+Ajouter {nb_joueurs} joueurs
+==============================
     """
             print(affichage_menu_ajouter_joueurs)
 
@@ -133,39 +133,38 @@ Menu Principal
                 nouveaux_joueurs.append(information_nouveau_joueur)
 
                 # Affichage de l'entête pour chaque nouveau joueur
-                affichage_nouveau_joueur = """
-        Renseigner les informations du joueur n°""" + str(joueur) + """
-        ==========================================
+                affichage_nouveau_joueur = f"""
+Renseigner les informations du joueur n°{joueur}
+==========================================
                 """
                 print(affichage_nouveau_joueur)
 
                 # Définition du nom de famille
-                nouveau_joueur_texte_nom = '\nRenseignez le Nom de famille du joueur n°' + str(joueur) + ' : '
+                nouveau_joueur_texte_nom = f'\nRenseignez le Nom de famille du joueur n°{joueur} : '
                 nouveaux_joueurs[joueur - 1]['nom_de_famille'] = pvt.parse_and_validate(
                     explanation=nouveau_joueur_texte_nom, parse=pvt.parse_string_not_empty, validate=pvt.no_validation)
 
                 # Définition le prénom
-                nouveau_joueur_texte_prenom = '\nRenseignez le Prénom du joueur n°' + str(joueur) + ' : '
+                nouveau_joueur_texte_prenom = f'\nRenseignez le Prénom du joueur n°{joueur} : '
                 nouveaux_joueurs[joueur - 1]['prenom'] = pvt.parse_and_validate(
                     explanation=nouveau_joueur_texte_prenom,
                     parse=pvt.parse_string_not_empty,
                     validate=pvt.no_validation)
 
                 # Définition de la date de naissance
-                nouveau_joueur_texte_date_naissance = '\nRenseignez la Date de naissance du joueur n°' + str(
-                    joueur) + ' au format "jj/mm/aaaa" : '
+                nouveau_joueur_texte_date_naissance = f'\nRenseignez la Date de naissance du joueur n°{joueur} au format "jj/mm/aaaa" : '
                 nouveaux_joueurs[joueur - 1]['date_de_naissance'] = pvt.parse_and_validate(
                     explanation=nouveau_joueur_texte_date_naissance, parse=pvt.parse_date,
                     validate=pvt.validate_date_format)
 
                 # Définition du sexe
-                nouveau_joueur_texte_sexe = '\nRenseignez le sexe du joueur n°' + str(joueur) + ' ("m"/"f") :'
+                nouveau_joueur_texte_sexe = f'\nRenseignez le sexe du joueur n°{joueur} ("m"/"f") :'
                 nouveaux_joueurs[joueur - 1]['sexe'] = pvt.parse_and_validate(explanation=nouveau_joueur_texte_sexe,
                                                                               parse=pvt.parse_string_not_empty,
                                                                               validate=pvt.validate_sexe)
 
                 # Définition du classement
-                nouveau_joueur_texte_classement = '\nRenseignez le classement du joueur n°' + str(joueur) + ' : '
+                nouveau_joueur_texte_classement = f'\nRenseignez le classement du joueur n°{joueur} : '
                 nouveaux_joueurs[joueur - 1]['classement'] = pvt.parse_and_validate(
                     explanation=nouveau_joueur_texte_classement, parse=pvt.parse_int,
                     validate=pvt.validate_integer_positive)
