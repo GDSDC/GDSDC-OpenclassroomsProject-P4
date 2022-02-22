@@ -28,7 +28,7 @@ class Controller:
         # Iteration sur tous les résultats de tous les matchs du précédent Round
         joueurs_qui_passent_au_prochain_tour = []
         for match in last_round.match_liste:
-            for (joueur,score) in match:
+            for (joueur, score) in match:
                 if score != Score.PERDANT:
                     joueurs_qui_passent_au_prochain_tour.append(joueur)
 
@@ -67,15 +67,18 @@ class Controller:
         else:
             scores_results.append(self.state.round_list)
         # Updating scores with actual_round
-        if self.state.actual_round.match_liste[0][0][1] is None:
-            pass
-        else:
-            scores_results.append(self.state.actual_round)
+        for [(joueur1, score_joueur1),(joueur2, score_joueur2)] in self.state.actual_round.match_liste:
+            if (score_joueur1 is None) and (score_joueur2 is None):
+                pass
+            else:
+                scores_results.append(self.state.actual_round)
+                break
         self.vue.afficher_resultats(scores_results)
 
     def modifier_classement(self, test_classement: Optional[List[Joueur]] = None):
         """Function to update players ranking"""
-        joueurs_classement = self.vue.modifier_classement(joueurs_classement=self.state.joueurs_du_tournoi,test_classement=test_classement)
+        joueurs_classement = self.vue.modifier_classement(joueurs_classement=self.state.joueurs_du_tournoi,
+                                                          test_classement=test_classement)
         self.state.modifier_classement(joueurs_classement)
 
     def terminer_tournoi(self):
