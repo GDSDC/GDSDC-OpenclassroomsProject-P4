@@ -241,25 +241,23 @@ Renseigner les informations du joueur n°{joueur}
 
             # Affichage menu entrer scores
             affichage_menu_entrer_scores = f'''
-    ==========================================================
-    Entrez les scores des {nombre_de_paires} matchs :  
-    ==========================================================        
+==========================================================
+Entrez les scores des {nombre_de_paires} matchs :  
+==========================================================        
     '''
             print(affichage_menu_entrer_scores)
 
             # Boucle sur les matchs
-            paires = 1
-            for ([joueur1, score_joueur1], [joueur2, score_joueur2]) in match_liste_scores:
-                print(f'Match n°{paires} : ')
+            for idx, ([joueur1, _], [joueur2, _]) in enumerate(match_liste_scores):
+                print(f'Match n°{idx + 1} : ')
                 print('Qui est le vainqueur ?')
                 print(f'1. {joueur1.prenom} {joueur1.nom_de_famille}')
                 print(f'1. {joueur2.prenom} {joueur2.nom_de_famille}')
                 print('3. Match-Nul')
-                match_texte = f'Veuillez choisir le résultat du match n°{paires} (1, 2, ou 3) : '
+                match_texte = f'Veuillez choisir le résultat du match n°{idx + 1} (1, 2, ou 3) : '
                 resultat_match = pvt.parse_and_validate(explanation=match_texte, parse=pvt.parse_int,
                                                         validate=pvt.validate_score)
                 # Score attribution
-                # TODO -> trouver façon d'assigner correctement -> actuelement les scores sortent en None
                 if resultat_match == 1:
                     score_joueur1 = Score.GAGNANT
                     score_joueur2 = Score.PERDANT
@@ -269,7 +267,7 @@ Renseigner les informations du joueur n°{joueur}
                 else:
                     score_joueur1 = Score.MATCH_NUL
                     score_joueur2 = Score.MATCH_NUL
-                paires += 1
+                match_liste_scores[idx] = ([joueur1, score_joueur1], [joueur2, score_joueur2])
         else:
             match_liste_scores = test_scores
 
