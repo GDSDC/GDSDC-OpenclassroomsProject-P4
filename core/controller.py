@@ -6,10 +6,10 @@ from typing import List, Optional, Tuple
 class Controller:
     """Contrôleur principal."""
 
-    def __init__(self):
+    def __init__(self, state: Optional[State] = None, vue: Optional[Vue] = None):
         """Initialise les modèles et les vues."""
-        self.state = State()
-        self.vue = Vue()
+        self.state = state or State()
+        self.vue = vue or Vue()
 
     def creer_nouveau_tournoi(self, test_tournoi: Optional[Tournoi] = None):
         nouveau_tournoi = self.vue.menu_creer_nouveau_tournoi(test_tournoi=test_tournoi)
