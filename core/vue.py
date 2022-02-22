@@ -182,9 +182,9 @@ Renseigner les informations du joueur n°{joueur}
         nombre_de_paires = len(round.match_liste)
 
         # Affichage de l'entête
-        affichage_paires_joueurs_entete = """
+        affichage_paires_joueurs_entete = f"""
 ==========================================================
-""" + str(nombre_de_paires) + """ nouvelles paires de joueurs générées avec succès !
+{nombre_de_paires} nouvelles paires de joueurs générées avec succès !
 ==========================================================
 """
         print(affichage_paires_joueurs_entete)
@@ -192,11 +192,8 @@ Renseigner les informations du joueur n°{joueur}
         # Boucle pour afficher toutes les paires de joueurs
         paires = 1
         for ((joueur1, score1), (joueur2, score2)) in round.match_liste:
-            print('Paire n°' + str(paires) + ' : ' + str(
-                joueur1.prenom) + ' ' + str(
-                joueur1.nom_de_famille) + ' / ' + str(
-                joueur2.prenom) + ' ' + str(
-                joueur2.nom_de_famille))
+            print(
+                f'Paire n°{paires} : {joueur1.prenom} {joueur1.nom_de_famille} / {joueur2.prenom} {joueur2.nom_de_famille}')
             paires += 1
 
     def creer_nouveau_round(self, numero_round: int, test_nouveau_round: Optional[Round]) -> Round:
