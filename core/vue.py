@@ -244,9 +244,9 @@ Menu Principal
             nombre_de_paires = len(match_liste_scores)
 
             # Affichage menu entrer scores
-            affichage_menu_entrer_scores = '''
+            affichage_menu_entrer_scores = f'''
     ==========================================================
-    Entrez les scores des ''' + str(nombre_de_paires) + ''' matchs :  
+    Entrez les scores des {nombre_de_paires} matchs :  
     ==========================================================        
     '''
             print(affichage_menu_entrer_scores)
@@ -256,13 +256,12 @@ Menu Principal
             for ([joueur1, score_joueur1], [joueur2, score_joueur2]) in match_liste_scores:
                 print('Match n°' + str(paires) + ' : ')
                 print('Qui est le vainqueur ?')
-                print('1. ' + joueur1.prenom + ' ' +joueur1.nom_de_famille)
+                print('1. ' + joueur1.prenom + ' ' + joueur1.nom_de_famille)
                 print('2. ' + joueur2.prenom + ' ' + joueur2.nom_de_famille)
                 print('3. Match-Nul')
-                match_texte = 'Veuillez choisir le résultat du match n°' + str(paires) + ' (1, 2, ou 3) : '
+                match_texte = f'Veuillez choisir le résultat du match n°{paires} (1, 2, ou 3) : '
                 resultat_match = pvt.parse_and_validate(explanation=match_texte, parse=pvt.parse_int,
                                                         validate=pvt.validate_score)
-
                 # Score attribution
                 # TODO -> trouver façon d'assigner correctement -> actuelement les scores sortent en None
                 if resultat_match == 1:
