@@ -329,9 +329,7 @@ Scores du round : {round.nom.value}
 
             # Iteration sur les joueurs du tournoi
             for joueur in joueurs_classement_updated:
-                joueur_classement_texte = str(joueur.prenom) + ' ' + str(
-                    joueur.nom_de_famille) + ' / Classement actuel = ' + str(
-                    joueur.classement) + ' --> Nouveau classement : '
+                joueur_classement_texte = f'{joueur.prenom} {joueur.nom_de_famille} / Classement actuel = {joueur.classement} --> Nouveau classement : '
                 nouveau_classement = pvt.parse_and_validate(explanation=joueur_classement_texte, parse=pvt.parse_int,
                                                             validate=pvt.validate_integer_positive)
                 joueur.classement = nouveau_classement
