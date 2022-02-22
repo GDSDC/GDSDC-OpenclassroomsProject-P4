@@ -213,9 +213,9 @@ Renseigner les informations du joueur n°{joueur}
             nouveau_round['nom'] = RoundName('Round ' + str(numero_round))
 
             # Affichage
-            affichage_creer_nouveau_round = '''
+            affichage_creer_nouveau_round = f'''
     ==============================
-    Création du ''' + nouveau_round['nom'].value + ''' avec succès !
+    Création du {nouveau_round['nom'].value} avec succès !
     ==============================
     '''
             print(affichage_creer_nouveau_round)
