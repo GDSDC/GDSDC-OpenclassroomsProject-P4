@@ -48,10 +48,9 @@ Menu Principal
             'lieu': '',
             'date_debut': '',
             'date_fin': '',
-            'nombre_tours': '',
             'controle_du_temps': '',
             'description': '',
-            'rounds': ''
+            'rounds': []
         }
 
         # Affichage de l'entête
@@ -236,7 +235,7 @@ Entrez les scores des {nombre_de_paires} matchs :
             print(f'Match n°{idx + 1} : ')
             print('Qui est le vainqueur ?')
             print(f'1. {joueur1.prenom} {joueur1.nom_de_famille}')
-            print(f'1. {joueur2.prenom} {joueur2.nom_de_famille}')
+            print(f'2. {joueur2.prenom} {joueur2.nom_de_famille}')
             print('3. Match-Nul')
             match_texte = f'Veuillez choisir le résultat du match n°{idx + 1} (1, 2, ou 3) : '
             resultat_match = pvt.parse_and_validate(explanation=match_texte, parse=pvt.parse_int,

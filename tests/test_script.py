@@ -67,16 +67,21 @@ def round4():
 def state1():
     state = State()
     state.tournoi = tournoi()
-    state.actual_round = round2()
-    state.round_list = [round1()]
+    state.tournoi.rounds = [round1(), round2()]
     return state
 
 
 def state2():
     state = State()
     state.tournoi = tournoi()
-    state.actual_round = round4()
-    state.round_list = [round1(), round2(), round3()]
+    state.tournoi.rounds = [round1(), round2(), round3()]
+    return state
+
+
+def state3():
+    state = State()
+    state.tournoi = tournoi()
+    state.tournoi.rounds = [round1(), round2(), round3(), round4()]
     return state
 
 
@@ -136,14 +141,14 @@ def test_model_ajouter_joueurs():
 
     # Then
     assert state.tournoi.joueurs_en_jeux == [player1, player2]
-    assert state.nombre_joueurs == 2
+    assert state.nombre_joueurs() == 2
 
 
 def test_model_creer_nouveau_round():
     """Function to test the state.creation of new round"""
 
     # Given
-    state = State()
+    state = state1()
 
     nouveau_round = round3()
 
@@ -151,39 +156,35 @@ def test_model_creer_nouveau_round():
     state.creer_nouveau_round(nouveau_round)
 
     # Then
-    assert state.actual_round == nouveau_round
+    assert state.tournoi.rounds == [round1(), round2(), round3()]
 
 
 def test_model_generer_paires_joueurs():
     """Function to test the state.creation of pairs of players"""
 
     # Given
-    state = State()
-    player1 = PLAYER1
-    player2 = PLAYER2
-    player3 = PLAYER3
-    player4 = PLAYER4
+    state = state1()
 
     # When
-    state.creer_nouveau_round(round1())
-    state.generer_paires_joueurs([player1, player2, player3, player4])
+    state.generer_paires_joueurs([PLAYER1, PLAYER2, PLAYER3, PLAYER4])
 
     # Then
-    assert state.actual_round.match_liste == [((player1, None), (player2, None)), ((player3, None), (player4, None))]
+    assert state.tournoi.rounds[-1].match_liste == [((PLAYER1, None), (PLAYER2, None)),
+                                                    ((PLAYER3, None), (PLAYER4, None))]
 
 
 def test_model_entrer_scores():
     """Function that test the model.entrer_scores"""
 
     # Given
-    state = state1()
+    state = state3()
     scores = SCORES
 
     # When
     state.entrer_scores(scores=scores)
 
     # Then
-    assert state.actual_round.match_liste == scores
+    assert state.tournoi.rounds[-1].match_liste == scores
 
 
 def test_model_modifier_classement():
@@ -232,7 +233,7 @@ def test_controller_ajouter_joueurs():
 
     # Then
     assert controller.state.tournoi.joueurs_en_jeux == liste_joueurs
-    assert controller.state.nombre_joueurs == len(liste_joueurs)
+    assert controller.state.nombre_joueurs() == len(liste_joueurs)
 
 
 def test_controller_creer_nouveau_round():
@@ -247,8 +248,7 @@ def test_controller_creer_nouveau_round():
     controller.creer_nouveau_round()
 
     # Then
-    assert controller.state.actual_round == round3()
-    assert controller.state.round_list == [round1(), round2()]
+    assert controller.state.tournoi.rounds == [round1(), round2(), round3()]
 
 
 def test_controller_generer_paires_joueurs():
@@ -264,8 +264,8 @@ def test_controller_generer_paires_joueurs():
     controller.generer_paires_joueurs()
 
     # Then
-    assert controller.state.actual_round.match_liste == [((PLAYER1, None), (PLAYER2, None)),
-                                                         ((PLAYER3, None), (PLAYER4, None))]
+    assert controller.state.tournoi.rounds[-1].match_liste == [((PLAYER1, None), (PLAYER2, None)),
+                                                               ((PLAYER3, None), (PLAYER4, None))]
 
 
 def test_controller_mettre_a_jour_joueurs():
@@ -294,7 +294,7 @@ def test_controller_entrer_scores():
     controller.entrer_scores()
 
     # Then
-    assert controller.state.actual_round.match_liste == SCORES
+    assert controller.state.tournoi.rounds[-1].match_liste == SCORES
 
 
 def test_modifier_classement():

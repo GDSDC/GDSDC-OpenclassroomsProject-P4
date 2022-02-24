@@ -22,38 +22,30 @@ class Controller:
     def mettre_a_jour_joueurs(self):
         """ Generation of new state.tournoi.joueurs_en_jeux list"""
         # Initialisation
-        self.state.tournoi.joueurs_en_jeux = []
-        last_round = self.state.round_list[-1]
-        # Iteration sur tous les résultats de tous les matchs du précédent Round
         joueurs_qui_passent_au_prochain_tour = []
-        for match in last_round.match_liste:
-            for (joueur, score) in match:
-                if score != Score.PERDANT:
-                    joueurs_qui_passent_au_prochain_tour.append(joueur)
-
+        # In case it is the very first round of Tournament
+        if not self.state.tournoi.rounds:
+            joueurs_qui_passent_au_prochain_tour.extend(self.state.tournoi.joueurs_du_tournoi)
+        else:
+            # Iteration sur tous les résultats de tous les matchs du précédent Round
+            for match in self.state.tournoi.rounds[-1].match_liste:
+                for (joueur, score) in match:
+                    if score != Score.PERDANT:
+                        joueurs_qui_passent_au_prochain_tour.append(joueur)
         self.state.tournoi.joueurs_en_jeux = joueurs_qui_passent_au_prochain_tour
 
-    def mettre_a_jour_round_list(self):
-        # In case it is the very first round of Tournament
-        if self.state.actual_round is None:
-            pass
-        # If it is the second, third or fourth round
-        else:
-            self.state.round_list.append(self.state.actual_round)
-            self.mettre_a_jour_joueurs()
-
     def creer_nouveau_round(self):
-        self.mettre_a_jour_round_list()
-        numero_round = len(self.state.round_list) + 1
+        self.mettre_a_jour_joueurs()
+        numero_round = len(self.state.tournoi.rounds) + 1
         nouveau_round = self.vue.creer_nouveau_round(numero_round=numero_round)
         self.state.creer_nouveau_round(nouveau_round)
 
     def generer_paires_joueurs(self):
         self.state.generer_paires_joueurs(self.state.tournoi.joueurs_en_jeux)
-        self.vue.afficher_paires_joueurs(self.state.actual_round)
+        self.vue.afficher_paires_joueurs(self.state.tournoi.rounds[-1])
 
     def entrer_scores(self):
-        scores = self.vue.entrer_scores(round=self.state.actual_round)
+        scores = self.vue.entrer_scores(round=self.state.tournoi.rounds[-1])
         self.state.entrer_scores(scores)
 
     def afficher_resultats(self):
@@ -61,17 +53,21 @@ class Controller:
         # Initialisation
         scores_results = []
         # Appending round_list if not empty
-        if not self.state.round_list:
+        if not self.state.tournoi.rounds:
             pass
         else:
-            scores_results.append(self.state.round_list)
-        # Updating scores with actual_round
-        for ((joueur1, score_joueur1), (joueur2, score_joueur2)) in self.state.actual_round.match_liste:
-            if (score_joueur1 is None) and (score_joueur2 is None):
+            # In case actual round is the Round 1
+            if len(self.state.tournoi.rounds) == 1:
                 pass
             else:
-                scores_results.append(self.state.actual_round)
-                break
+                scores_results.extend(self.state.tournoi.rounds[:-1])
+            # Updating scores with actual round
+            for ((joueur1, score_joueur1), (joueur2, score_joueur2)) in self.state.tournoi.rounds[-1].match_liste:
+                if (score_joueur1 is None) and (score_joueur2 is None):
+                    pass
+                else:
+                    scores_results.append(self.state.tournoi.rounds[-1])
+                    break
         self.vue.afficher_resultats(scores_results)
 
     def modifier_classement(self):
@@ -83,7 +79,6 @@ class Controller:
         """Function to close tournament"""
 
         # Send Sate to database
-        self.mettre_a_jour_round_list()
 
         # Init the actual instance
         self.__init__()
