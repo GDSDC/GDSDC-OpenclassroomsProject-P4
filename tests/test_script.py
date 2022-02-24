@@ -7,64 +7,79 @@ from datetime import datetime, date
 
 # Global Constants
 
+TEST_DATETIME = datetime(year=2022, month=2, day=24)
+TEST_DATE = TEST_DATETIME.date()
+
 TOURNOI = Tournoi(nom='Tournoi_TEST',
                   lieu='lieu_TEST',
-                  date_debut=date.today(),
-                  date_fin=date.today(),
+                  date_debut=TEST_DATE,
+                  date_fin=TEST_DATE,
                   controle_du_temps=ControleDuTemps.BLITZ,
                   description='Remarques_TEST',
                   rounds=[], )
 
 PLAYER1 = Joueur(nom_de_famille='Nom de famille TEST1', prenom='prenom TEST1',
-                 date_de_naissance=date.today(), sexe=Sex.MALE, classement=1)
+                 date_de_naissance=TEST_DATE, sexe=Sex.MALE, classement=1)
 PLAYER2 = Joueur(nom_de_famille='Nom de famille TEST2', prenom='prenom TEST2',
-                 date_de_naissance=date.today(), sexe=Sex.FEMALE, classement=2)
+                 date_de_naissance=TEST_DATE, sexe=Sex.FEMALE, classement=2)
 PLAYER3 = Joueur(nom_de_famille='Nom de famille TEST3', prenom='prenom TEST3',
-                 date_de_naissance=date.today(), sexe=Sex.MALE, classement=3)
+                 date_de_naissance=TEST_DATE, sexe=Sex.MALE, classement=3)
 PLAYER4 = Joueur(nom_de_famille='Nom de famille TEST4', prenom='prenom TEST4',
-                 date_de_naissance=date.today(), sexe=Sex.FEMALE, classement=4)
+                 date_de_naissance=TEST_DATE, sexe=Sex.FEMALE, classement=4)
 
 PLAYER_NOUVEAU_CLASSEMENT1 = Joueur(nom_de_famille='Nom de famille TEST1', prenom='prenom TEST1',
-                                    date_de_naissance=date.today(), sexe=Sex.MALE, classement=10)
+                                    date_de_naissance=TEST_DATE, sexe=Sex.MALE, classement=10)
 PLAYER_NOUVEAU_CLASSEMENT2 = Joueur(nom_de_famille='Nom de famille TEST2', prenom='prenom TEST2',
-                                    date_de_naissance=date.today(), sexe=Sex.FEMALE, classement=20)
+                                    date_de_naissance=TEST_DATE, sexe=Sex.FEMALE, classement=20)
 PLAYER_NOUVEAU_CLASSEMENT3 = Joueur(nom_de_famille='Nom de famille TEST3', prenom='prenom TEST3',
-                                    date_de_naissance=date.today(), sexe=Sex.MALE, classement=30)
+                                    date_de_naissance=TEST_DATE, sexe=Sex.MALE, classement=30)
 PLAYER_NOUVEAU_CLASSEMENT4 = Joueur(nom_de_famille='Nom de famille TEST4', prenom='prenom TEST4',
-                                    date_de_naissance=date.today(), sexe=Sex.FEMALE, classement=40)
+                                    date_de_naissance=TEST_DATE, sexe=Sex.FEMALE, classement=40)
 
+SCORES_VIDE = [((PLAYER1, None), (PLAYER2, None)), ((PLAYER3, None), (PLAYER4, None))]
 SCORES = [((PLAYER1, Score.GAGNANT), (PLAYER2, Score.PERDANT)), ((PLAYER3, Score.GAGNANT), (PLAYER4, Score.PERDANT))]
 
-ROUND1 = Round(nom=RoundName.ROUND1, match_liste=[], date_debut=datetime.today(),
-               date_fin=datetime.today())
-ROUND2 = Round(nom=RoundName.ROUND2, match_liste=[], date_debut=datetime.today(),
-               date_fin=datetime.today())
-ROUND3 = Round(nom=RoundName.ROUND3, match_liste=SCORES, date_debut=datetime.today(),
-               date_fin=datetime.today())
-ROUND4 = Round(nom=RoundName.ROUND4, match_liste=SCORES, date_debut=datetime.today(),
-               date_fin=datetime.today())
+
+def round1():
+    return Round(nom=RoundName.ROUND1, match_liste=[], date_debut=TEST_DATETIME,
+                 date_fin=TEST_DATETIME)
 
 
-def init_hardcoded_state1():
-    STATE = State()
-    STATE.joueurs_du_tournoi = [PLAYER1, PLAYER2, PLAYER3, PLAYER4]
-    STATE.joueurs_en_jeux = [PLAYER1, PLAYER2, PLAYER3, PLAYER4]
-    STATE.nombre_joueurs = 0
-    STATE.tournoi = TOURNOI
-    STATE.actual_round = ROUND2
-    STATE.round_list = [ROUND1]
-    return STATE
+def round2():
+    return Round(nom=RoundName.ROUND2, match_liste=[], date_debut=TEST_DATETIME,
+                 date_fin=TEST_DATETIME)
 
 
-def init_hardcoded_state2():
-    STATE = State()
-    STATE.joueurs_du_tournoi = [PLAYER1, PLAYER2, PLAYER3, PLAYER4]
-    STATE.joueurs_en_jeux = [PLAYER1, PLAYER2, PLAYER3, PLAYER4]
-    STATE.nombre_joueurs = 0
-    STATE.tournoi = TOURNOI
-    STATE.actual_round = ROUND4
-    STATE.round_list = [ROUND1, ROUND2, ROUND3]
-    return STATE
+def round3():
+    return Round(nom=RoundName.ROUND3, match_liste=SCORES, date_debut=TEST_DATETIME,
+                 date_fin=TEST_DATETIME)
+
+
+def round4():
+    return Round(nom=RoundName.ROUND4, match_liste=SCORES_VIDE, date_debut=TEST_DATETIME,
+                 date_fin=TEST_DATETIME)
+
+
+def state1():
+    state = State()
+    state.joueurs_du_tournoi = [PLAYER1, PLAYER2, PLAYER3, PLAYER4]
+    state.joueurs_en_jeux = [PLAYER1, PLAYER2, PLAYER3, PLAYER4]
+    state.nombre_joueurs = 0
+    state.tournoi = TOURNOI
+    state.actual_round = round2()
+    state.round_list = [round1()]
+    return state
+
+
+def state2():
+    state = State()
+    state.joueurs_du_tournoi = [PLAYER1, PLAYER2, PLAYER3, PLAYER4]
+    state.joueurs_en_jeux = [PLAYER1, PLAYER2, PLAYER3, PLAYER4]
+    state.nombre_joueurs = 0
+    state.tournoi = TOURNOI
+    state.actual_round = round4()
+    state.round_list = [round1(), round2(), round3()]
+    return state
 
 
 class TestVue(Vue):
@@ -79,7 +94,7 @@ class TestVue(Vue):
         return [PLAYER1, PLAYER2, PLAYER3, PLAYER4]
 
     def creer_nouveau_round(self, numero_round: int) -> Round:
-        return ROUND3
+        return round3()
 
     def entrer_scores(self, round: Round) -> List[Tuple[Joueur, Score]]:
         return SCORES
@@ -132,7 +147,7 @@ def test_model_creer_nouveau_round():
     # Given
     state = State()
 
-    nouveau_round = ROUND3
+    nouveau_round = round3()
 
     # When
     state.creer_nouveau_round(nouveau_round)
@@ -152,11 +167,42 @@ def test_model_generer_paires_joueurs():
     player4 = PLAYER4
 
     # When
-    state.creer_nouveau_round(ROUND1)
+    state.creer_nouveau_round(round1())
     state.generer_paires_joueurs([player1, player2, player3, player4])
 
     # Then
     assert state.actual_round.match_liste == [([player1, None], [player2, None]), ([player3, None], [player4, None])]
+
+
+def test_model_entrer_scores():
+    """Function that test the model.entrer_scores"""
+
+    # Given
+    state = state1()
+    scores = SCORES
+
+    # When
+    state.entrer_scores(scores=scores)
+
+    # Then
+    assert state.actual_round.match_liste == scores
+
+
+def test_model_modifier_classement():
+    """Function that test the model.modifier_classement"""
+
+    # Given
+    state = state1()
+    joueurs_classement = [PLAYER_NOUVEAU_CLASSEMENT1,
+                          PLAYER_NOUVEAU_CLASSEMENT2,
+                          PLAYER_NOUVEAU_CLASSEMENT3,
+                          PLAYER_NOUVEAU_CLASSEMENT4]
+
+    # When
+    state.modifier_classement(joueurs_classement=joueurs_classement)
+
+    # Then
+    assert state.joueurs_du_tournoi == joueurs_classement
 
 
 # CONTROLLER TESTS
@@ -194,7 +240,7 @@ def test_controller_creer_nouveau_round():
     """Function to test the controller.creation of new round"""
 
     # Given
-    STATE = init_hardcoded_state1()
+    STATE = state1()
     controller = Controller(vue=TEST_VUE, state=STATE)
 
     # When
@@ -202,15 +248,15 @@ def test_controller_creer_nouveau_round():
     controller.creer_nouveau_round()
 
     # Then
-    assert controller.state.actual_round == ROUND3
-    assert controller.state.round_list == [ROUND1, ROUND2]
+    assert controller.state.actual_round == round3()
+    assert controller.state.round_list == [round1(), round2()]
 
 
 def test_controller_generer_paires_joueurs():
     """Function to test the controller.creation of paires"""
 
     # Given
-    STATE = init_hardcoded_state1()
+    STATE = state1()
     controller = Controller(vue=TEST_VUE, state=STATE)
 
     # When
@@ -225,7 +271,7 @@ def test_controller_mettre_a_jour_joueurs():
     """Function to test the update of players when creating new Round"""
 
     # Given
-    STATE2 = init_hardcoded_state2()
+    STATE2 = state2()
     controller = Controller(vue=TEST_VUE, state=STATE2)
 
     # When
@@ -238,17 +284,48 @@ def test_controller_mettre_a_jour_joueurs():
 
 def test_controller_entrer_scores():
     """Function that test the controller.entrer_scores"""
-    pass
+
+    # Given
+    STATE2 = state2()
+    controller = Controller(vue=TEST_VUE, state=STATE2)
+
+    # When
+    controller.entrer_scores()
+
+    # Then
+    assert controller.state.actual_round.match_liste == SCORES
 
 
 def test_modifier_classement():
     """Function that test the controller.modifier_classement"""
-    pass
+
+    # Given
+    STATE = state1()
+    controller = Controller(vue=TEST_VUE, state=STATE)
+
+    # When
+    controller.modifier_classement()
+
+    # Then
+    assert controller.state.joueurs_du_tournoi == [PLAYER_NOUVEAU_CLASSEMENT1,
+                                                   PLAYER_NOUVEAU_CLASSEMENT2,
+                                                   PLAYER_NOUVEAU_CLASSEMENT3,
+                                                   PLAYER_NOUVEAU_CLASSEMENT4]
 
 
 def test_controller_terminer_tournoi():
     """Function to test closing a tournament"""
-    pass
+
+    # Given
+    STATE2 = state2()
+    controller = Controller(state=STATE2)
+    init_controller = Controller()
+
+    # Then
+    controller.terminer_tournoi()
+
+    # Then
+    assert controller.state == init_controller.state
 
 
 if __name__ == '__main__':
