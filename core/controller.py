@@ -1,6 +1,6 @@
 from core.vue import Vue
 from core.model import State, Joueur, Tournoi, Score, Round, NOMBRE_DE_JOUEURS
-from typing import List, Optional, Tuple
+from typing import List, Optional
 
 
 class Controller:
