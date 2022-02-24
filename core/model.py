@@ -81,7 +81,8 @@ class Tournoi:
 
 class State:
     def __init__(self):
-        self.nombre_joueurs = 0
+        self.acteurs: Dict[int, Joueur] = {}
+        self.tournois: List[Tournoi] = []
         self.tournoi: Optional[Tournoi] = None
         self.actual_round = None
         self.round_list = []
@@ -89,15 +90,18 @@ class State:
     # for instance comparison in testing
     def __eq__(self, other):
         if isinstance(other, State):
-            return self.nombre_joueurs == other.nombre_joueurs \
+            return self.acteurs == other.acteurs \
                    and self.tournoi == other.tournoi \
-                   and self.actual_round == other.actual_round \
+                   and self.tournois == other.tournois \
                    and self.round_list == other.round_list
         else:
             return False
 
     def creer_nouveau_tournoi(self, nouveau_tournoi: Tournoi):
         self.tournoi = nouveau_tournoi
+
+    def nombre_joueurs(self):
+        return len(self.tournoi.joueurs_du_tournoi)
 
     def ajouter_joueurs(self, joueurs: List[Joueur]):
         self.tournoi.joueurs_du_tournoi = joueurs

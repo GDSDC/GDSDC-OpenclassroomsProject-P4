@@ -66,7 +66,6 @@ def round4():
 
 def state1():
     state = State()
-    state.nombre_joueurs = 0
     state.tournoi = tournoi()
     state.actual_round = round2()
     state.round_list = [round1()]
@@ -75,7 +74,6 @@ def state1():
 
 def state2():
     state = State()
-    state.nombre_joueurs = 0
     state.tournoi = tournoi()
     state.actual_round = round4()
     state.round_list = [round1(), round2(), round3()]
