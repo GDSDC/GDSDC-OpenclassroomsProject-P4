@@ -11,13 +11,12 @@ class Controller:
         self.state = state or State()
         self.vue = vue or Vue()
 
-    def creer_nouveau_tournoi(self, test_tournoi: Optional[Tournoi] = None):
-        nouveau_tournoi = self.vue.menu_creer_nouveau_tournoi(test_tournoi=test_tournoi)
+    def creer_nouveau_tournoi(self):
+        nouveau_tournoi = self.vue.menu_creer_nouveau_tournoi()
         self.state.creer_nouveau_tournoi(nouveau_tournoi)
 
-    def ajouter_joueurs(self, test_liste_joueurs: Optional[List[Joueur]] = None,
-                        nb_joueurs: Optional[int] = NOMBRE_DE_JOUEURS):
-        joueurs = self.vue.ajouter_joueurs(test_liste_joueurs=test_liste_joueurs, nb_joueurs=nb_joueurs)
+    def ajouter_joueurs(self, nb_joueurs: Optional[int] = NOMBRE_DE_JOUEURS):
+        joueurs = self.vue.ajouter_joueurs(nb_joueurs=nb_joueurs)
         self.state.ajouter_joueurs(joueurs)
 
     def mettre_a_jour_joueurs(self):
@@ -43,18 +42,18 @@ class Controller:
             self.state.round_list.append(self.state.actual_round)
             self.mettre_a_jour_joueurs()
 
-    def creer_nouveau_round(self, test_nouveau_round: Optional[Round] = None):
+    def creer_nouveau_round(self):
         self.mettre_a_jour_round_list()
         numero_round = len(self.state.round_list) + 1
-        nouveau_round = self.vue.creer_nouveau_round(numero_round=numero_round, test_nouveau_round=test_nouveau_round)
+        nouveau_round = self.vue.creer_nouveau_round(numero_round=numero_round)
         self.state.creer_nouveau_round(nouveau_round)
 
     def generer_paires_joueurs(self):
         self.state.generer_paires_joueurs(self.state.joueurs_en_jeux)
         self.vue.afficher_paires_joueurs(self.state.actual_round)
 
-    def entrer_scores(self, test_scores: Optional[List[Tuple[Joueur, Score]]] = None):
-        scores = self.vue.entrer_scores(round=self.state.actual_round, test_scores=test_scores)
+    def entrer_scores(self):
+        scores = self.vue.entrer_scores(round=self.state.actual_round)
         self.state.entrer_scores(scores)
 
     def afficher_resultats(self):
@@ -62,12 +61,12 @@ class Controller:
         # Initialisation
         scores_results = []
         # Appending round_list if not empty
-        if self.state.round_list == []:
+        if not self.state.round_list:
             pass
         else:
             scores_results.append(self.state.round_list)
         # Updating scores with actual_round
-        for [(joueur1, score_joueur1),(joueur2, score_joueur2)] in self.state.actual_round.match_liste:
+        for [(joueur1, score_joueur1), (joueur2, score_joueur2)] in self.state.actual_round.match_liste:
             if (score_joueur1 is None) and (score_joueur2 is None):
                 pass
             else:
@@ -75,10 +74,9 @@ class Controller:
                 break
         self.vue.afficher_resultats(scores_results)
 
-    def modifier_classement(self, test_classement: Optional[List[Joueur]] = None):
+    def modifier_classement(self):
         """Function to update players ranking"""
-        joueurs_classement = self.vue.modifier_classement(joueurs_classement=self.state.joueurs_du_tournoi,
-                                                          test_classement=test_classement)
+        joueurs_classement = self.vue.modifier_classement(joueurs_classement=self.state.joueurs_du_tournoi)
         self.state.modifier_classement(joueurs_classement)
 
     def terminer_tournoi(self):

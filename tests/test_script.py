@@ -1,8 +1,12 @@
+from typing import List, Optional, Tuple
+
 from core.controller import Controller
-from core.model import State, Joueur, Sex, Score, Tournoi, Round, RoundName, ControleDuTemps
+from core.model import *
+from core.vue import Vue
 from datetime import datetime, date
 
 # Global Constants
+
 TOURNOI = Tournoi(nom='Tournoi_TEST',
                   lieu='lieu_TEST',
                   date_debut=date.today(),
@@ -29,17 +33,66 @@ PLAYER_NOUVEAU_CLASSEMENT3 = Joueur(nom_de_famille='Nom de famille TEST3', preno
 PLAYER_NOUVEAU_CLASSEMENT4 = Joueur(nom_de_famille='Nom de famille TEST4', prenom='prenom TEST4',
                                     date_de_naissance=date.today(), sexe=Sex.FEMALE, classement=40)
 
-MATCH_LISTE1 = [([PLAYER1, Score.GAGNANT], [PLAYER2, Score.PERDANT])]
-MATCH_LISTE2 = [([PLAYER3, Score.GAGNANT], [PLAYER4, Score.PERDANT])]
+SCORES = [((PLAYER1, Score.GAGNANT), (PLAYER2, Score.PERDANT)), ((PLAYER3, Score.GAGNANT), (PLAYER4, Score.PERDANT))]
 
 ROUND1 = Round(nom=RoundName.ROUND1, match_liste=[], date_debut=datetime.today(),
                date_fin=datetime.today())
 ROUND2 = Round(nom=RoundName.ROUND2, match_liste=[], date_debut=datetime.today(),
                date_fin=datetime.today())
-ROUND3 = Round(nom=RoundName.ROUND3, match_liste=[], date_debut=datetime.today(),
+ROUND3 = Round(nom=RoundName.ROUND3, match_liste=SCORES, date_debut=datetime.today(),
                date_fin=datetime.today())
-ROUND4 = Round(nom=RoundName.ROUND4, match_liste=MATCH_LISTE1, date_debut=datetime.today(),
+ROUND4 = Round(nom=RoundName.ROUND4, match_liste=SCORES, date_debut=datetime.today(),
                date_fin=datetime.today())
+
+
+def init_hardcoded_state1():
+    STATE = State()
+    STATE.joueurs_du_tournoi = [PLAYER1, PLAYER2, PLAYER3, PLAYER4]
+    STATE.joueurs_en_jeux = [PLAYER1, PLAYER2, PLAYER3, PLAYER4]
+    STATE.nombre_joueurs = 0
+    STATE.tournoi = TOURNOI
+    STATE.actual_round = ROUND2
+    STATE.round_list = [ROUND1]
+    return STATE
+
+
+def init_hardcoded_state2():
+    STATE = State()
+    STATE.joueurs_du_tournoi = [PLAYER1, PLAYER2, PLAYER3, PLAYER4]
+    STATE.joueurs_en_jeux = [PLAYER1, PLAYER2, PLAYER3, PLAYER4]
+    STATE.nombre_joueurs = 0
+    STATE.tournoi = TOURNOI
+    STATE.actual_round = ROUND4
+    STATE.round_list = [ROUND1, ROUND2, ROUND3]
+    return STATE
+
+
+class TestVue(Vue):
+    def menu_principal(self) -> int:
+        # not used in tests
+        return 1
+
+    def menu_creer_nouveau_tournoi(self) -> Tournoi:
+        return TOURNOI
+
+    def ajouter_joueurs(self, nb_joueurs: Optional[int]) -> List[Joueur]:
+        return [PLAYER1, PLAYER2, PLAYER3, PLAYER4]
+
+    def creer_nouveau_round(self, numero_round: int) -> Round:
+        return ROUND3
+
+    def entrer_scores(self, round: Round) -> List[Tuple[Joueur, Score]]:
+        return SCORES
+
+    def modifier_classement(self, joueurs_classement: List[Joueur]) -> List[Joueur]:
+        return [PLAYER_NOUVEAU_CLASSEMENT1,
+                PLAYER_NOUVEAU_CLASSEMENT2,
+                PLAYER_NOUVEAU_CLASSEMENT3,
+                PLAYER_NOUVEAU_CLASSEMENT4]
+
+
+# Initialisation
+TEST_VUE = TestVue()
 
 
 # MODEL TESTS
@@ -79,7 +132,7 @@ def test_model_creer_nouveau_round():
     # Given
     state = State()
 
-    nouveau_round = ROUND1
+    nouveau_round = ROUND3
 
     # When
     state.creer_nouveau_round(nouveau_round)
@@ -112,148 +165,90 @@ def test_controller_creer_nouveau_tournoi():
     """Function to test the controller.creation of tournament"""
 
     # Given
-    controller_tournoi = Controller()
+    controller = Controller(vue=TEST_VUE)
     nouveau_tournoi = TOURNOI
 
     # When
-    controller_tournoi.creer_nouveau_tournoi(test_tournoi=nouveau_tournoi)
+    controller.creer_nouveau_tournoi()
 
     # Then
-    assert controller_tournoi.state.tournoi == nouveau_tournoi
+    assert controller.state.tournoi == nouveau_tournoi
 
 
 def test_controller_ajouter_joueurs():
     """Function to test the controller.creation of players"""
 
     # Given
-    controller_joueurs = Controller()
+    controller = Controller(vue=TEST_VUE)
     liste_joueurs = [PLAYER1, PLAYER2, PLAYER3, PLAYER4]
 
     # When
-    controller_joueurs.ajouter_joueurs(test_liste_joueurs=liste_joueurs)
+    controller.ajouter_joueurs()
 
     # Then
-    assert controller_joueurs.state.joueurs_en_jeux == liste_joueurs
-    assert controller_joueurs.state.nombre_joueurs == len(liste_joueurs)
+    assert controller.state.joueurs_en_jeux == liste_joueurs
+    assert controller.state.nombre_joueurs == len(liste_joueurs)
 
 
 def test_controller_creer_nouveau_round():
     """Function to test the controller.creation of new round"""
 
     # Given
-    controller_round = Controller()
-    [nouveau_round1, nouveau_round2, nouveau_round3, nouveau_round4] = [ROUND1, ROUND2, ROUND3, ROUND4]
+    STATE = init_hardcoded_state1()
+    controller = Controller(vue=TEST_VUE, state=STATE)
 
     # When
-    # Round 1 creation
-    controller_round.creer_nouveau_round(test_nouveau_round=nouveau_round1)
-    # Round 2 creation
-    controller_round.creer_nouveau_round(test_nouveau_round=nouveau_round2)
     # Round 3 creation
-    controller_round.creer_nouveau_round(test_nouveau_round=nouveau_round3)
-    # Round 4 creation
-    controller_round.creer_nouveau_round(test_nouveau_round=nouveau_round4)
+    controller.creer_nouveau_round()
 
     # Then
-    assert controller_round.state.actual_round == ROUND4
-    assert controller_round.state.round_list == [ROUND1, ROUND2, ROUND3]
+    assert controller.state.actual_round == ROUND3
+    assert controller.state.round_list == [ROUND1, ROUND2]
 
 
 def test_controller_generer_paires_joueurs():
-    """Function to test the creation of paires"""
+    """Function to test the controller.creation of paires"""
 
     # Given
-    controller_paires = Controller()
-    liste_joueurs = [PLAYER1, PLAYER2, PLAYER3, PLAYER4]
-    nouveau_round1 = ROUND1
+    STATE = init_hardcoded_state1()
+    controller = Controller(vue=TEST_VUE, state=STATE)
 
     # When
-    controller_paires.ajouter_joueurs(test_liste_joueurs=liste_joueurs)
-    controller_paires.creer_nouveau_round(test_nouveau_round=nouveau_round1)
+    controller.generer_paires_joueurs()
 
     # Then
-    assert controller_paires.state.actual_round.match_liste == [([PLAYER1, None], [PLAYER2, None]),
-                                                                ([PLAYER3, None], [PLAYER4, None])]
+    assert controller.state.actual_round.match_liste == [([PLAYER1, None], [PLAYER2, None]),
+                                                         ([PLAYER3, None], [PLAYER4, None])]
 
 
 def test_controller_mettre_a_jour_joueurs():
-    """Function to test the update of players when controller.creating new Round"""
+    """Function to test the update of players when creating new Round"""
 
     # Given
-    controller_maj_joueurs = Controller()
-    liste_joueurs = [PLAYER1, PLAYER2, PLAYER3, PLAYER4]
-    match_liste = [([PLAYER1, Score.GAGNANT], [PLAYER2, Score.PERDANT]),
-                   ([PLAYER3, Score.MATCH_NUL], [PLAYER4, Score.MATCH_NUL])]
-    last_round = Round(nom=RoundName.ROUND1, match_liste=match_liste, date_debut=datetime.today(),
-                       date_fin=datetime.today())
+    STATE2 = init_hardcoded_state2()
+    controller = Controller(vue=TEST_VUE, state=STATE2)
 
     # When
-    controller_maj_joueurs.ajouter_joueurs(test_liste_joueurs=liste_joueurs)
-    controller_maj_joueurs.state.round_list = [last_round]
-    controller_maj_joueurs.mettre_a_jour_joueurs()
+    controller.mettre_a_jour_joueurs()
 
     # Then
-    assert controller_maj_joueurs.state.joueurs_en_jeux == [PLAYER1, PLAYER3, PLAYER4]
+    assert controller.state.joueurs_en_jeux == [PLAYER1, PLAYER3]
+    assert controller.state.joueurs_du_tournoi == [PLAYER1, PLAYER2, PLAYER3, PLAYER4]
 
 
 def test_controller_entrer_scores():
     """Function that test the controller.entrer_scores"""
-
-    # Given
-    controller_scores = Controller()
-    scores = [MATCH_LISTE1, MATCH_LISTE2]
-    nouveau_round1 = ROUND1
-
-    # When
-    controller_scores.creer_nouveau_round(test_nouveau_round=nouveau_round1)
-    controller_scores.entrer_scores(test_scores=scores)
-
-    # Then
-    assert controller_scores.state.actual_round.match_liste == scores
+    pass
 
 
 def test_modifier_classement():
     """Function that test the controller.modifier_classement"""
-
-    # Given
-    controller_classement = Controller()
-    players_initial_classement = [PLAYER1, PLAYER2, PLAYER3, PLAYER4]
-    players_new_classement = [PLAYER_NOUVEAU_CLASSEMENT1, PLAYER_NOUVEAU_CLASSEMENT2, PLAYER_NOUVEAU_CLASSEMENT3,
-                              PLAYER_NOUVEAU_CLASSEMENT4]
-
-    # When
-    controller_classement.ajouter_joueurs(test_liste_joueurs=players_initial_classement)
-    controller_classement.modifier_classement(test_classement=players_new_classement)
-
-    # Then
-    assert controller_classement.state.joueurs_du_tournoi == players_new_classement
+    pass
 
 
 def test_controller_terminer_tournoi():
     """Function to test closing a tournament"""
-
-    # Given
-    initial_state = State()
-    controller_terminer_tournoi = Controller()
-    nouveau_tournoi = TOURNOI
-    liste_joueurs = [PLAYER1, PLAYER2, PLAYER3, PLAYER4]
-    nouveau_round1 = ROUND1
-    nouveau_round2 = ROUND2
-
-    # When
-    # Tournament creation
-    controller_terminer_tournoi.creer_nouveau_tournoi(test_tournoi=nouveau_tournoi)
-    # Adding players
-    controller_terminer_tournoi.ajouter_joueurs(test_liste_joueurs=liste_joueurs)
-    # Round 1 creation
-    controller_terminer_tournoi.creer_nouveau_round(test_nouveau_round=nouveau_round1)
-    # Round 2 creation
-    controller_terminer_tournoi.creer_nouveau_round(test_nouveau_round=nouveau_round2)
-    # Closing Tournament
-    controller_terminer_tournoi.terminer_tournoi()
-
-    # Then
-    assert controller_terminer_tournoi.state == initial_state
+    pass
 
 
 if __name__ == '__main__':
