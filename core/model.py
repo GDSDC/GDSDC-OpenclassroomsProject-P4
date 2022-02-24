@@ -45,10 +45,13 @@ class RoundName(Enum):
     ROUND4 = 'Round 4'
 
 
+Match = Tuple[Tuple[Joueur, Optional[Score]], Tuple[Joueur, Optional[Score]]]
+
+
 @dataclass
 class Round:
     nom: Optional[RoundName]
-    match_liste: List[Tuple[Joueur, Score]]
+    match_liste: List[Match]
     date_debut: datetime
     date_fin: datetime
 
@@ -112,7 +115,7 @@ class State:
             self.actual_round.match_liste.append(([joueurs[i], None], [joueurs[i + 1], None]))
             i += 2
 
-    def entrer_scores(self, scores: List[Tuple[Joueur, Score]]):
+    def entrer_scores(self, scores: List[Match]):
         self.actual_round.match_liste = scores
 
     def modifier_classement(self, joueurs_classement: List[Joueur]):

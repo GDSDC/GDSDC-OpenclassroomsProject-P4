@@ -1,7 +1,7 @@
-from typing import List, Tuple, Optional
+from typing import List, Optional
 from datetime import date, datetime
 
-from core.model import Joueur, Tournoi, Score, Round, RoundName
+from core.model import Joueur, Tournoi, Score, Round, RoundName, Match
 from core import parse_validate_tools as pvt
 
 # Constantes Globales
@@ -217,7 +217,7 @@ Création du {nouveau_round['nom'].value} avec succès !
 
         return nouveau_round
 
-    def entrer_scores(self, round: Round) -> List[Tuple[Joueur, Score]]:
+    def entrer_scores(self, round: Round) -> List[Match]:
 
         # Initialisation
         match_liste_scores = round.match_liste
@@ -232,7 +232,7 @@ Entrez les scores des {nombre_de_paires} matchs :
         print(affichage_menu_entrer_scores)
 
         # Boucle sur les matchs
-        for idx, ([joueur1, _], [joueur2, _]) in enumerate(match_liste_scores):
+        for idx, ((joueur1, _), (joueur2, _)) in enumerate(match_liste_scores):
             print(f'Match n°{idx + 1} : ')
             print('Qui est le vainqueur ?')
             print(f'1. {joueur1.prenom} {joueur1.nom_de_famille}')
@@ -251,7 +251,7 @@ Entrez les scores des {nombre_de_paires} matchs :
             else:
                 score_joueur1 = Score.MATCH_NUL
                 score_joueur2 = Score.MATCH_NUL
-            match_liste_scores[idx] = ([joueur1, score_joueur1], [joueur2, score_joueur2])
+            match_liste_scores[idx] = ((joueur1, score_joueur1), (joueur2, score_joueur2))
 
         return match_liste_scores
 

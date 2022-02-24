@@ -66,7 +66,7 @@ class Controller:
         else:
             scores_results.append(self.state.round_list)
         # Updating scores with actual_round
-        for [(joueur1, score_joueur1), (joueur2, score_joueur2)] in self.state.actual_round.match_liste:
+        for ((joueur1, score_joueur1), (joueur2, score_joueur2)) in self.state.actual_round.match_liste:
             if (score_joueur1 is None) and (score_joueur2 is None):
                 pass
             else:
