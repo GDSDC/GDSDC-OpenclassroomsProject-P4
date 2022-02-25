@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Any
 from datetime import date, datetime
 
 from core.model import Joueur, Tournoi, Score, Round, RoundName, Match
@@ -315,6 +315,26 @@ Classements mis à jour avec succès !
         print(affichage_classement_validation)
 
         return joueurs_classement_updated
+
+    def afficher_rapports(self, nom_rapport: str, donnees_rapport: List[Any]):
+        """Function that shows a report"""
+
+        # Affichage de l'entête
+        affichage_rapport_entete = f"""
+==========================================================
+Affichage de la liste des {nom_rapport}
+==========================================================
+"""
+        print(affichage_rapport_entete)
+
+        # Affichage de la liste
+        for idx, element in enumerate(donnees_rapport):
+            print(f'{idx + 1}. {element}')
+
+        # Affichage fin de liste
+        print("""
+----------------------------------------------------------
+""")
 
 
 if __name__ == '__main__':
