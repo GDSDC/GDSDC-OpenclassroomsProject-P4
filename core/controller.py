@@ -101,6 +101,15 @@ class Controller:
 
         return result
 
+    def tournois_ordre_chronologique_descendant(self, data: List[Tournoi]) -> List[Tournoi]:
+        """Function that output a list of tournaments descending chronological ordered"""
+
+        result = []
+        result.extend(data)
+        result.sort(key=lambda x: x.date_debut, reverse=True)
+
+        return result
+
     def rapport_acteur_alphabetique(self):
         """Function that shows an alphabetic ordered report of all actors"""
         # Report Name
@@ -146,6 +155,18 @@ class Controller:
         # Formatting ordered data
         formatted_ordered_data = [f'{joueur.prenom} {joueur.nom_de_famille} / classement : {joueur.classement}' for
                                   joueur in ordered_data]
+        # Showing report
+        self.vue.afficher_rapports(nom_rapport=nom_rapport, donnees_rapport=formatted_ordered_data)
+
+    def rapport_tournois(self):
+        """Function that shows a descending chronological order report"""
+        # Report Name
+        nom_rapport = 'tournois'
+        # Ordering data
+        ordered_data = self.tournois_ordre_chronologique_descendant(self.state.tournois)
+        # Formatting ordered data
+        formatted_ordered_data = [f'{tournoi.nom} de {tournoi.lieu} qui a débuté le : {tournoi.date_debut}' for
+                                  tournoi in ordered_data]
         # Showing report
         self.vue.afficher_rapports(nom_rapport=nom_rapport, donnees_rapport=formatted_ordered_data)
 

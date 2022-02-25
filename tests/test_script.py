@@ -3,7 +3,7 @@ from typing import List, Optional, Tuple
 from core.controller import Controller
 from core.model import *
 from core.vue import Vue
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 
 # Global Constants
 
@@ -32,11 +32,35 @@ SCORES_VIDE = [((PLAYER1, None), (PLAYER2, None)), ((PLAYER3, None), (PLAYER4, N
 SCORES = [((PLAYER1, Score.GAGNANT), (PLAYER2, Score.PERDANT)), ((PLAYER3, Score.GAGNANT), (PLAYER4, Score.PERDANT))]
 
 
-def tournoi():
+def tournoi1():
     return Tournoi(nom='Tournoi_TEST',
                    lieu='lieu_TEST',
                    date_debut=TEST_DATE,
                    date_fin=TEST_DATE,
+                   controle_du_temps=ControleDuTemps.BLITZ,
+                   description='Remarques_TEST',
+                   joueurs_du_tournoi=[PLAYER1, PLAYER2, PLAYER3, PLAYER4],
+                   joueurs_en_jeux=[PLAYER1, PLAYER2, PLAYER3, PLAYER4],
+                   rounds=[])
+
+
+def tournoi2():
+    return Tournoi(nom='Tournoi_TEST',
+                   lieu='lieu_TEST',
+                   date_debut=TEST_DATE + timedelta(days=10),
+                   date_fin=TEST_DATE + timedelta(days=10),
+                   controle_du_temps=ControleDuTemps.BLITZ,
+                   description='Remarques_TEST',
+                   joueurs_du_tournoi=[PLAYER1, PLAYER2, PLAYER3, PLAYER4],
+                   joueurs_en_jeux=[PLAYER1, PLAYER2, PLAYER3, PLAYER4],
+                   rounds=[])
+
+
+def tournoi3():
+    return Tournoi(nom='Tournoi_TEST',
+                   lieu='lieu_TEST',
+                   date_debut=TEST_DATE + timedelta(days=20),
+                   date_fin=TEST_DATE + timedelta(days=20),
                    controle_du_temps=ControleDuTemps.BLITZ,
                    description='Remarques_TEST',
                    joueurs_du_tournoi=[PLAYER1, PLAYER2, PLAYER3, PLAYER4],
@@ -66,21 +90,21 @@ def round4():
 
 def state1():
     state = State()
-    state.tournoi = tournoi()
+    state.tournoi = tournoi1()
     state.tournoi.rounds = [round1(), round2()]
     return state
 
 
 def state2():
     state = State()
-    state.tournoi = tournoi()
+    state.tournoi = tournoi1()
     state.tournoi.rounds = [round1(), round2(), round3()]
     return state
 
 
 def state3():
     state = State()
-    state.tournoi = tournoi()
+    state.tournoi = tournoi1()
     state.tournoi.rounds = [round1(), round2(), round3(), round4()]
     return state
 
@@ -91,7 +115,7 @@ class TestVue(Vue):
         return 1
 
     def menu_creer_nouveau_tournoi(self) -> Tournoi:
-        return tournoi()
+        return tournoi1()
 
     def ajouter_joueurs(self, nb_joueurs: Optional[int]) -> List[Joueur]:
         return [PLAYER1, PLAYER2, PLAYER3, PLAYER4]
@@ -120,7 +144,7 @@ def test_model_creer_nouveau_tournoi():
 
     # Given
     state = State()
-    nouveau_tournoi = tournoi()
+    nouveau_tournoi = tournoi1()
 
     # When
     state.creer_nouveau_tournoi(nouveau_tournoi)
@@ -211,7 +235,7 @@ def test_controller_creer_nouveau_tournoi():
 
     # Given
     controller = Controller(vue=TEST_VUE)
-    nouveau_tournoi = tournoi()
+    nouveau_tournoi = tournoi1()
 
     # When
     controller.creer_nouveau_tournoi()
@@ -355,6 +379,20 @@ def test_controller_joueurs_ordre_classement():
 
     # Then
     assert result == [PLAYER1, PLAYER2, PLAYER3, PLAYER4]
+
+
+def test_controller_tournois_ordre_chronologique_descendant():
+    """Function that test controller.tournois_ordre_chronologique_descendant"""
+
+    # Given
+    controller = Controller()
+    tournois = [tournoi1(), tournoi3(), tournoi2()]
+
+    # When
+    result = controller.tournois_ordre_chronologique_descendant(data=tournois)
+
+    # Then
+    assert result == [tournoi3(), tournoi2(), tournoi1()]
 
 
 if __name__ == '__main__':
