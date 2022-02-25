@@ -343,5 +343,19 @@ def test_controller_joueurs_ordre_alphabetique():
     assert result == [PLAYER1, PLAYER2, PLAYER3, PLAYER4]
 
 
+def test_controller_joueurs_ordre_classement():
+    """Function that test controller.joueurs_ordre_classement"""
+
+    # Given
+    controller = Controller()
+    JOUEURS = [PLAYER4, PLAYER2, PLAYER3, PLAYER1]
+
+    # When
+    result = controller.joueurs_ordre_classement(data=JOUEURS)
+
+    # Then
+    assert result == [PLAYER1, PLAYER2, PLAYER3, PLAYER4]
+
+
 if __name__ == '__main__':
     pass

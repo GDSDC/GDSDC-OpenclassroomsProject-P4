@@ -88,7 +88,16 @@ class Controller:
 
         result = []
         result.extend(data)
-        # TODO build here or in Joueur class function/code to order
+        result.sort(key=lambda x: x.nom_de_famille.lower())
+
+        return result
+
+    def joueurs_ordre_classement(self, data: List[Joueur]) -> List[Joueur]:
+        """Function that output a list of players ordered by ranking"""
+
+        result = []
+        result.extend(data)
+        result.sort(key=lambda x: x.classement)
 
         return result
 
