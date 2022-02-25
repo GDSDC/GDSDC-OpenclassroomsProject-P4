@@ -20,5 +20,5 @@ init_controller = Controller()
 init_controller.creer_nouveau_tournoi()
 init_controller.state.tournoi.joueurs_du_tournoi = PLAYERS
 init_controller.state.acteurs = ACTEURS
-init_controller.rapport_joueurs_alphabetique()
-init_controller.rapport_acteur_classement()
+init_controller.rapport_joueurs_classement()
+init_controller.rapport_acteur_alphabetique()
