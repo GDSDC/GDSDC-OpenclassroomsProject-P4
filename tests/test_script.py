@@ -329,5 +329,19 @@ def test_controller_terminer_tournoi():
     assert controller.state == init_controller.state
 
 
+def test_controller_joueurs_ordre_alphabetique():
+    """Function that test controller.joueurs_ordre_alphabetique"""
+
+    # Given
+    controller = Controller()
+    JOUEURS = [PLAYER4, PLAYER2, PLAYER3, PLAYER1]
+
+    # When
+    result = controller.joueurs_ordre_alphabetique(data=JOUEURS)
+
+    # Then
+    assert result == [PLAYER1, PLAYER2, PLAYER3, PLAYER4]
+
+
 if __name__ == '__main__':
     pass

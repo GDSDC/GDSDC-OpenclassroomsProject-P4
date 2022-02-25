@@ -83,6 +83,17 @@ class Controller:
         # Init the actual instance
         self.__init__()
 
+    def joueurs_ordre_alphabetique(self, data: List[Joueur]) -> List[Joueur]:
+        """Function that output a list of players ordered aalphabeticaly"""
+
+        result = []
+        result.extend(data)
+        # TODO build here or in Joueur class function/code to order
+
+        return result
+
+
+
 
 if __name__ == '__main__':
     pass
