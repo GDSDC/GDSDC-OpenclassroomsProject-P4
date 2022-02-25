@@ -159,7 +159,7 @@ class Controller:
         self.vue.afficher_rapports(nom_rapport=nom_rapport, donnees_rapport=formatted_ordered_data)
 
     def rapport_tournois(self):
-        """Function that shows a descending chronological order report"""
+        """Function that shows a descending chronological order report or tournaments"""
         # Report Name
         nom_rapport = 'tournois'
         # Ordering data
@@ -167,6 +167,18 @@ class Controller:
         # Formatting ordered data
         formatted_ordered_data = [f'{tournoi.nom} de {tournoi.lieu} qui a débuté le : {tournoi.date_debut}' for
                                   tournoi in ordered_data]
+        # Showing report
+        self.vue.afficher_rapports(nom_rapport=nom_rapport, donnees_rapport=formatted_ordered_data)
+
+    def rapport_tours_tournoi(self):
+        """Function that shows a report or all rounds of a tournament"""
+        # Report Name
+        nom_rapport = f'tours du tournoi {self.state.tournoi.nom}'
+        # Ordering data
+        ordered_data = self.state.tournoi.rounds
+        # Formatting ordered data
+        formatted_ordered_data = [f'Tour {round.nom.value} qui a débuté le : {round.date_debut}' for
+                                  round in ordered_data]
         # Showing report
         self.vue.afficher_rapports(nom_rapport=nom_rapport, donnees_rapport=formatted_ordered_data)
 
