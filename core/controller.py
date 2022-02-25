@@ -134,24 +134,24 @@ class Controller:
         # Showing report
         self.vue.afficher_rapports(nom_rapport=nom_rapport, donnees_rapport=formatted_ordered_data)
 
-    def rapport_joueurs_alphabetique(self):
-        """Function that shows an alphabetic ordered report of players"""
+    def rapport_joueurs_alphabetique(self, tournoi: Tournoi):
+        """Function that shows an alphabetic ordered report of the players of a tournament"""
         # Report Name
-        nom_rapport = 'joueurs du tournoi par ordre alphabétique'
+        nom_rapport = f'joueurs du tournoi {tournoi.nom} par ordre alphabétique'
         # Ordering data
-        ordered_data = self.joueurs_ordre_alphabetique(self.state.tournoi.joueurs_du_tournoi)
+        ordered_data = self.joueurs_ordre_alphabetique(tournoi.joueurs_du_tournoi)
         # Formatting ordered data
         formatted_ordered_data = [f'{joueur.prenom} {joueur.nom_de_famille} / classement : {joueur.classement}' for
                                   joueur in ordered_data]
         # Showing report
         self.vue.afficher_rapports(nom_rapport=nom_rapport, donnees_rapport=formatted_ordered_data)
 
-    def rapport_joueurs_classement(self):
-        """Function that shows a ranking ordered report of all actors"""
+    def rapport_joueurs_classement(self, tournoi: Tournoi):
+        """Function that shows a ranking ordered report of the players of a tournament"""
         # Report Name
-        nom_rapport = 'joueurs du tournoi par ordre de classement'
+        nom_rapport = f'joueurs du tournoi {tournoi.nom} par ordre de classement'
         # Ordering data
-        ordered_data = self.joueurs_ordre_classement(self.state.tournoi.joueurs_du_tournoi)
+        ordered_data = self.joueurs_ordre_classement(tournoi.joueurs_du_tournoi)
         # Formatting ordered data
         formatted_ordered_data = [f'{joueur.prenom} {joueur.nom_de_famille} / classement : {joueur.classement}' for
                                   joueur in ordered_data]
@@ -170,15 +170,32 @@ class Controller:
         # Showing report
         self.vue.afficher_rapports(nom_rapport=nom_rapport, donnees_rapport=formatted_ordered_data)
 
-    def rapport_tours_tournoi(self):
+    def rapport_tours_tournoi(self, tournoi: Tournoi):
         """Function that shows a report or all rounds of a tournament"""
         # Report Name
-        nom_rapport = f'tours du tournoi {self.state.tournoi.nom}'
+        nom_rapport = f'tours du tournoi {tournoi.nom}'
         # Ordering data
-        ordered_data = self.state.tournoi.rounds
+        ordered_data = tournoi.rounds
         # Formatting ordered data
         formatted_ordered_data = [f'Tour {round.nom.value} qui a débuté le : {round.date_debut}' for
                                   round in ordered_data]
+        # Showing report
+        self.vue.afficher_rapports(nom_rapport=nom_rapport, donnees_rapport=formatted_ordered_data)
+
+    def rapport_matchs_tournoi(self, tournoi: Tournoi):
+        """Function that shows a report or all matchs of a tournament"""
+        # Report Name
+        nom_rapport = f'matchs du tournoi {tournoi.nom}'
+        # Ordering data
+        ordered_data = []
+        for round in tournoi.rounds:
+            for match in round.match_liste:
+                ordered_data.append(match)
+        # ordered_data = [match in round.match_liste for round in tournoi.rounds]
+        # Formatting ordered data
+        formatted_ordered_data = [
+            f'Match : {joueur_1.prenom} {joueur_1.nom_de_famille} // {joueur_2.prenom} {joueur_2.nom_de_famille}' for
+            ((joueur_1, _), (joueur_2, _)) in ordered_data]
         # Showing report
         self.vue.afficher_rapports(nom_rapport=nom_rapport, donnees_rapport=formatted_ordered_data)
 

@@ -1,5 +1,5 @@
 from core.controller import Controller
-from core.model import Joueur, Sex, Tournoi, ControleDuTemps, Round, RoundName
+from core.model import Joueur, Sex, Tournoi, ControleDuTemps, Round, RoundName, Score
 from datetime import datetime, date, timedelta
 
 TEST_DATETIME = datetime(year=2022, month=2, day=24)
@@ -14,12 +14,15 @@ PLAYER3 = Joueur(nom_de_famille='Nom de famille TEST3', prenom='prenom TEST3',
 PLAYER4 = Joueur(nom_de_famille='Nom de famille TEST4', prenom='prenom TEST4',
                  date_de_naissance=TEST_DATE, sexe=Sex.FEMALE, classement=4)
 
+SCORES = [((PLAYER1, Score.GAGNANT), (PLAYER2, Score.PERDANT)), ((PLAYER3, Score.GAGNANT), (PLAYER4, Score.PERDANT))]
+SCORES_VIDE = [((PLAYER1, None), (PLAYER2, None)), ((PLAYER3, None), (PLAYER4, None))]
+
 PLAYERS = [PLAYER4, PLAYER3, PLAYER2, PLAYER1]
 ACTEURS = {1: PLAYER4, 2: PLAYER3, 3: PLAYER2, 4: PLAYER1}
 
-ROUND1 = Round(nom=RoundName.ROUND1, match_liste=[], date_debut=TEST_DATETIME,
+ROUND1 = Round(nom=RoundName.ROUND1, match_liste=SCORES_VIDE, date_debut=TEST_DATETIME,
                date_fin=TEST_DATETIME)
-ROUND2 = Round(nom=RoundName.ROUND2, match_liste=[], date_debut=TEST_DATETIME,
+ROUND2 = Round(nom=RoundName.ROUND2, match_liste=SCORES, date_debut=TEST_DATETIME,
                date_fin=TEST_DATETIME)
 
 TOURNOI1 = Tournoi(nom='Tournoi_TEST_1',
@@ -38,7 +41,7 @@ TOURNOI2 = Tournoi(nom='Tournoi_TEST_2',
                    date_fin=TEST_DATE + timedelta(days=10),
                    controle_du_temps=ControleDuTemps.BLITZ,
                    description='Remarques_TEST',
-                   joueurs_du_tournoi=[PLAYER1, PLAYER2, PLAYER3, PLAYER4],
+                   joueurs_du_tournoi=[PLAYER4, PLAYER2, PLAYER3, PLAYER1],
                    joueurs_en_jeux=[PLAYER1, PLAYER2, PLAYER3, PLAYER4],
                    rounds=[ROUND1, ROUND2])
 
@@ -53,5 +56,5 @@ TOURNOI3 = Tournoi(nom='Tournoi_TEST_3',
                    rounds=[])
 
 init_controller = Controller()
-init_controller.state.tournoi = TOURNOI2
-init_controller.rapport_tours_tournoi()
+init_controller.rapport_joueurs_alphabetique(tournoi=TOURNOI2)
+init_controller.rapport_joueurs_classement(tournoi=TOURNOI2)
