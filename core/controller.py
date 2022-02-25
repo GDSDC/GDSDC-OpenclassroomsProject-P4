@@ -101,7 +101,37 @@ class Controller:
 
         return result
 
+    def rapport_acteur_alphabetique(self):
+        """Function that shows an alphabetic ordered report of all actors"""
 
+        # Report nam
+        nom_rapport = 'acteurs par ordre alphabétique'
+        ordered_data = self.joueurs_ordre_alphabetique(data=list(self.state.acteurs.values()))
+        self.vue.afficher_rapports(nom_rapport=nom_rapport, donnees_rapport=ordered_data)
+
+    def rapport_acteur_classement(self):
+        """Function that shows a ranking ordered report of all actors"""
+
+        # Report nam
+        nom_rapport = 'acteurs par ordre de classement'
+        ordered_data = self.joueurs_ordre_classement(data=list(self.state.acteurs.values()))
+        self.vue.afficher_rapports(nom_rapport=nom_rapport, donnees_rapport=ordered_data)
+
+    def rapport_joueurs_alphabetique(self):
+        """Function that shows an alphabetic ordered report of players"""
+
+        # Report nam
+        nom_rapport = 'joueurs du tournoi par ordre alphabétique'
+        ordered_data = self.joueurs_ordre_alphabetique(self.state.tournoi.joueurs_du_tournoi)
+        self.vue.afficher_rapports(nom_rapport=nom_rapport, donnees_rapport=ordered_data)
+
+    def rapport_joueurs_classement(self):
+        """Function that shows a ranking ordered report of all actors"""
+
+        # Report nam
+        nom_rapport = 'joueurs par ordre de classement'
+        ordered_data = self.joueurs_ordre_classement(self.state.tournoi.joueurs_du_tournoi)
+        self.vue.afficher_rapports(nom_rapport=nom_rapport, donnees_rapport=ordered_data)
 
 
 if __name__ == '__main__':

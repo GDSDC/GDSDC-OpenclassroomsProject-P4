@@ -224,8 +224,8 @@ def test_controller_ajouter_joueurs():
     """Function to test the controller.creation of players"""
 
     # Given
-    STATE = state1()
-    controller = Controller(vue=TEST_VUE, state=STATE)
+    init_sate = state1()
+    controller = Controller(vue=TEST_VUE, state=init_sate)
     liste_joueurs = [PLAYER1, PLAYER2, PLAYER3, PLAYER4]
 
     # When
@@ -240,8 +240,8 @@ def test_controller_creer_nouveau_round():
     """Function to test the controller.creation of new round"""
 
     # Given
-    STATE = state1()
-    controller = Controller(vue=TEST_VUE, state=STATE)
+    init_sate = state1()
+    controller = Controller(vue=TEST_VUE, state=init_sate)
 
     # When
     # Round 3 creation
@@ -255,9 +255,9 @@ def test_controller_generer_paires_joueurs():
     """Function to test the controller.creation of paires"""
 
     # Given
-    STATE = state1()
-    print(f'STATE.tournoi.joueurs_en_jeux : {STATE.tournoi.joueurs_en_jeux}')
-    controller = Controller(vue=TEST_VUE, state=STATE)
+    init_sate = state1()
+    print(f'init_sate.tournoi.joueurs_en_jeux : {init_sate.tournoi.joueurs_en_jeux}')
+    controller = Controller(vue=TEST_VUE, state=init_sate)
     print(f' state.tournoi.joueurs_en_jeux : {controller.state.tournoi.joueurs_en_jeux}')
 
     # When
@@ -272,8 +272,8 @@ def test_controller_mettre_a_jour_joueurs():
     """Function to test the update of players when creating new Round"""
 
     # Given
-    STATE2 = state2()
-    controller = Controller(vue=TEST_VUE, state=STATE2)
+    init_sate2 = state2()
+    controller = Controller(vue=TEST_VUE, state=init_sate2)
 
     # When
     controller.mettre_a_jour_joueurs()
@@ -287,8 +287,8 @@ def test_controller_entrer_scores():
     """Function that test the controller.entrer_scores"""
 
     # Given
-    STATE2 = state2()
-    controller = Controller(vue=TEST_VUE, state=STATE2)
+    init_sate2 = state2()
+    controller = Controller(vue=TEST_VUE, state=init_sate2)
 
     # When
     controller.entrer_scores()
@@ -301,8 +301,8 @@ def test_modifier_classement():
     """Function that test the controller.modifier_classement"""
 
     # Given
-    STATE = state1()
-    controller = Controller(vue=TEST_VUE, state=STATE)
+    init_sate = state1()
+    controller = Controller(vue=TEST_VUE, state=init_sate)
 
     # When
     controller.modifier_classement()
@@ -318,8 +318,8 @@ def test_controller_terminer_tournoi():
     """Function to test closing a tournament"""
 
     # Given
-    STATE2 = state2()
-    controller = Controller(state=STATE2)
+    init_sate2 = state2()
+    controller = Controller(state=init_sate2)
     init_controller = Controller()
 
     # Then
@@ -334,10 +334,10 @@ def test_controller_joueurs_ordre_alphabetique():
 
     # Given
     controller = Controller()
-    JOUEURS = [PLAYER4, PLAYER2, PLAYER3, PLAYER1]
+    joueurs = [PLAYER4, PLAYER2, PLAYER3, PLAYER1]
 
     # When
-    result = controller.joueurs_ordre_alphabetique(data=JOUEURS)
+    result = controller.joueurs_ordre_alphabetique(data=joueurs)
 
     # Then
     assert result == [PLAYER1, PLAYER2, PLAYER3, PLAYER4]
@@ -348,10 +348,10 @@ def test_controller_joueurs_ordre_classement():
 
     # Given
     controller = Controller()
-    JOUEURS = [PLAYER4, PLAYER2, PLAYER3, PLAYER1]
+    joueurs = [PLAYER4, PLAYER2, PLAYER3, PLAYER1]
 
     # When
-    result = controller.joueurs_ordre_classement(data=JOUEURS)
+    result = controller.joueurs_ordre_classement(data=joueurs)
 
     # Then
     assert result == [PLAYER1, PLAYER2, PLAYER3, PLAYER4]

@@ -329,7 +329,7 @@ Affichage de la liste des {nom_rapport}
 
         # Affichage de la liste
         for idx, element in enumerate(donnees_rapport):
-            print(f'{idx + 1}. {element}')
+            print(f'{idx + 1}. {element.prenom} {element.nom_de_famille} / classement : {element.classement}')
 
         # Affichage fin de liste
         print("""
