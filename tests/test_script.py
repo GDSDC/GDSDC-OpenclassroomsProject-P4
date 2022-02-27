@@ -1,4 +1,4 @@
-from typing import List, Optional, Tuple
+from typing import List, Optional, Tuple, Dict
 
 from core.controller import Controller
 from core.model import *
@@ -114,7 +114,7 @@ class TestVue(Vue):
         # not used in tests
         return 1
 
-    def menu_creer_nouveau_tournoi(self) -> Tournoi:
+    def menu_creer_nouveau_tournoi(self, acteurs: Dict[int, Joueur]) -> Tournoi:
         return tournoi1()
 
     def ajouter_joueurs(self, nb_joueurs: Optional[int]) -> List[Joueur]:
