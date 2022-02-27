@@ -56,5 +56,6 @@ TOURNOI3 = Tournoi(nom='Tournoi_TEST_3',
                    rounds=[])
 
 init_controller = Controller()
-init_controller.rapport_joueurs_alphabetique(tournoi=TOURNOI2)
-init_controller.rapport_joueurs_classement(tournoi=TOURNOI2)
+init_controller.state.acteurs = ACTEURS
+init_controller.creer_nouveau_tournoi()
+print(init_controller.state.tournoi.joueurs_du_tournoi)

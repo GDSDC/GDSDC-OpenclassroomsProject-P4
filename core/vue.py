@@ -1,4 +1,4 @@
-from typing import List, Optional, Any
+from typing import List, Optional, Any, Dict
 from datetime import date, datetime
 
 from core.model import Joueur, Tournoi, Score, Round, RoundName, Match
@@ -39,7 +39,7 @@ Menu Principal
 
         return choix_utilisateur_menu_principal
 
-    def menu_creer_nouveau_tournoi(self) -> Tournoi:
+    def menu_creer_nouveau_tournoi(self, acteurs: Dict[int, Joueur]) -> Tournoi:
         """Création d'un nouveau tournoi en renseignant toutes les informations demandées."""
 
         # Initialisation
@@ -50,7 +50,8 @@ Menu Principal
             'date_fin': '',
             'controle_du_temps': '',
             'description': '',
-            'rounds': []
+            'rounds': [],
+            'joueurs_du_tournoi': [],
         }
 
         # Affichage de l'entête
@@ -90,6 +91,24 @@ Créer un nouveau Tournoi
         nouveau_tournoi['description'] = pvt.parse_and_validate(explanation=nouveau_tournoi_texte_description,
                                                                 parse=pvt.parse_string_not_empty,
                                                                 validate=pvt.no_validation)
+
+        # Choix des joueurs parmis les acteurs
+        acteurs_affichage = '''\n Choix des joueurs parmis les acteurs : '''
+        for (key, acteur) in acteurs.items():
+            acteurs_affichage += f'''\n{key} - {acteur.prenom} {acteur.nom_de_famille}'''
+        print(acteurs_affichage)
+
+        choix_acteurs_texte = '\nChoisissez un acteur parmis la liste en entrant son numéro ou entrez \'terminer\' lorsque vous avez terminé la la selection : '
+        exit_condition = False
+        while not exit_condition:
+            acteur_key = pvt.parse_and_validate(explanation=choix_acteurs_texte, parse=pvt.parse_string_not_empty, validate=pvt.validate_actor_key)
+            if acteur_key == 'terminer':
+                exit_condition = True
+            elif acteur_key not in acteurs.keys():
+                print(f'Veuillez choisir le numéro d\'un acteur présent dans la liste {acteurs.keys()}')
+            else:
+                nouveau_tournoi['joueurs_du_tournoi'].append(acteurs[acteur_key])
+
 
         # Formatage du resultat au format Tournoi
         nouveau_tournoi = Tournoi(**nouveau_tournoi)
