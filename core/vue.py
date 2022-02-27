@@ -111,7 +111,7 @@ Créer un nouveau Tournoi
 
         # Ajout de nouveaux joueurs
         # TODO : ajouter ici la possibilité d'appeler la fonction ajouter_joueurs pour ajouter un joueur à la fois
-
+        # peut-être : mettre section acteurs et ajouter joueur d'une une seule fonction ajouter joueurs que l'on appelle ici
 
         # Formatage du resultat au format Tournoi
         nouveau_tournoi = Tournoi(**nouveau_tournoi)
