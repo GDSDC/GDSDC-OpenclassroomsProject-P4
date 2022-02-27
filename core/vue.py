@@ -109,6 +109,9 @@ Créer un nouveau Tournoi
             else:
                 nouveau_tournoi['joueurs_du_tournoi'].append(acteurs[acteur_key])
 
+        # Ajout de nouveaux joueurs
+        # TODO : ajouter ici la possibilité d'appeler la fonction ajouter_joueurs pour ajouter un joueur à la fois
+
 
         # Formatage du resultat au format Tournoi
         nouveau_tournoi = Tournoi(**nouveau_tournoi)
