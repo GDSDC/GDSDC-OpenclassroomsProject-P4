@@ -198,7 +198,7 @@ Renseigner les informations du joueur n°{joueur}
 
             # Formatage des informations de joueurs au format Joueur
             nouveaux_joueurs[joueur - 1] = Joueur(**nouveaux_joueurs[joueur - 1])
-            
+
         # Concatenation des acteurs et joueurs
         joueurs.extend(choix_acteurs)
         joueurs.extend(nouveaux_joueurs)
@@ -354,25 +354,33 @@ Classements mis à jour avec succès !
 
         return joueurs_classement_updated
 
-    def afficher_rapports(self, nom_rapport: str, donnees_rapport: List[Any]):
+    def afficher_rapport(self, nom: str, donnees: List[Any]):
         """Function that shows a report"""
 
         # Affichage de l'entête
         affichage_rapport_entete = f"""
 ==========================================================
-Affichage de la liste des {nom_rapport}
+Affichage de la liste des {nom}
 ==========================================================
 """
         print(affichage_rapport_entete)
 
         # Affichage de la liste
-        for idx, element in enumerate(donnees_rapport):
+        for idx, element in enumerate(donnees):
             print(f'{idx + 1}. {element}')
 
         # Affichage fin de liste
         print("""
 ----------------------------------------------------------
 """)
+
+    def display_tournaments_report(self, tournaments: List[Tournoi]):
+        # Formatting ordered data
+        formatted_tournaments = [f'{tournoi.nom} de {tournoi.lieu} qui a débuté le : {tournoi.date_debut}' for
+                                  tournoi in tournaments]
+        # Report Name
+        self.afficher_rapport(nom='tournois', donnees=formatted_tournaments)
+
 
 
 if __name__ == '__main__':

@@ -395,5 +395,23 @@ def test_controller_tournois_ordre_chronologique_descendant():
     assert result == [tournoi3(), tournoi2(), tournoi1()]
 
 
+def test_load_and_save_player():
+    player = Joueur(....)
+
+    player_as_json = player.to_json()
+
+    player_again = Joueur.from_json(player_as_json)
+    assert player_again == player
+
+
+def test_load_and_save_tournament():
+    tournament = Tournoi(....)
+
+    tournament_as_json = tournament.to_json()
+
+    tournament_again = Tournoi.from_json(tournament_as_json)
+    assert tournament_again == tournament
+
+
 if __name__ == '__main__':
     pass
