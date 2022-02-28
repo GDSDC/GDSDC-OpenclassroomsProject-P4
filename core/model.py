@@ -8,7 +8,7 @@ from datetime import date, datetime
 NOMBRE_DE_TOURS = 4
 
 # nombre de joueurs par tournoi
-NOMBRE_DE_JOUEURS = 2
+NOMBRE_DE_JOUEURS = 4
 
 
 # Classe décrivant le Joueur

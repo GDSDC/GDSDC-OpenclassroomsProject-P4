@@ -1,7 +1,7 @@
 from typing import List, Optional, Any, Dict
 from datetime import date, datetime
 
-from core.model import Joueur, Tournoi, Score, Round, RoundName, Match
+from core.model import Joueur, Tournoi, Score, Round, RoundName, Match, NOMBRE_DE_JOUEURS
 from core import parse_validate_tools as pvt
 
 # Constantes Globales
@@ -92,46 +92,58 @@ Créer un nouveau Tournoi
                                                                 parse=pvt.parse_string_not_empty,
                                                                 validate=pvt.no_validation)
 
-        # Choix des joueurs parmis les acteurs
-        acteurs_affichage = '''\n Choix des joueurs parmis les acteurs : '''
-        for (key, acteur) in acteurs.items():
-            acteurs_affichage += f'''\n{key} - {acteur.prenom} {acteur.nom_de_famille}'''
-        print(acteurs_affichage)
-
-        choix_acteurs_texte = '\nChoisissez un acteur parmis la liste en entrant son numéro ou entrez \'terminer\' lorsque vous avez terminé la la selection : '
-        exit_condition = False
-        while not exit_condition:
-            acteur_key = pvt.parse_and_validate(explanation=choix_acteurs_texte, parse=pvt.parse_string_not_empty, validate=pvt.validate_actor_key)
-            if acteur_key == 'terminer':
-                exit_condition = True
-            elif acteur_key not in acteurs.keys():
-                print(f'Veuillez choisir le numéro d\'un acteur présent dans la liste {acteurs.keys()}')
-            else:
-                nouveau_tournoi['joueurs_du_tournoi'].append(acteurs[acteur_key])
-
-        # Ajout de nouveaux joueurs
-        # TODO : ajouter ici la possibilité d'appeler la fonction ajouter_joueurs pour ajouter un joueur à la fois
-        # peut-être : mettre section acteurs et ajouter joueur d'une une seule fonction ajouter joueurs que l'on appelle ici
+        # Choix des joueurs
+        nouveau_tournoi['joueurs_du_tournoi'] = self.ajouter_joueurs(nb_joueurs=NOMBRE_DE_JOUEURS, acteurs=acteurs)
 
         # Formatage du resultat au format Tournoi
         nouveau_tournoi = Tournoi(**nouveau_tournoi)
 
         return nouveau_tournoi
 
-    def ajouter_joueurs(self, nb_joueurs: Optional[int]) -> List[Joueur]:
+    def ajouter_joueurs(self, nb_joueurs: Optional[int], acteurs: Dict[int, Joueur]) -> List[Joueur]:
         """AJout des informations de huit joueurs dans une liste de dictionnaires à destination du Controller."""
 
         # Initialisation
         # liste retournée contenant les informations des huit joueurs
+        choix_acteurs = []
         nouveaux_joueurs = []
+        joueurs = []
 
         # Affichage de l'entête
         affichage_menu_ajouter_joueurs = f"""
 ==============================
-Ajouter {nb_joueurs} joueurs
+Ajouter joueurs au tournoi
 ==============================
 """
         print(affichage_menu_ajouter_joueurs)
+
+        # Choix des joueurs parmis les acteurs
+        acteurs_affichage = '''\nChoix des joueurs parmis les acteurs : '''
+        for (key, acteur) in acteurs.items():
+            acteurs_affichage += f'''\n{key} - {acteur.prenom} {acteur.nom_de_famille}'''
+        print(acteurs_affichage)
+
+        choix_acteurs_texte = '\nChoisissez un acteur parmis la liste en entrant son numéro ou entrez \'terminer\' lorsque vous avez terminé la selection : '
+        exit_condition = False
+        while not exit_condition:
+            acteur_key = pvt.parse_and_validate(explanation=choix_acteurs_texte, parse=pvt.parse_string_not_empty,
+                                                validate=pvt.validate_actor_key)
+            if acteur_key == 'terminer':
+                exit_condition = True
+            elif acteur_key not in acteurs.keys():
+                print(f'Veuillez choisir le numéro d\'un acteur présent dans la liste {acteurs.keys()}')
+            else:
+                choix_acteurs.append(acteurs[acteur_key])
+                print(f'Joueur {acteurs[acteur_key].prenom} {acteurs[acteur_key].nom_de_famille} sélectionné !')
+
+        # Choix nouveaux joueurs
+        nb_joueurs = nb_joueurs - len(choix_acteurs)
+        affichage_menu_ajouter_nouveaux_joueurs = f"""
+==============================
+Ajouter {nb_joueurs} nouveaux joueurs au tournoi
+==============================
+"""
+        print(affichage_menu_ajouter_nouveaux_joueurs)
 
         # Boucle sur les huits joueurs
         for joueur in range(1, nb_joueurs + 1):
@@ -186,8 +198,12 @@ Renseigner les informations du joueur n°{joueur}
 
             # Formatage des informations de joueurs au format Joueur
             nouveaux_joueurs[joueur - 1] = Joueur(**nouveaux_joueurs[joueur - 1])
+            
+        # Concatenation des acteurs et joueurs
+        joueurs.extend(choix_acteurs)
+        joueurs.extend(nouveaux_joueurs)
 
-        return nouveaux_joueurs
+        return joueurs
 
     def afficher_paires_joueurs(self, round: Round):
 
