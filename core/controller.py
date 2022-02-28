@@ -15,9 +15,9 @@ class Controller:
         nouveau_tournoi = self.vue.menu_creer_nouveau_tournoi(acteurs=self.state.acteurs)
         self.state.creer_nouveau_tournoi(nouveau_tournoi)
 
-    def ajouter_joueurs(self, nb_joueurs: Optional[int] = NOMBRE_DE_JOUEURS):
-        joueurs = self.vue.ajouter_joueurs(nb_joueurs=nb_joueurs)
-        self.state.ajouter_joueurs(joueurs)
+    # def ajouter_joueurs(self, nb_joueurs: Optional[int] = NOMBRE_DE_JOUEURS):
+    #     joueurs = self.vue.ajouter_joueurs(nb_joueurs=nb_joueurs)
+    #     self.state.ajouter_joueurs(joueurs)
 
     def mettre_a_jour_joueurs(self):
         """ Generation of new state.tournoi.joueurs_en_jeux list"""
