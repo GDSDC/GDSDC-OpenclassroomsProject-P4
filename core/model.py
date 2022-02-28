@@ -1,4 +1,5 @@
-from typing import List, Tuple, Optional
+import dataclasses
+from typing import Any, Dict, List, Tuple, Optional
 from dataclasses import dataclass
 from enum import Enum
 from datetime import date, datetime
@@ -26,6 +27,21 @@ class Joueur:
     date_de_naissance: date
     sexe: Sex
     classement: int
+
+    def to_json(self) -> Dict[str, Any]:
+        self_as_dict = dataclasses.asdict(self)
+        self_as_dict['date_de_naissance'] = self.date_de_naissance.isoformat()
+        self_as_dict['sexe'] = self.sexe.value
+
+        return self_as_dict
+
+    @classmethod
+    def from_json(cls, json_value: Dict[str, Any]) -> 'Joueur':
+        joueur = Joueur(**json_value)
+        joueur.date_de_naissance = date.fromisoformat(json_value['date_de_naissance'])
+        joueur.sexe = Sex(json_value['sexe'])
+
+        return joueur
 
 
 # Classe décrivant le Match
@@ -80,10 +96,12 @@ class Tournoi:
 
 
 class State:
-    def __init__(self):
-        self.acteurs: Dict[int, Joueur] = {}
-        self.tournois: List[Tournoi] = []
-        self.tournoi: Optional[Tournoi] = None
+    def __init__(self, acteurs: Optional[Dict[int, Joueur]] = None, tournois: Optional[List[Tournoi]] = None):
+        self.acteurs: Dict[int, Joueur] = acteurs or {}
+        self.tournois: List[Tournoi] = tournois or []
+
+        # TODO suggestion pour charger le dernier tournoi comme tournoi en cours
+        self.tournoi: Optional[Tournoi] = tournois[-1] if tournois is not None and len(tournois) > 0 else None
 
     # for instance comparison in testing
     def __eq__(self, other):
