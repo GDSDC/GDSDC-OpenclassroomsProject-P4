@@ -25,15 +25,15 @@ ACTEURS = {1: PLAYER4, 2: PLAYER3, 3: PLAYER2, 4: PLAYER1}
 # ROUND2 = Round(nom=RoundName.ROUND2, match_liste=SCORES, date_debut=TEST_DATETIME,
 #                date_fin=TEST_DATETIME)
 #
-# TOURNOI1 = Tournoi(nom='Tournoi_TEST_1',
-#                    lieu='lieu_TEST_1',
-#                    date_debut=TEST_DATE,
-#                    date_fin=TEST_DATE,
-#                    controle_du_temps=ControleDuTemps.BLITZ,
-#                    description='Remarques_TEST',
-#                    joueurs_du_tournoi=[PLAYER1, PLAYER2, PLAYER3, PLAYER4],
-#                    joueurs_en_jeux=[PLAYER1, PLAYER2, PLAYER3, PLAYER4],
-#                    rounds=[])
+TOURNOI1 = Tournoi(nom='Tournoi_TEST_1',
+                   lieu='lieu_TEST_1',
+                   date_debut=TEST_DATE,
+                   date_fin=TEST_DATE,
+                   controle_du_temps=ControleDuTemps.BLITZ,
+                   description='Remarques_TEST',
+                   joueurs_du_tournoi=[PLAYER1, PLAYER2, PLAYER3, PLAYER4],
+                   joueurs_en_jeux=[PLAYER1, PLAYER2, PLAYER3, PLAYER4],
+                   rounds=[])
 #
 # TOURNOI2 = Tournoi(nom='Tournoi_TEST_2',
 #                    lieu='lieu_TEST_2',
@@ -62,4 +62,5 @@ ACTEURS = {1: PLAYER4, 2: PLAYER3, 3: PLAYER2, 4: PLAYER1}
 
 init_controller = Controller()
 init_controller.state.acteurs = ACTEURS
+init_controller.state.tournoi = TOURNOI1
 init_controller.start()

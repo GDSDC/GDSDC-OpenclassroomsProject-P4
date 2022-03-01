@@ -35,7 +35,10 @@ class Controller:
                         self.creer_nouveau_tournoi()
                     # Démarrer nouveau Round
                     elif choix_menu_tournoi == 2:
-                        self.creer_nouveau_round()
+                        if self.state.tournoi:
+                            self.creer_nouveau_round()
+                        else:
+                            print('\nVeuillez créer un Tournoi avant de démarrer un nouveau Round.')
                     # Entrer les résultats
                     elif choix_menu_tournoi == 3:
                         self.entrer_scores()
@@ -84,6 +87,7 @@ class Controller:
         numero_round = len(self.state.tournoi.rounds) + 1
         nouveau_round = self.vue.creer_nouveau_round(numero_round=numero_round)
         self.state.creer_nouveau_round(nouveau_round)
+        self.generer_paires_joueurs()
 
     def generer_paires_joueurs(self):
         self.state.generer_paires_joueurs(self.state.tournoi.joueurs_en_jeux)

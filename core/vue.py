@@ -171,11 +171,13 @@ Ajouter joueurs au tournoi
                     print(f'Veuillez choisir le numéro d\'un acteur présent dans la liste {acteurs.keys()}')
                 else:
                     if acteurs[acteur_key] in choix_acteurs:
-                        print(f'Joueur {acteurs[acteur_key].prenom} {acteurs[acteur_key].nom_de_famille} déjà sélectionné XX')
+                        print(
+                            f'Joueur {acteurs[acteur_key].prenom} {acteurs[acteur_key].nom_de_famille} déjà sélectionné XX')
                         print('\nVeuillez choisir un autre joueur.')
                     else:
                         choix_acteurs.append(acteurs[acteur_key])
-                        print(f'Joueur {acteurs[acteur_key].prenom} {acteurs[acteur_key].nom_de_famille} sélectionné !')
+                        print(
+                            f'Joueur {acteurs[acteur_key].prenom} {acteurs[acteur_key].nom_de_famille} sélectionné !')
                         if len(choix_acteurs) == nb_joueurs:
                             print(f'\nNombre maximum de joueurs ({nb_joueurs}) atteint.')
                             exit_condition = True
