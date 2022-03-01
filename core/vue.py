@@ -5,18 +5,42 @@ from core.model import Joueur, Tournoi, Score, Round, RoundName, Match, NOMBRE_D
 from core import parse_validate_tools as pvt
 
 # Constantes Globales
-CHOIX_MENU_PRINCIPAL = {1: 'Gestion des Joueurs (ajouter/supprimer)',
-                        2: 'Gestion du Tournoi',
-                        3: 'Rapports',
-                        4: 'Sauvegarde / Chargement des données',
-                        5: 'Quitter le programme'}
+CHOIX_MENU_PRINCIPAL = ('Gestion des Joueurs (ajouter/supprimer)',
+                        'Gestion du Tournoi',
+                        'Rapports',
+                        'Sauvegarde / Chargement des données',
+                        'Quitter le programme')
+CHOIX_MENU_PRINCIPAL = dict(enumerate(CHOIX_MENU_PRINCIPAL, 1))
 
-CHOIX_MENU_TOURNOI = {1: 'Créer un nouveau tournoi',
-                      2: 'Ajouter huit joueurs',
-                      3: 'Démarrer nouveau Round',
-                      4: 'Entrer les résultats',
-                      5: 'Terminer le tournoi',
-                      6: 'Quitter'}
+CHOIX_MENU_JOUEURS = ('Afficher la liste des Joueurs',
+                      'Ajouter un nouveau Joueur',
+                      'Supprimer un Joueur',
+                      'Mettre à jour le classement d\'un Joueur',
+                      'Quitter')
+CHOIX_MENU_JOUEURS = dict(enumerate(CHOIX_MENU_JOUEURS, 1))
+
+CHOIX_MENU_TOURNOI = ('Créer un nouveau Tournoi',
+                      'Démarrer nouveau Round',
+                      'Entrer les résultats',
+                      'Mettre à jour le classement des Joueurs',
+                      'Terminer le tournoi',
+                      'Quitter')
+CHOIX_MENU_TOURNOI = dict(enumerate(CHOIX_MENU_TOURNOI, 1))
+
+CHOIX_MENU_RAPPORTS = ('Liste de tous les Acteurs par ordre alphabétique',
+                       'Liste de tous les Acteurs par classement',
+                       'Liste de tous les Joueurs d\'un Tournoi par ordre alphabétique',
+                       'Liste de tous les Joueurs d\'un Tournoi par classement',
+                       'Liste de tous les Tournois',
+                       'Liste de tous les Tours d\'un Tournoi',
+                       'Liste de tous les Matchs d\'un Tournoi',
+                       'Quitter')
+CHOIX_MENU_RAPPORTS = dict(enumerate(CHOIX_MENU_RAPPORTS, 1))
+
+CHOIX_MENU_SAUVEGARDE_CHARGEMENT = ('Sauvegarder l\'état du programme',
+                                    'Charger l\'état du programme',
+                                    'Quitter')
+CHOIX_MENU_SAUVEGARDE_CHARGEMENT = dict(enumerate(CHOIX_MENU_SAUVEGARDE_CHARGEMENT, 1))
 
 
 class Vue:

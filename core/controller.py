@@ -1,4 +1,4 @@
-from core.vue import Vue, CHOIX_MENU_PRINCIPAL
+from core.vue import Vue, CHOIX_MENU_PRINCIPAL, CHOIX_MENU_TOURNOI
 from core.model import State, Joueur, Tournoi, Score, Round, NOMBRE_DE_JOUEURS
 from typing import List, Optional
 from core import sorters
@@ -15,22 +15,44 @@ class Controller:
     def start(self):
         must_exit = False
         while not must_exit:
-            choix = self.vue.afficher_menu(nom_menu='Menu Principal', menu= CHOIX_MENU_PRINCIPAL)
-            if choix == 1:
+
+            # Menu Principal
+            choix_menu_principal = self.vue.afficher_menu(nom_menu='Menu Principal', menu=CHOIX_MENU_PRINCIPAL)
+
+            # Gestion des Joueurs
+            if choix_menu_principal == 1:
                 pass
-            elif choix == 2:
+                # TODO : créer menu Joueurs
+
+            # Gestion du Tournoi
+            elif choix_menu_principal == 2:
+                must_exit_tournament = False
+                while not must_exit_tournament:
+                    choix_menu_tournoi = self.vue.afficher_menu(nom_menu=CHOIX_MENU_PRINCIPAL[2],
+                                                                menu=CHOIX_MENU_TOURNOI)
+                    # Créer un nouveau tournoi
+                    if choix_menu_tournoi == 1:
+                        self.creer_nouveau_tournoi()
+                    # Démarrer nouveau Round
+                    elif choix_menu_tournoi == 2:
+                        self.creer_nouveau_round()
+                    # Entrer les résultats
+                    elif choix_menu_tournoi == 3:
+                        self.entrer_scores()
+                    # Terminer Tournoi
+                    elif choix_menu_tournoi == 4:
+                        self.terminer_tournoi()
+                    # Quitter
+                    elif choix_menu_tournoi == 5:
+                        must_exit_tournament = True
+            elif choix_menu_principal == 3:
                 pass
-            elif choix == 3:
+            elif choix_menu_principal == 4:
                 pass
-            elif choix == 4:
-                pass
-            elif choix == 5:
+            elif choix_menu_principal == 5:
                 must_exit = True
 
-
-
     # Gestion des joueurs
-
 
     # Gestion du tournoi
 
@@ -160,6 +182,7 @@ class Controller:
         self.vue.afficher_rapport_matchs_tournoi(tournoi=tournoi, donnees_rapport=ordered_data)
 
     # Gestion de la base de données
+
 
 if __name__ == '__main__':
     pass
