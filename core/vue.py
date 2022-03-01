@@ -46,35 +46,14 @@ CHOIX_MENU_SAUVEGARDE_CHARGEMENT = dict(enumerate(CHOIX_MENU_SAUVEGARDE_CHARGEME
 class Vue:
     """Classe qui gère l'interface/menu du programme."""
 
-    def menu_principal(self) -> int:
-        """Affichage du menu principal et récupération du choix de l'utilisateur."""
-
-        # Affichage de l'entête
-        affichage_menu_principal = """
-==============================
-Menu Principal
-==============================
-"""
-        print(affichage_menu_principal)
-
-        # Affichage des différents choix
-        for choix in CHOIX_MENU_PRINCIPAL.keys():
-            print(choix, '--', CHOIX_MENU_PRINCIPAL[choix])
-
-        # Choix du menu
-        choix_du_menu_texte = '\nRenseignez votre choix parmis les propositions ci-dessus (1 à ' + str(
-            len(CHOIX_MENU_PRINCIPAL)) + ') : '
-        choix_utilisateur_menu_principal = pvt.parse_and_validate(explanation=choix_du_menu_texte, parse=pvt.parse_int,
-                                                                  validate=pvt.validate_integer_interval)
-
     def afficher_menu(self, nom_menu: str, menu: Dict[int, str]) -> int:
         """Affichage d'un menu et récupération du choix de l'utilisateur."""
 
         # Affichage de l'entête
         affichage_menu = f"""
-    ==============================
-    {nom_menu}
-    ==============================
+==============================
+{nom_menu}
+==============================
     """
         print(affichage_menu)
 
@@ -152,6 +131,8 @@ Créer un nouveau Tournoi
         # Formatage du resultat au format Tournoi
         nouveau_tournoi = Tournoi(**nouveau_tournoi)
 
+        print(f'\nNouveau Tournoi {nouveau_tournoi.nom} créé avec succès !')
+
         return nouveau_tournoi
 
     def ajouter_joueurs(self, nb_joueurs: Optional[int], acteurs: Dict[int, Joueur]) -> List[Joueur]:
@@ -171,87 +152,101 @@ Ajouter joueurs au tournoi
 """
         print(affichage_menu_ajouter_joueurs)
 
-        # Choix des joueurs parmis les acteurs
-        acteurs_affichage = '''\nChoix des joueurs parmis les acteurs : '''
-        for (key, acteur) in acteurs.items():
-            acteurs_affichage += f'''\n{key} - {acteur.prenom} {acteur.nom_de_famille}'''
-        print(acteurs_affichage)
+        if acteurs:
+            # Choix des joueurs parmis les acteurs
+            acteurs_affichage = '''\nChoix des joueurs parmis les acteurs : '''
+            for (key, acteur) in acteurs.items():
+                acteurs_affichage += f'''\n{key} - {acteur.prenom} {acteur.nom_de_famille}'''
+            print(acteurs_affichage)
 
-        choix_acteurs_texte = '\nChoisissez un acteur parmis la liste en entrant son numéro ou entrez \'terminer\' lorsque vous avez terminé la selection : '
-        exit_condition = False
-        while not exit_condition:
-            acteur_key = pvt.parse_and_validate(explanation=choix_acteurs_texte, parse=pvt.parse_string_not_empty,
-                                                validate=pvt.validate_actor_key)
-            if acteur_key == 'terminer':
-                exit_condition = True
-            elif acteur_key not in acteurs.keys():
-                print(f'Veuillez choisir le numéro d\'un acteur présent dans la liste {acteurs.keys()}')
-            else:
-                choix_acteurs.append(acteurs[acteur_key])
-                print(f'Joueur {acteurs[acteur_key].prenom} {acteurs[acteur_key].nom_de_famille} sélectionné !')
+            choix_acteurs_texte = '\nChoisissez un acteur parmis la liste en entrant son numéro ou entrez \'terminer\' lorsque vous avez terminé la selection : '
+            exit_condition = False
+            while not exit_condition:
+                acteur_key = pvt.parse_and_validate(explanation=choix_acteurs_texte, parse=pvt.parse_string_not_empty,
+                                                    validate=pvt.validate_actor_key)
+                if acteur_key == 'terminer':
+                    exit_condition = True
+                    print(f'{len(choix_acteurs)} acteurs sélectionnés !')
+                elif acteur_key not in acteurs.keys():
+                    print(f'Veuillez choisir le numéro d\'un acteur présent dans la liste {acteurs.keys()}')
+                else:
+                    if acteurs[acteur_key] in choix_acteurs:
+                        print(f'Joueur {acteurs[acteur_key].prenom} {acteurs[acteur_key].nom_de_famille} déjà sélectionné XX')
+                        print('\nVeuillez choisir un autre joueur.')
+                    else:
+                        choix_acteurs.append(acteurs[acteur_key])
+                        print(f'Joueur {acteurs[acteur_key].prenom} {acteurs[acteur_key].nom_de_famille} sélectionné !')
+                        if len(choix_acteurs) == nb_joueurs:
+                            print(f'\nNombre maximum de joueurs ({nb_joueurs}) atteint.')
+                            exit_condition = True
+        else:
+            pass
 
-        # Choix nouveaux joueurs
-        nb_joueurs = nb_joueurs - len(choix_acteurs)
-        affichage_menu_ajouter_nouveaux_joueurs = f"""
+        if len(choix_acteurs) == nb_joueurs:
+            pass
+        else:
+            # Choix nouveaux joueurs
+            nb_joueurs = nb_joueurs - len(choix_acteurs)
+            affichage_menu_ajouter_nouveaux_joueurs = f"""
 ==============================
 Ajouter {nb_joueurs} nouveaux joueurs au tournoi
 ==============================
 """
-        print(affichage_menu_ajouter_nouveaux_joueurs)
+            print(affichage_menu_ajouter_nouveaux_joueurs)
 
-        # Boucle sur les huits joueurs
-        for joueur in range(1, nb_joueurs + 1):
-            # dictionnaire type contenant les informations d'un joueur
-            information_nouveau_joueur = {
-                'nom_de_famille': '',
-                'prenom': '',
-                'date_de_naissance': '',
-                'sexe': '',
-                'classement': ''
-            }
+            # Boucle sur les huits joueurs
+            for joueur in range(1, nb_joueurs + 1):
+                # dictionnaire type contenant les informations d'un joueur
+                information_nouveau_joueur = {
+                    'nom_de_famille': '',
+                    'prenom': '',
+                    'date_de_naissance': '',
+                    'sexe': '',
+                    'classement': ''
+                }
 
-            # ajout du dictionnaire type à la liste de nouveaux joueurs
-            nouveaux_joueurs.append(information_nouveau_joueur)
+                # ajout du dictionnaire type à la liste de nouveaux joueurs
+                nouveaux_joueurs.append(information_nouveau_joueur)
 
-            # Affichage de l'entête pour chaque nouveau joueur
-            affichage_nouveau_joueur = f"""
+                # Affichage de l'entête pour chaque nouveau joueur
+                affichage_nouveau_joueur = f"""
 Renseigner les informations du joueur n°{joueur}
 ==========================================
-            """
-            print(affichage_nouveau_joueur)
+                """
+                print(affichage_nouveau_joueur)
 
-            # Définition du nom de famille
-            nouveau_joueur_texte_nom = f'\nRenseignez le Nom de famille du joueur n°{joueur} : '
-            nouveaux_joueurs[joueur - 1]['nom_de_famille'] = pvt.parse_and_validate(
-                explanation=nouveau_joueur_texte_nom, parse=pvt.parse_string_not_empty, validate=pvt.no_validation)
+                # Définition du nom de famille
+                nouveau_joueur_texte_nom = f'\nRenseignez le Nom de famille du joueur n°{joueur} : '
+                nouveaux_joueurs[joueur - 1]['nom_de_famille'] = pvt.parse_and_validate(
+                    explanation=nouveau_joueur_texte_nom, parse=pvt.parse_string_not_empty, validate=pvt.no_validation)
 
-            # Définition le prénom
-            nouveau_joueur_texte_prenom = f'\nRenseignez le Prénom du joueur n°{joueur} : '
-            nouveaux_joueurs[joueur - 1]['prenom'] = pvt.parse_and_validate(
-                explanation=nouveau_joueur_texte_prenom,
-                parse=pvt.parse_string_not_empty,
-                validate=pvt.no_validation)
+                # Définition le prénom
+                nouveau_joueur_texte_prenom = f'\nRenseignez le Prénom du joueur n°{joueur} : '
+                nouveaux_joueurs[joueur - 1]['prenom'] = pvt.parse_and_validate(
+                    explanation=nouveau_joueur_texte_prenom,
+                    parse=pvt.parse_string_not_empty,
+                    validate=pvt.no_validation)
 
-            # Définition de la date de naissance
-            nouveau_joueur_texte_date_naissance = f'\nRenseignez la Date de naissance du joueur n°{joueur} au format "jj/mm/aaaa" : '
-            nouveaux_joueurs[joueur - 1]['date_de_naissance'] = pvt.parse_and_validate(
-                explanation=nouveau_joueur_texte_date_naissance, parse=pvt.parse_date,
-                validate=pvt.validate_date_format)
+                # Définition de la date de naissance
+                nouveau_joueur_texte_date_naissance = f'\nRenseignez la Date de naissance du joueur n°{joueur} au format "jj/mm/aaaa" : '
+                nouveaux_joueurs[joueur - 1]['date_de_naissance'] = pvt.parse_and_validate(
+                    explanation=nouveau_joueur_texte_date_naissance, parse=pvt.parse_date,
+                    validate=pvt.validate_date_format)
 
-            # Définition du sexe
-            nouveau_joueur_texte_sexe = f'\nRenseignez le sexe du joueur n°{joueur} ("m"/"f") :'
-            nouveaux_joueurs[joueur - 1]['sexe'] = pvt.parse_and_validate(explanation=nouveau_joueur_texte_sexe,
-                                                                          parse=pvt.parse_string_not_empty,
-                                                                          validate=pvt.validate_sexe)
+                # Définition du sexe
+                nouveau_joueur_texte_sexe = f'\nRenseignez le sexe du joueur n°{joueur} ("m"/"f") :'
+                nouveaux_joueurs[joueur - 1]['sexe'] = pvt.parse_and_validate(explanation=nouveau_joueur_texte_sexe,
+                                                                              parse=pvt.parse_string_not_empty,
+                                                                              validate=pvt.validate_sexe)
 
-            # Définition du classement
-            nouveau_joueur_texte_classement = f'\nRenseignez le classement du joueur n°{joueur} : '
-            nouveaux_joueurs[joueur - 1]['classement'] = pvt.parse_and_validate(
-                explanation=nouveau_joueur_texte_classement, parse=pvt.parse_int,
-                validate=pvt.validate_integer_positive)
+                # Définition du classement
+                nouveau_joueur_texte_classement = f'\nRenseignez le classement du joueur n°{joueur} : '
+                nouveaux_joueurs[joueur - 1]['classement'] = pvt.parse_and_validate(
+                    explanation=nouveau_joueur_texte_classement, parse=pvt.parse_int,
+                    validate=pvt.validate_integer_positive)
 
-            # Formatage des informations de joueurs au format Joueur
-            nouveaux_joueurs[joueur - 1] = Joueur(**nouveaux_joueurs[joueur - 1])
+                # Formatage des informations de joueurs au format Joueur
+                nouveaux_joueurs[joueur - 1] = Joueur(**nouveaux_joueurs[joueur - 1])
 
         # Concatenation des acteurs et joueurs
         joueurs.extend(choix_acteurs)
