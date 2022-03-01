@@ -22,7 +22,7 @@ CHOIX_MENU_JOUEURS = dict(enumerate(CHOIX_MENU_JOUEURS, 1))
 CHOIX_MENU_TOURNOI = ('Créer un nouveau Tournoi',
                       'Démarrer nouveau Round',
                       'Entrer les résultats',
-                      'Mettre à jour le classement des Joueurs',
+                      'Mettre à jour le classement des Joueurs du Tournoi',
                       'Terminer le tournoi',
                       'Quitter')
 CHOIX_MENU_TOURNOI = dict(enumerate(CHOIX_MENU_TOURNOI, 1))

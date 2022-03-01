@@ -212,7 +212,7 @@ def test_model_entrer_scores():
 
 
 def test_model_modifier_classement():
-    """Function that test the model.modifier_classement"""
+    """Function that test the model.modifier_classement_tournoi"""
 
     # Given
     state = state1()
@@ -322,14 +322,14 @@ def test_controller_entrer_scores():
 
 
 def test_modifier_classement():
-    """Function that test the controller.modifier_classement"""
+    """Function that test the controller.modifier_classement_tournoi"""
 
     # Given
     init_sate = state1()
     controller = Controller(vue=TEST_VUE, state=init_sate)
 
     # When
-    controller.modifier_classement()
+    controller.modifier_classement_tournoi()
 
     # Then
     assert controller.state.tournoi.joueurs_du_tournoi == [PLAYER_NOUVEAU_CLASSEMENT1,

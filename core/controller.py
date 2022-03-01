@@ -42,11 +42,14 @@ class Controller:
                     # Entrer les résultats
                     elif choix_menu_tournoi == 3:
                         self.entrer_scores()
-                    # Terminer Tournoi
+                    # MAJ classement des Joueurs du Tournoi
                     elif choix_menu_tournoi == 4:
+                        self.modifier_classement_tournoi()
+                    # Terminer Tournoi
+                    elif choix_menu_tournoi == 5:
                         self.terminer_tournoi()
                     # Quitter
-                    elif choix_menu_tournoi == 5:
+                    elif choix_menu_tournoi == 6:
                         must_exit_tournament = True
             elif choix_menu_principal == 3:
                 pass
@@ -119,8 +122,9 @@ class Controller:
                     break
         self.vue.afficher_resultats(scores_results)
 
-    def modifier_classement(self):
+    def modifier_classement_tournoi(self):
         """Function to update players ranking"""
+        self.afficher_resultats_tournoi()
         joueurs_classement = self.vue.modifier_classement(joueurs_classement=self.state.tournoi.joueurs_du_tournoi)
         self.state.modifier_classement(joueurs_classement)
 
