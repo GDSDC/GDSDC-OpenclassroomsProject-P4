@@ -1,6 +1,7 @@
 from core.vue import Vue
 from core.model import State, Joueur, Tournoi, Score, Round, NOMBRE_DE_JOUEURS
 from typing import List, Optional
+from core import sorters
 
 
 class Controller:
@@ -92,85 +93,67 @@ class Controller:
 
         return result
 
-    def joueurs_ordre_classement(self, data: List[Joueur]) -> List[Joueur]:
-        """Function that output a list of players ordered by ranking"""
-
-        result = []
-        result.extend(data)
-        result.sort(key=lambda x: x.classement)
-
-        return result
-
-    def tournois_ordre_chronologique_descendant(self, data: List[Tournoi]) -> List[Tournoi]:
-        """Function that output a list of tournaments descending chronological ordered"""
-
-        result = []
-        result.extend(data)
-        result.sort(key=lambda x: x.date_debut, reverse=True)
-
-        return result
-
-    def rapport_acteur_alphabetique(self):
+    def afficher_rapport_acteur_alphabetique(self):
         """Function that shows an alphabetic ordered report of all actors"""
         # Report Name
         nom_rapport = 'acteurs par ordre alphabétique'
         # Ordering data
-        ordered_data = self.joueurs_ordre_alphabetique(data=list(self.state.acteurs.values()))
+        ordered_data = sorted(self.state.acteurs.values(), key=sorters.player_alphabetical_by_lastname)
         # Formatting ordered data
         formatted_ordered_data = [f'{acteur.prenom} {acteur.nom_de_famille} / classement : {acteur.classement}' for
                                   acteur in ordered_data]
         # Showing report
         self.vue.afficher_rapports(nom_rapport=nom_rapport, donnees_rapport=formatted_ordered_data)
 
-    def rapport_acteur_classement(self):
+    def afficher_rapport_acteur_classement(self):
         """Function that shows a ranking ordered report of all actors"""
         # Report Name
         nom_rapport = 'acteurs par ordre de classement'
         # Ordering data
-        ordered_data = self.joueurs_ordre_classement(data=list(self.state.acteurs.values()))
+        ordered_data = sorted(state.acteurs.values(), key=sorters.player_by_ranking)
         # Formatting ordered data
         formatted_ordered_data = [f'{acteur.prenom} {acteur.nom_de_famille} / classement : {acteur.classement}' for
                                   acteur in ordered_data]
         # Showing report
         self.vue.afficher_rapports(nom_rapport=nom_rapport, donnees_rapport=formatted_ordered_data)
 
-    def rapport_joueurs_alphabetique(self, tournoi: Tournoi):
+    def afficher_rapport_joueurs_alphabetique(self, tournoi: Tournoi):
         """Function that shows an alphabetic ordered report of the players of a tournament"""
         # Report Name
         nom_rapport = f'joueurs du tournoi {tournoi.nom} par ordre alphabétique'
         # Ordering data
-        ordered_data = self.joueurs_ordre_alphabetique(tournoi.joueurs_du_tournoi)
+        ordered_data = sorted(tournoi.joueurs_du_tournoi, key=sorters.player_alphabetical_by_lastname)
         # Formatting ordered data
         formatted_ordered_data = [f'{joueur.prenom} {joueur.nom_de_famille} / classement : {joueur.classement}' for
                                   joueur in ordered_data]
         # Showing report
         self.vue.afficher_rapports(nom_rapport=nom_rapport, donnees_rapport=formatted_ordered_data)
 
-    def rapport_joueurs_classement(self, tournoi: Tournoi):
+    def afficher_rapport_joueurs_classement(self, tournoi: Tournoi):
         """Function that shows a ranking ordered report of the players of a tournament"""
         # Report Name
         nom_rapport = f'joueurs du tournoi {tournoi.nom} par ordre de classement'
         # Ordering data
-        ordered_data = self.joueurs_ordre_classement(tournoi.joueurs_du_tournoi)
+        ordered_data = sorted(tournoi.joueurs_du_tournoi, key=sorters.player_by_ranking)
         # Formatting ordered data
         formatted_ordered_data = [f'{joueur.prenom} {joueur.nom_de_famille} / classement : {joueur.classement}' for
                                   joueur in ordered_data]
         # Showing report
         self.vue.afficher_rapports(nom_rapport=nom_rapport, donnees_rapport=formatted_ordered_data)
 
-    def rapport_tournois(self):
+    def afficher_rapport_tournois(self):
         """Function that shows a descending chronological order report or tournaments"""
         # Report Name
         nom_rapport = 'tournois'
         # Ordering data
-        ordered_data = self.tournois_ordre_chronologique_descendant(self.state.tournois)
+        ordered_data = sorted(self.state.tournois, key=sorters.tournament_chronological, reverse=True)
         # Formatting ordered data
         formatted_ordered_data = [f'{tournoi.nom} de {tournoi.lieu} qui a débuté le : {tournoi.date_debut}' for
                                   tournoi in ordered_data]
         # Showing report
         self.vue.afficher_rapports(nom_rapport=nom_rapport, donnees_rapport=formatted_ordered_data)
 
-    def rapport_tours_tournoi(self, tournoi: Tournoi):
+    def afficher_rapport_tours_tournoi(self, tournoi: Tournoi):
         """Function that shows a report or all rounds of a tournament"""
         # Report Name
         nom_rapport = f'tours du tournoi {tournoi.nom}'
@@ -182,7 +165,7 @@ class Controller:
         # Showing report
         self.vue.afficher_rapports(nom_rapport=nom_rapport, donnees_rapport=formatted_ordered_data)
 
-    def rapport_matchs_tournoi(self, tournoi: Tournoi):
+    def afficher_rapport_matchs_tournoi(self, tournoi: Tournoi):
         """Function that shows a report or all matchs of a tournament"""
         # Report Name
         nom_rapport = f'matchs du tournoi {tournoi.nom}'
