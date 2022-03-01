@@ -84,103 +84,57 @@ class Controller:
         # Init the actual instance
         self.__init__()
 
-    def joueurs_ordre_alphabetique(self, data: List[Joueur]) -> List[Joueur]:
-        """Function that output a list of players ordered aalphabeticaly"""
-
-        result = []
-        result.extend(data)
-        result.sort(key=lambda x: x.nom_de_famille.lower())
-
-        return result
-
     def afficher_rapport_acteur_alphabetique(self):
         """Function that shows an alphabetic ordered report of all actors"""
-        # Report Name
-        nom_rapport = 'acteurs par ordre alphabétique'
-        # Ordering data
+        # Order data
         ordered_data = sorted(self.state.acteurs.values(), key=sorters.player_alphabetical_by_lastname)
-        # Formatting ordered data
-        formatted_ordered_data = [f'{acteur.prenom} {acteur.nom_de_famille} / classement : {acteur.classement}' for
-                                  acteur in ordered_data]
         # Showing report
-        self.vue.afficher_rapports(nom_rapport=nom_rapport, donnees_rapport=formatted_ordered_data)
+        self.vue.afficher_rapport_acteur_alphabetique(donnees_rapport=ordered_data)
 
     def afficher_rapport_acteur_classement(self):
         """Function that shows a ranking ordered report of all actors"""
-        # Report Name
-        nom_rapport = 'acteurs par ordre de classement'
-        # Ordering data
-        ordered_data = sorted(state.acteurs.values(), key=sorters.player_by_ranking)
-        # Formatting ordered data
-        formatted_ordered_data = [f'{acteur.prenom} {acteur.nom_de_famille} / classement : {acteur.classement}' for
-                                  acteur in ordered_data]
+        # Order data
+        ordered_data = sorted(self.state.acteurs.values(), key=sorters.player_by_ranking)
         # Showing report
-        self.vue.afficher_rapports(nom_rapport=nom_rapport, donnees_rapport=formatted_ordered_data)
+        self.vue.afficher_rapport_acteur_classement(donnees_rapport=ordered_data)
 
     def afficher_rapport_joueurs_alphabetique(self, tournoi: Tournoi):
         """Function that shows an alphabetic ordered report of the players of a tournament"""
-        # Report Name
-        nom_rapport = f'joueurs du tournoi {tournoi.nom} par ordre alphabétique'
         # Ordering data
         ordered_data = sorted(tournoi.joueurs_du_tournoi, key=sorters.player_alphabetical_by_lastname)
-        # Formatting ordered data
-        formatted_ordered_data = [f'{joueur.prenom} {joueur.nom_de_famille} / classement : {joueur.classement}' for
-                                  joueur in ordered_data]
         # Showing report
-        self.vue.afficher_rapports(nom_rapport=nom_rapport, donnees_rapport=formatted_ordered_data)
+        self.vue.afficher_rapport_joueurs_alphabetique(tournoi=tournoi, donnees_rapport=ordered_data)
 
     def afficher_rapport_joueurs_classement(self, tournoi: Tournoi):
         """Function that shows a ranking ordered report of the players of a tournament"""
-        # Report Name
-        nom_rapport = f'joueurs du tournoi {tournoi.nom} par ordre de classement'
-        # Ordering data
+        # Order data
         ordered_data = sorted(tournoi.joueurs_du_tournoi, key=sorters.player_by_ranking)
-        # Formatting ordered data
-        formatted_ordered_data = [f'{joueur.prenom} {joueur.nom_de_famille} / classement : {joueur.classement}' for
-                                  joueur in ordered_data]
         # Showing report
-        self.vue.afficher_rapports(nom_rapport=nom_rapport, donnees_rapport=formatted_ordered_data)
+        self.vue.afficher_rapport_joueurs_classement(tournoi=tournoi, donnees_rapport=ordered_data)
 
     def afficher_rapport_tournois(self):
         """Function that shows a descending chronological order report or tournaments"""
-        # Report Name
-        nom_rapport = 'tournois'
-        # Ordering data
+        # Order data
         ordered_data = sorted(self.state.tournois, key=sorters.tournament_chronological, reverse=True)
-        # Formatting ordered data
-        formatted_ordered_data = [f'{tournoi.nom} de {tournoi.lieu} qui a débuté le : {tournoi.date_debut}' for
-                                  tournoi in ordered_data]
         # Showing report
-        self.vue.afficher_rapports(nom_rapport=nom_rapport, donnees_rapport=formatted_ordered_data)
+        self.vue.afficher_rapport_tournois(donnees_rapport=ordered_data)
 
     def afficher_rapport_tours_tournoi(self, tournoi: Tournoi):
         """Function that shows a report or all rounds of a tournament"""
-        # Report Name
-        nom_rapport = f'tours du tournoi {tournoi.nom}'
-        # Ordering data
+        # Order data
         ordered_data = tournoi.rounds
-        # Formatting ordered data
-        formatted_ordered_data = [f'Tour {round.nom.value} qui a débuté le : {round.date_debut}' for
-                                  round in ordered_data]
         # Showing report
-        self.vue.afficher_rapports(nom_rapport=nom_rapport, donnees_rapport=formatted_ordered_data)
+        self.vue.afficher_rapport_tours_tournoi(tournoi=tournoi, donnees_rapport=ordered_data)
 
     def afficher_rapport_matchs_tournoi(self, tournoi: Tournoi):
         """Function that shows a report or all matchs of a tournament"""
-        # Report Name
-        nom_rapport = f'matchs du tournoi {tournoi.nom}'
-        # Ordering data
+        # Order data
         ordered_data = []
         for round in tournoi.rounds:
             for match in round.match_liste:
                 ordered_data.append(match)
-        # ordered_data = [match in round.match_liste for round in tournoi.rounds]
-        # Formatting ordered data
-        formatted_ordered_data = [
-            f'Match : {joueur_1.prenom} {joueur_1.nom_de_famille} // {joueur_2.prenom} {joueur_2.nom_de_famille}' for
-            ((joueur_1, _), (joueur_2, _)) in ordered_data]
         # Showing report
-        self.vue.afficher_rapports(nom_rapport=nom_rapport, donnees_rapport=formatted_ordered_data)
+        self.vue.afficher_rapport_matchs_tournoi(tournoi=tournoi, donnees_rapport=ordered_data)
 
 
 if __name__ == '__main__':

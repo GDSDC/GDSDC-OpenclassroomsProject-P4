@@ -198,7 +198,7 @@ Renseigner les informations du joueur n°{joueur}
 
             # Formatage des informations de joueurs au format Joueur
             nouveaux_joueurs[joueur - 1] = Joueur(**nouveaux_joueurs[joueur - 1])
-            
+
         # Concatenation des acteurs et joueurs
         joueurs.extend(choix_acteurs)
         joueurs.extend(nouveaux_joueurs)
@@ -373,6 +373,62 @@ Affichage de la liste des {nom_rapport}
         print("""
 ----------------------------------------------------------
 """)
+
+    def format_players_data(self, data: List[Joueur]) -> List[str]:
+        """Function that format players list into str list for printing in reports"""
+
+        formatted_data = [f'{joueur.prenom} {joueur.nom_de_famille} / classement : {joueur.classement}' for
+                          joueur in data]
+        return formatted_data
+
+    def afficher_rapport_acteur_alphabetique(self, donnees_rapport: List[Joueur]):
+        """Function that shows an alphabetic ordered report of all actors"""
+
+        formatted_data = self.format_players_data(data=donnees_rapport)
+        self.afficher_rapports(nom_rapport='acteurs par ordre alphabétique', donnees_rapport=formatted_data)
+
+    def afficher_rapport_acteur_classement(self, donnees_rapport: List[Joueur]):
+        """Function that shows a ranking ordered report of all actors"""
+
+        formatted_data = self.format_players_data(data=donnees_rapport)
+        self.afficher_rapports(nom_rapport='acteurs par ordre de classement', donnees_rapport=formatted_data)
+
+    def afficher_rapport_joueurs_alphabetique(self, tournoi: Tournoi, donnees_rapport: List[Joueur]) -> [str,
+                                                                                                         List[str]]:
+        """Function that shows a ranking ordered report of the players of a tournament"""
+
+        formatted_data = self.format_players_data(data=donnees_rapport)
+        self.afficher_rapports(nom_rapport=f'joueurs du tournoi {tournoi.nom} par ordre alphabétique',
+                               donnees_rapport=formatted_data)
+
+    def afficher_rapport_joueurs_classement(self, tournoi: Tournoi, donnees_rapport: List[Joueur]):
+        """Function that shows a ranking ordered report of the players of a tournament"""
+
+        formatted_data = self.format_players_data(data=donnees_rapport)
+        self.afficher_rapports(nom_rapport=f'joueurs du tournoi {tournoi.nom} par ordre de classement',
+                               donnees_rapport=formatted_data)
+
+    def afficher_rapport_tournois(self, donnees_rapport: List[Tournoi]):
+        """Function that shows a descending chronological order report or tournaments"""
+
+        formatted_data = [f'Tournoi {tournoi.nom} de {tournoi.lieu} qui a débuté le : {tournoi.date_debut}' for
+                          tournoi in donnees_rapport]
+        self.afficher_rapports(nom_rapport='tournois', donnees_rapport=formatted_data)
+
+    def afficher_rapport_tours_tournoi(self, tournoi: Tournoi, donnees_rapport: List[Round]):
+        """Function that shows a report or all rounds of a tournament"""
+
+        formatted_data = [f'Tour {round.nom.value} qui a débuté le : {round.date_debut}' for
+                          round in donnees_rapport]
+        self.afficher_rapports(nom_rapport=f'tours du tournoi {tournoi.nom}', donnees_rapport=formatted_data)
+
+    def afficher_rapport_matchs_tournoi(self, tournoi: Tournoi, donnees_rapport: List[Match]):
+        """Function that shows a report or all matchs of a tournament"""
+
+        formatted_data = [
+            f'Match : {joueur_1.prenom} {joueur_1.nom_de_famille} // {joueur_2.prenom} {joueur_2.nom_de_famille}' for
+            ((joueur_1, _), (joueur_2, _)) in donnees_rapport]
+        self.afficher_rapports(nom_rapport=f'matchs du tournoi {tournoi.nom}', donnees_rapport=formatted_data)
 
 
 if __name__ == '__main__':

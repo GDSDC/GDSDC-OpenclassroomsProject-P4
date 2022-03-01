@@ -57,8 +57,6 @@ TOURNOI3 = Tournoi(nom='Tournoi_TEST_3',
 
 init_controller = Controller()
 init_controller.state.acteurs = ACTEURS
-init_controller.creer_nouveau_tournoi()
-# print(init_controller.state.tournoi.joueurs_du_tournoi)
-init_controller.afficher_rapport_acteur_alphabetique()
-init_controller.afficher_rapport_joueurs_classement(tournoi=init_controller.state.tournoi)
+# init_controller.state.tournois = [TOURNOI2, TOURNOI3, TOURNOI1]
+init_controller.afficher_rapport_matchs_tournoi(tournoi=TOURNOI2)
 
