@@ -5,12 +5,18 @@ from core.model import Joueur, Tournoi, Score, Round, RoundName, Match, NOMBRE_D
 from core import parse_validate_tools as pvt
 
 # Constantes Globales
-CHOIX_MENU_PRINCIPAL = {1: 'Créer un nouveau tournoi',
-                        2: 'Ajouter huit joueurs',
-                        3: 'Démarrer nouveau Round',
-                        4: 'Entrer les résultats',
-                        5: 'Terminer le tournoi',
-                        6: 'Quitter'}
+CHOIX_MENU_PRINCIPAL = {1: 'Gestion des Joueurs (ajouter/supprimer)',
+                        2: 'Gestion du Tournoi',
+                        3: 'Rapports',
+                        4: 'Sauvegarde / Chargement des données',
+                        5: 'Quitter le programme'}
+
+CHOIX_MENU_TOURNOI = {1: 'Créer un nouveau tournoi',
+                      2: 'Ajouter huit joueurs',
+                      3: 'Démarrer nouveau Round',
+                      4: 'Entrer les résultats',
+                      5: 'Terminer le tournoi',
+                      6: 'Quitter'}
 
 
 class Vue:
@@ -37,7 +43,31 @@ Menu Principal
         choix_utilisateur_menu_principal = pvt.parse_and_validate(explanation=choix_du_menu_texte, parse=pvt.parse_int,
                                                                   validate=pvt.validate_integer_interval)
 
-        return choix_utilisateur_menu_principal
+    def afficher_menu(self, nom_menu: str, menu: Dict[int, str]) -> int:
+        """Affichage d'un menu et récupération du choix de l'utilisateur."""
+
+        # Affichage de l'entête
+        affichage_menu = f"""
+    ==============================
+    {nom_menu}
+    ==============================
+    """
+        print(affichage_menu)
+
+        # Affichage des différents choix
+        for choix in menu.keys():
+            print(choix, '--', menu[choix])
+
+        # Choix du menu
+        choix_du_menu_texte = '\nRenseignez votre choix parmis les propositions ci-dessus (1 à ' + str(
+            len(menu)) + ') : '
+        choix_utilisateur_menu = pvt.parse_and_validate(explanation=choix_du_menu_texte,
+                                                        parse=pvt.parse_int,
+                                                        validate=lambda x: pvt.validate_integer_interval(parsed_int=x,
+                                                                                                         interval=(1,
+                                                                                                                   len(menu))))
+
+        return choix_utilisateur_menu
 
     def menu_creer_nouveau_tournoi(self, acteurs: Dict[int, Joueur]) -> Tournoi:
         """Création d'un nouveau tournoi en renseignant toutes les informations demandées."""

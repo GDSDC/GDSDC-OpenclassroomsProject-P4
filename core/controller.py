@@ -1,4 +1,4 @@
-from core.vue import Vue
+from core.vue import Vue, CHOIX_MENU_PRINCIPAL
 from core.model import State, Joueur, Tournoi, Score, Round, NOMBRE_DE_JOUEURS
 from typing import List, Optional
 from core import sorters
@@ -11,6 +11,28 @@ class Controller:
         """Initialise les modèles et les vues."""
         self.state = state or State()
         self.vue = vue or Vue()
+
+    def start(self):
+        must_exit = False
+        while not must_exit:
+            choix = self.vue.afficher_menu(nom_menu='Menu Principal', menu= CHOIX_MENU_PRINCIPAL)
+            if choix == 1:
+                pass
+            elif choix == 2:
+                pass
+            elif choix == 3:
+                pass
+            elif choix == 4:
+                pass
+            elif choix == 5:
+                must_exit = True
+
+
+
+    # Gestion des joueurs
+
+
+    # Gestion du tournoi
 
     def creer_nouveau_tournoi(self):
         nouveau_tournoi = self.vue.menu_creer_nouveau_tournoi(acteurs=self.state.acteurs)
@@ -49,7 +71,7 @@ class Controller:
         scores = self.vue.entrer_scores(round=self.state.tournoi.rounds[-1])
         self.state.entrer_scores(scores)
 
-    def afficher_resultats(self):
+    def afficher_resultats_tournoi(self):
         """Function that shows all scores of the Tournament"""
         # Initialisation
         scores_results = []
@@ -84,6 +106,7 @@ class Controller:
         # Init the actual instance
         self.__init__()
 
+    # Rapports
     def afficher_rapport_acteur_alphabetique(self):
         """Function that shows an alphabetic ordered report of all actors"""
         # Order data
@@ -136,6 +159,7 @@ class Controller:
         # Showing report
         self.vue.afficher_rapport_matchs_tournoi(tournoi=tournoi, donnees_rapport=ordered_data)
 
+    # Gestion de la base de données
 
 if __name__ == '__main__':
     pass
