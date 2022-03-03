@@ -155,9 +155,8 @@ Créer un nouveau Tournoi
                                                                                                       interval=(1,
                                                                                                                 len(tournois))))
         # Return
-        print(f'\nTournoi {tournois[tournoi_selectionne-1].nom} sélectionné avec succès !')
-        return tournois[tournoi_selectionne-1]
-
+        print(f'\nTournoi {tournois[tournoi_selectionne - 1].nom} sélectionné avec succès !')
+        return tournois[tournoi_selectionne - 1]
 
     def ajouter_joueurs(self, nb_joueurs: Optional[int], acteurs: Dict[int, Joueur]) -> List[Joueur]:
         """AJout des informations de huit joueurs dans une liste de dictionnaires à destination du Controller."""
@@ -280,9 +279,9 @@ Renseigner les informations du joueur n°{joueur}
 
         return joueurs
 
-    def afficher_paires_joueurs(self, round: Round):
+    def afficher_paires_joueurs(self, round_param: Round):
 
-        nombre_de_paires = len(round.match_liste)
+        nombre_de_paires = len(round_param.match_liste)
 
         # Affichage de l'entête
         affichage_paires_joueurs_entete = f"""
@@ -294,7 +293,7 @@ Renseigner les informations du joueur n°{joueur}
 
         # Boucle pour afficher toutes les paires de joueurs
         paires = 1
-        for ((joueur1, score1), (joueur2, score2)) in round.match_liste:
+        for ((joueur1, score1), (joueur2, score2)) in round_param.match_liste:
             print(
                 f'Paire n°{paires} : {joueur1.prenom} {joueur1.nom_de_famille} / {joueur2.prenom} {joueur2.nom_de_famille}')
             paires += 1
@@ -329,10 +328,10 @@ Création du {nouveau_round['nom'].value} avec succès !
 
         return nouveau_round
 
-    def entrer_scores(self, round: Round) -> List[Match]:
+    def entrer_scores(self, round_param: Round) -> List[Match]:
 
         # Initialisation
-        match_liste_scores = round.match_liste
+        match_liste_scores = round_param.match_liste
         nombre_de_paires = len(match_liste_scores)
 
         # Affichage menu entrer scores
@@ -379,17 +378,17 @@ Affichage des scores
         print(affichage_scores_entete)
 
         # Iteration sur les rounds
-        for round in scores_results:
+        for round_variable in scores_results:
             # Affichage entête par round
             affichage_round = f"""
 ==========================================================
-Scores du round : {round.nom.value}
+Scores du round : {round_variable.nom.value}
 ==========================================================
 """
             print(affichage_round)
 
             # Iteration sur tous les matchs du rounds
-            for ((joueur1, score_joueur1), (joueur2, score_joueur2)) in round.match_liste:
+            for ((joueur1, score_joueur1), (joueur2, score_joueur2)) in round_variable.match_liste:
                 # Affichage scores par match
                 affichage_scores_match = f"""
 ----------------------------------------------------------
@@ -486,8 +485,9 @@ Affichage de la liste des {nom_rapport}
     def afficher_rapport_tournois(self, donnees_rapport: List[Tournoi]):
         """Function that shows a descending chronological order report or tournaments"""
 
-        formatted_data = [f"Tournoi {tournoi.nom} de {tournoi.lieu} qui a débuté le : {tournoi.date_debut.strftime('%d-%m-%Y')}" for
-                          tournoi in donnees_rapport]
+        formatted_data = [
+            f"Tournoi {tournoi.nom} de {tournoi.lieu} qui a débuté le : {tournoi.date_debut.strftime('%d-%m-%Y')}" for
+            tournoi in donnees_rapport]
         self.afficher_rapports(nom_rapport='tournois', donnees_rapport=formatted_data)
 
     def afficher_rapport_tours_tournoi(self, tournoi: Tournoi, donnees_rapport: List[Round]):
@@ -495,9 +495,9 @@ Affichage de la liste des {nom_rapport}
         if not donnees_rapport:
             print(f'\nAuncun Round créé dans le Tournoi {tournoi.nom} !')
         else:
-        # TODO : format all date to human style
-            formatted_data = [f"Tour {round.nom.value} qui a débuté le : {round.date_debut.strftime('%d-%m-%Y')}" for
-                              round in donnees_rapport]
+            # TODO : format all date to human style
+            formatted_data = [f"Tour {round_variable.nom.value} qui a débuté le : {round_variable.date_debut.strftime('%d-%m-%Y')}" for
+                              round_variable in donnees_rapport]
             self.afficher_rapports(nom_rapport=f'tours du tournoi {tournoi.nom}', donnees_rapport=formatted_data)
 
     def afficher_rapport_matchs_tournoi(self, tournoi: Tournoi, donnees_rapport: List[Match]):
@@ -506,7 +506,8 @@ Affichage de la liste des {nom_rapport}
             print(f'\nAucun match joué dans le Tournoi {tournoi.nom} !')
         else:
             formatted_data = [
-                f'Match : {joueur_1.prenom} {joueur_1.nom_de_famille} // {joueur_2.prenom} {joueur_2.nom_de_famille}' for
+                f'Match : {joueur_1.prenom} {joueur_1.nom_de_famille} // {joueur_2.prenom} {joueur_2.nom_de_famille}'
+                for
                 ((joueur_1, _), (joueur_2, _)) in donnees_rapport]
             self.afficher_rapports(nom_rapport=f'matchs du tournoi {tournoi.nom}', donnees_rapport=formatted_data)
 

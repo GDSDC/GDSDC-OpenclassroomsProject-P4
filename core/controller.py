@@ -150,7 +150,7 @@ class Controller:
         self.vue.afficher_paires_joueurs(self.state.tournoi.rounds[-1])
 
     def entrer_scores(self):
-        scores = self.vue.entrer_scores(round=self.state.tournoi.rounds[-1])
+        scores = self.vue.entrer_scores(round_param=self.state.tournoi.rounds[-1])
         self.state.entrer_scores(scores)
 
     def afficher_resultats_tournoi(self):
@@ -236,8 +236,8 @@ class Controller:
         """Function that shows a report or all matchs of a tournament"""
         # Order data
         ordered_data = []
-        for round in tournoi.rounds:
-            for match in round.match_liste:
+        for round_variable in tournoi.rounds:
+            for match in round_variable.match_liste:
                 ordered_data.append(match)
         # Showing report
         self.vue.afficher_rapport_matchs_tournoi(tournoi=tournoi, donnees_rapport=ordered_data)

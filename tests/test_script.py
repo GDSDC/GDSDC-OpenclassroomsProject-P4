@@ -8,7 +8,6 @@ from datetime import datetime, timedelta
 # Global Constants
 
 
-
 PLAYER1 = Joueur(nom_de_famille='Nom de famille TEST1', prenom='prenom TEST1',
                  date_de_naissance=datetime.now(), sexe=Sex.MALE, classement=1)
 PLAYER2 = Joueur(nom_de_famille='Nom de famille TEST2', prenom='prenom TEST2',
@@ -109,7 +108,8 @@ def state3():
 
 
 class TestVue(Vue):
-    def menu_principal(self) -> int:
+    @staticmethod
+    def menu_principal() -> int:
         # not used in tests
         return 1
 
@@ -122,7 +122,7 @@ class TestVue(Vue):
     def creer_nouveau_round(self, numero_round: int) -> Round:
         return round3()
 
-    def entrer_scores(self, round: Round) -> List[Match]:
+    def entrer_scores(self, round_param: Round) -> List[Match]:
         return SCORES
 
     def modifier_classement(self, joueurs_classement: List[Joueur]) -> List[Joueur]:

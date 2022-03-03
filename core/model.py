@@ -57,9 +57,9 @@ class Round:
 
     # for instance comparison in testing
     def __eq__(self, other):
-        if isinstance(other, State):
+        if isinstance(other, Round):
             return self.nom == other.nom \
-                   and self.match_liste == other.lieu \
+                   and self.match_liste == other.match_liste \
                    and self.date_debut.date() == other.date_debut.date() \
                    and self.date_fin.date() == other.date_fin.date()
         else:
@@ -90,7 +90,7 @@ class Tournoi:
 
     # for instance comparison in testing
     def __eq__(self, other):
-        if isinstance(other, State):
+        if isinstance(other, Tournoi):
             return self.nom == other.nom \
                    and self.lieu == other.lieu \
                    and self.date_debut.date() == other.date_debut.date() \
@@ -102,6 +102,7 @@ class Tournoi:
                    and self.nombre_tours == other.nombre_tours
         else:
             return False
+
 
 class State:
     def __init__(self):
