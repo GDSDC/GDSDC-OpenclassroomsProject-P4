@@ -35,7 +35,9 @@ class Controller:
                     # Supprimer Joueur
                     elif choix_menu_joueurs == 3:
                         self.supprimer_joueur()
-                        # TODO : create controller.supprimer_joueur that select a player among actors list and remove it from list
+                    # MAJ classement d'un Joueur
+                    elif choix_menu_joueurs == 4:
+                        self.modifier_classement()
 
 
             # Gestion du Tournoi
@@ -213,10 +215,19 @@ class Controller:
         self.vue.afficher_resultats(scores_results)
 
     def modifier_classement_tournoi(self):
-        """Function to update players ranking"""
+        """Function to update players ranking in a Tournament"""
         self.afficher_resultats_tournoi()
         joueurs_classement = self.vue.modifier_classement(joueurs_classement=self.state.tournoi.joueurs_du_tournoi)
-        self.state.modifier_classement(joueurs_classement)
+        self.state.modifier_classement_tournoi(joueurs_classement)
+
+    def modifier_classement(self):
+        """Function to update players ranking in acteurs"""
+        acteurs_ordered_liste = sorted(list(self.state.acteurs.values()), key=sorters.player_alphabetical_by_lastname)
+        joueur_classement = self.vue.selectionner_acteur(acteurs_liste=acteurs_ordered_liste)
+        joueur_nouveau_classement = self.vue.modifier_classement(joueurs_classement=[joueur_classement])[0]
+        self.state.modifier_classement(joueur_classement=joueur_nouveau_classement)
+
+
 
     def terminer_tournoi(self):
         """Function to close tournament"""

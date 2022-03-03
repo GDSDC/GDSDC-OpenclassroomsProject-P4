@@ -299,7 +299,7 @@ Supprimer un Joueur
 
             # Choix d'un joueur parmis les acteurs
             acteurs_affichage = '''\nChoix d'un joueur à supprimer parmis les acteurs : '''
-            for (key, acteur) in enumerate(acteurs_liste,1):
+            for (key, acteur) in enumerate(acteurs_liste, 1):
                 acteurs_affichage += f'''\n{key} - {acteur.prenom} {acteur.nom_de_famille}'''
             print(acteurs_affichage)
 
@@ -312,7 +312,8 @@ Supprimer un Joueur
                                                                                                      len(acteurs_liste))))
             joueur_a_supprimer = acteurs_liste[acteur_key - 1]
             # Message
-            print(f'\nJoueur {joueur_a_supprimer.prenom} {joueur_a_supprimer.nom_de_famille} supprimé de la liste des acteurs avec succès !')
+            print(
+                f'\nJoueur {joueur_a_supprimer.prenom} {joueur_a_supprimer.nom_de_famille} supprimé de la liste des acteurs avec succès !')
 
         else:
             pass
@@ -446,9 +447,9 @@ Scores du round : {round_variable.nom.value}
         # Affichage de l'entête
         affichage_classement_entete = """
 ==========================================================
-Mise à jour des scores
+Mise à jour des classements
 ==========================================================
-Mettez à jour les scores des joueurs suivant :
+Mettez à jour le classement des joueurs suivant :
 """
         print(affichage_classement_entete)
 
@@ -487,6 +488,23 @@ Affichage de la liste des {nom_rapport}
         print("""
 ----------------------------------------------------------
 """)
+
+    def selectionner_acteur(self, acteurs_liste: List[Joueur]) -> Joueur:
+        """Function to select and return a player among acteurs"""
+
+        self.afficher_rapport_acteur_alphabetique(donnees_rapport=acteurs_liste)
+
+        selectionner_acteur_texte = 'Sélectionnez un joueur de la liste d\'acteurs ci-dessus : '
+        indice_acteur_selectionne = pvt.parse_and_validate(explanation=selectionner_acteur_texte, parse=pvt.parse_int,
+                                                           validate=lambda x: pvt.validate_integer_interval(
+                                                               parsed_int=x, interval=(1, len(acteurs_liste))))
+
+        acteur_selectionne = acteurs_liste[indice_acteur_selectionne - 1]
+
+        # Message
+        print(f'\nJoueur {acteur_selectionne.prenom} {acteur_selectionne.nom_de_famille} sélectionné avec susscès !')
+
+        return acteur_selectionne
 
     def format_players_data(self, data: List[Joueur]) -> List[str]:
         """Function that format players list into str list for printing in reports"""

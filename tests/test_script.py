@@ -221,7 +221,7 @@ def test_model_modifier_classement():
                           PLAYER_NOUVEAU_CLASSEMENT4]
 
     # When
-    state.modifier_classement(joueurs_classement=joueurs_classement)
+    state.modifier_classement_tournoi(joueurs_classement=joueurs_classement)
 
     # Then
     assert state.tournoi.joueurs_du_tournoi == joueurs_classement

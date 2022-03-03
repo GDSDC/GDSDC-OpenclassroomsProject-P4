@@ -149,8 +149,13 @@ class State:
     def entrer_scores(self, scores: List[Match]):
         self.tournoi.rounds[-1].match_liste = scores
 
-    def modifier_classement(self, joueurs_classement: List[Joueur]):
+    def modifier_classement_tournoi(self, joueurs_classement: List[Joueur]):
         self.tournoi.joueurs_du_tournoi = joueurs_classement
+
+    def modifier_classement(self, joueur_classement: Joueur):
+        """Function to update players ranking"""
+        pass
+        # TODO : find a way to look for the player in acteurs and update ranking only
 
 
 if __name__ == '__main__':
