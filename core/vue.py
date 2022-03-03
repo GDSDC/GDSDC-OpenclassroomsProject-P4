@@ -20,14 +20,6 @@ CHOIX_MENU_JOUEURS = ('Afficher la liste des Joueurs',
                       'Quitter')
 CHOIX_MENU_JOUEURS = dict(enumerate(CHOIX_MENU_JOUEURS, 1))
 
-# CHOIX_MENU_TOURNOI = ('Créer un nouveau Tournoi',
-#                       'Démarrer nouveau Round',
-#                       'Entrer les résultats',
-#                       'Mettre à jour le classement des Joueurs du Tournoi',
-#                       'Terminer le tournoi',
-#                       'Quitter')
-# CHOIX_MENU_TOURNOI = dict(enumerate(CHOIX_MENU_TOURNOI, 1))
-
 CHOIX_MENU_TOURNOI = {1: 'Créer un nouveau Tournoi',
                       2: 'Démarrer nouveau Round',
                       3: 'Entrer les résultats',
@@ -35,15 +27,24 @@ CHOIX_MENU_TOURNOI = {1: 'Créer un nouveau Tournoi',
                       5: 'Terminer le tournoi',
                       6: 'Quitter'}
 
-CHOIX_MENU_RAPPORTS = ('Liste de tous les Acteurs par ordre alphabétique',
-                       'Liste de tous les Acteurs par classement',
-                       'Liste de tous les Joueurs d\'un Tournoi par ordre alphabétique',
-                       'Liste de tous les Joueurs d\'un Tournoi par classement',
-                       'Liste de tous les Tournois',
-                       'Liste de tous les Tours d\'un Tournoi',
-                       'Liste de tous les Matchs d\'un Tournoi',
-                       'Quitter')
-CHOIX_MENU_RAPPORTS = dict(enumerate(CHOIX_MENU_RAPPORTS, 1))
+CHOIX_MENU_RAPPORTS = {1: 'Liste de tous les Acteurs par ordre alphabétique',
+                       2: 'Liste de tous les Acteurs par classement',
+                       3: 'Liste de tous les Joueurs d\'un Tournoi par ordre alphabétique',
+                       4: 'Liste de tous les Joueurs d\'un Tournoi par classement',
+                       5: 'Liste de tous les Tournois',
+                       6: 'Liste de tous les Tours d\'un Tournoi',
+                       7: 'Liste de tous les Matchs d\'un Tournoi',
+                       8:'Quitter'}
+
+# CHOIX_MENU_RAPPORTS = ('Liste de tous les Acteurs par ordre alphabétique',
+#                        'Liste de tous les Acteurs par classement',
+#                        'Liste de tous les Joueurs d\'un Tournoi par ordre alphabétique',
+#                        'Liste de tous les Joueurs d\'un Tournoi par classement',
+#                        'Liste de tous les Tournois',
+#                        'Liste de tous les Tours d\'un Tournoi',
+#                        'Liste de tous les Matchs d\'un Tournoi',
+#                        'Quitter')
+# CHOIX_MENU_RAPPORTS = dict(enumerate(CHOIX_MENU_RAPPORTS, 1))
 
 CHOIX_MENU_SAUVEGARDE_CHARGEMENT = ('Sauvegarder l\'état du programme',
                                     'Charger l\'état du programme',
@@ -496,9 +497,10 @@ Affichage de la liste des {nom_rapport}
         if not donnees_rapport:
             print(f'\nAuncun Round créé dans le Tournoi {tournoi.nom} !')
         else:
-            # TODO : format all date to human style
-            formatted_data = [f"Tour {round_variable.nom.value} qui a débuté le : {round_variable.date_debut.strftime('%d-%m-%Y')}" for
-                              round_variable in donnees_rapport]
+            formatted_data = [
+                f"Tour {round_variable.nom.value} qui a débuté le : {round_variable.date_debut.strftime('%d-%m-%Y')}"
+                for
+                round_variable in donnees_rapport]
             self.afficher_rapports(nom_rapport=f'tours du tournoi {tournoi.nom}', donnees_rapport=formatted_data)
 
     def afficher_rapport_matchs_tournoi(self, tournoi: Tournoi, donnees_rapport: List[Match]):
