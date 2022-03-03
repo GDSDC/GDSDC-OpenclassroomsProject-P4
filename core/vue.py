@@ -285,6 +285,40 @@ Renseigner les informations du joueur n°{joueur}
 
         return joueurs
 
+    def supprimer_joueur(self, acteurs_liste: List[Joueur]) -> Joueur:
+        """Function to select a player to remove from acteurs."""
+
+        if acteurs_liste:
+            # Affichage de l'entête
+            affichage_supprimer_joueur = f"""
+==============================
+Supprimer un Joueur
+==============================
+            """
+            print(affichage_supprimer_joueur)
+
+            # Choix d'un joueur parmis les acteurs
+            acteurs_affichage = '''\nChoix d'un joueur à supprimer parmis les acteurs : '''
+            for (key, acteur) in enumerate(acteurs_liste,1):
+                acteurs_affichage += f'''\n{key} - {acteur.prenom} {acteur.nom_de_famille}'''
+            print(acteurs_affichage)
+
+            choix_acteurs_texte = '\nChoisissez un acteur parmis la liste en entrant son numéro : '
+            acteur_key = pvt.parse_and_validate(explanation=choix_acteurs_texte,
+                                                parse=pvt.parse_int,
+                                                validate=lambda x: pvt.validate_integer_interval(parsed_int=x,
+                                                                                                 interval=(
+                                                                                                     1,
+                                                                                                     len(acteurs_liste))))
+            joueur_a_supprimer = acteurs_liste[acteur_key - 1]
+            # Message
+            print(f'\nJoueur {joueur_a_supprimer.prenom} {joueur_a_supprimer.nom_de_famille} supprimé de la liste des acteurs avec succès !')
+
+        else:
+            pass
+
+        return joueur_a_supprimer
+
     def afficher_paires_joueurs(self, round_param: Round):
 
         nombre_de_paires = len(round_param.match_liste)

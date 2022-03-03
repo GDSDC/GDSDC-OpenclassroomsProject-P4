@@ -129,6 +129,14 @@ class State:
         nouvel_indice = list(self.acteurs.keys())[-1] + 1
         self.acteurs[nouvel_indice] = nouveau_joueur
 
+    def supprimer_joueur(self, joueur_a_supprimer: Joueur):
+        """Function to delete joueur_a_supprimer from self.acteurs"""
+        for key, value in self.acteurs.items():
+            if value == joueur_a_supprimer:
+                del self.acteurs[key]
+                break
+
+
     def creer_nouveau_round(self, nouveau_round: Round):
         self.tournoi.rounds.append(nouveau_round)
 

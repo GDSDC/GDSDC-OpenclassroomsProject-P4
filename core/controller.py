@@ -123,10 +123,19 @@ class Controller:
     # Gestion des joueurs
 
     def ajouter_nouveau_joueur(self):
-        nouveau_joueur = self.vue.ajouter_joueurs(nb_joueurs=1, )
+        """Function to add a player to acteurs"""
+        nouveau_joueur = self.vue.ajouter_joueurs(nb_joueurs=1)
         self.state.ajouter_nouveau_joueur(nouveau_joueur[0])
 
-    # Gestion du tournoi
+    def supprimer_joueur(self):
+        """Function to remove a player from acteurs"""
+        # Order data
+        acteurs_liste = list(self.state.acteurs.values())
+        acteurs_liste_ordered = sorted(acteurs_liste, key=sorters.player_alphabetical_by_lastname)
+        joueur_a_supprimer = self.vue.supprimer_joueur(acteurs_liste=acteurs_liste_ordered)
+        self.state.supprimer_joueur(joueur_a_supprimer=joueur_a_supprimer)
+
+        # Gestion du tournoi
 
     def creer_nouveau_tournoi(self):
         nouveau_tournoi = self.vue.menu_creer_nouveau_tournoi(acteurs=self.state.acteurs)
