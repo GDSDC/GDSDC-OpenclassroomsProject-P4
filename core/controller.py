@@ -1,4 +1,4 @@
-from core.vue import Vue, CHOIX_MENU_PRINCIPAL, CHOIX_MENU_TOURNOI, CHOIX_MENU_RAPPORTS
+from core.vue import Vue, CHOIX_MENU_PRINCIPAL, CHOIX_MENU_TOURNOI, CHOIX_MENU_RAPPORTS, CHOIX_MENU_JOUEURS
 from core.model import State, Joueur, Tournoi, Score, Round, NOMBRE_DE_JOUEURS
 from typing import List, Optional
 from core import sorters
@@ -21,8 +21,18 @@ class Controller:
 
             # Gestion des Joueurs
             if choix_menu_principal == 1:
-                pass
                 # TODO : créer menu Joueurs
+                must_exit_players = False
+                while not must_exit_players:
+                    choix_menu_joueurs = self.vue.afficher_menu(nom_menu=CHOIX_MENU_PRINCIPAL[1],
+                                                                menu=CHOIX_MENU_JOUEURS)
+                    # Afficher liste des Joueurs
+                    if choix_menu_joueurs == 1:
+                        self.afficher_rapport_acteur_alphabetique()
+                    # Ajouter nouveau Joueur
+                    elif choix_menu_joueurs == 2:
+                        self.ajouter_nouveau_joueur()
+
 
             # Gestion du Tournoi
             elif choix_menu_principal == 2:
@@ -108,15 +118,15 @@ class Controller:
 
     # Gestion des joueurs
 
+    def ajouter_nouveau_joueur(self):
+        nouveau_joueur = self.vue.ajouter_joueurs(nb_joueurs=1, )
+        self.state.ajouter_nouveau_joueur(nouveau_joueur[0])
+
     # Gestion du tournoi
 
     def creer_nouveau_tournoi(self):
         nouveau_tournoi = self.vue.menu_creer_nouveau_tournoi(acteurs=self.state.acteurs)
         self.state.creer_nouveau_tournoi(nouveau_tournoi)
-
-    # def ajouter_joueurs(self, nb_joueurs: Optional[int] = NOMBRE_DE_JOUEURS):
-    #     joueurs = self.vue.ajouter_joueurs(nb_joueurs=nb_joueurs)
-    #     self.state.ajouter_joueurs(joueurs)
 
     def selectionner_tournoi(self) -> Tournoi:
         """Function to select a Tournament among old Tournament and the actual"""

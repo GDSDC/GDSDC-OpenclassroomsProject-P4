@@ -160,7 +160,7 @@ Créer un nouveau Tournoi
         print(f'\nTournoi {tournois[tournoi_selectionne - 1].nom} sélectionné avec succès !')
         return tournois[tournoi_selectionne - 1]
 
-    def ajouter_joueurs(self, nb_joueurs: Optional[int], acteurs: Dict[int, Joueur]) -> List[Joueur]:
+    def ajouter_joueurs(self, nb_joueurs: Optional[int], acteurs: Optional[Dict[int, Joueur]] = None) -> List[Joueur]:
         """AJout des informations de huit joueurs dans une liste de dictionnaires à destination du Controller."""
 
         # Initialisation
@@ -172,7 +172,7 @@ Créer un nouveau Tournoi
         # Affichage de l'entête
         affichage_menu_ajouter_joueurs = f"""
 ==============================
-Ajouter joueurs au tournoi
+Ajouter joueurs
 ==============================
 """
         print(affichage_menu_ajouter_joueurs)
@@ -216,7 +216,7 @@ Ajouter joueurs au tournoi
             nb_joueurs = nb_joueurs - len(choix_acteurs)
             affichage_menu_ajouter_nouveaux_joueurs = f"""
 ==============================
-Ajouter {nb_joueurs} nouveaux joueurs au tournoi
+Ajouter {nb_joueurs} nouveaux joueurs
 ==============================
 """
             print(affichage_menu_ajouter_nouveaux_joueurs)

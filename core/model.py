@@ -125,9 +125,9 @@ class State:
     def nombre_joueurs(self):
         return len(self.tournoi.joueurs_du_tournoi)
 
-    # def ajouter_joueurs(self, joueurs: List[Joueur]):
-    #     self.tournoi.joueurs_du_tournoi = joueurs
-    #     self.tournoi.joueurs_en_jeux = joueurs
+    def ajouter_nouveau_joueur(self, nouveau_joueur: Joueur):
+        nouvel_indice = list(self.acteurs.keys())[-1] + 1
+        self.acteurs[nouvel_indice] = nouveau_joueur
 
     def creer_nouveau_round(self, nouveau_round: Round):
         self.tournoi.rounds.append(nouveau_round)
