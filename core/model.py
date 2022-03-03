@@ -23,7 +23,7 @@ class Joueur:
     """Classe décrivant un Joueur"""
     nom_de_famille: str
     prenom: str
-    date_de_naissance: date
+    date_de_naissance: datetime
     sexe: Sex
     classement: int
 
@@ -55,6 +55,16 @@ class Round:
     date_debut: datetime
     date_fin: datetime
 
+    # for instance comparison in testing
+    def __eq__(self, other):
+        if isinstance(other, State):
+            return self.nom == other.nom \
+                   and self.match_liste == other.lieu \
+                   and self.date_debut.date() == other.date_debut.date() \
+                   and self.date_fin.date() == other.date_fin.date()
+        else:
+            return False
+
 
 # Classe décrivant le Tournoi
 class ControleDuTemps(Enum):
@@ -69,8 +79,8 @@ class Tournoi:
     """Classe décrivant un Tournoi"""
     nom: str
     lieu: str
-    date_debut: date
-    date_fin: date
+    date_debut: datetime
+    date_fin: datetime
     controle_du_temps: ControleDuTemps
     description: str
     rounds: List[Round]
@@ -78,6 +88,20 @@ class Tournoi:
     joueurs_en_jeux: Optional[List[Joueur]] = None
     nombre_tours: int = NOMBRE_DE_TOURS
 
+    # for instance comparison in testing
+    def __eq__(self, other):
+        if isinstance(other, State):
+            return self.nom == other.nom \
+                   and self.lieu == other.lieu \
+                   and self.date_debut.date() == other.date_debut.date() \
+                   and self.date_fin.date() == other.date_fin.date() \
+                   and self.controle_du_temps == other.controle_du_temps \
+                   and self.description == other.description \
+                   and self.joueurs_du_tournoi == other.joueurs_du_tournoi \
+                   and self.joueurs_en_jeux == other.joueurs_en_jeux \
+                   and self.nombre_tours == other.nombre_tours
+        else:
+            return False
 
 class State:
     def __init__(self):

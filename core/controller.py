@@ -1,4 +1,4 @@
-from core.vue import Vue, CHOIX_MENU_PRINCIPAL, CHOIX_MENU_TOURNOI
+from core.vue import Vue, CHOIX_MENU_PRINCIPAL, CHOIX_MENU_TOURNOI, CHOIX_MENU_RAPPORTS
 from core.model import State, Joueur, Tournoi, Score, Round, NOMBRE_DE_JOUEURS
 from typing import List, Optional
 from core import sorters
@@ -51,8 +51,42 @@ class Controller:
                     # Quitter
                     elif choix_menu_tournoi == 6:
                         must_exit_tournament = True
+
+            # Rapports
             elif choix_menu_principal == 3:
-                pass
+                must_exit_rapports = False
+                while not must_exit_rapports:
+                    choix_menu_rapports = self.vue.afficher_menu(nom_menu=CHOIX_MENU_PRINCIPAL[3],
+                                                                 menu=CHOIX_MENU_RAPPORTS)
+                    # Acteurs par ordre alphabétique
+                    if choix_menu_rapports == 1:
+                        self.afficher_rapport_acteur_alphabetique()
+                    # Acteurs par par classement
+                    elif choix_menu_rapports == 2:
+                        self.afficher_rapport_acteur_classement()
+                    # Joueurs d'un Tournoi par ordre alphabétique
+                    elif choix_menu_rapports == 3:
+                        tournoi_selectionne = self.selectionner_tournoi()
+                        self.afficher_rapport_joueurs_alphabetique(tournoi=tournoi_selectionne)
+                    # Joueurs d'un Tournoi par classement
+                    elif choix_menu_rapports == 4:
+                        tournoi_selectionne = self.selectionner_tournoi()
+                        self.afficher_rapport_joueurs_classement(tournoi=tournoi_selectionne)
+                    # Tournois
+                    elif choix_menu_rapports == 5:
+                        self.afficher_rapport_tournois()
+                    # Tours d'un Tournoi
+                    elif choix_menu_rapports == 6:
+                        tournoi_selectionne = self.selectionner_tournoi()
+                        self.afficher_rapport_tours_tournoi(tournoi=tournoi_selectionne)
+                    # Matchs d'un Tournoi
+                    elif choix_menu_rapports == 7:
+                        tournoi_selectionne = self.selectionner_tournoi()
+                        self.afficher_rapport_matchs_tournoi(tournoi=tournoi_selectionne)
+                    # Quitter
+                    elif choix_menu_rapports == 8:
+                        must_exit_rapports = True
+
             elif choix_menu_principal == 4:
                 pass
             elif choix_menu_principal == 5:
@@ -69,6 +103,25 @@ class Controller:
     # def ajouter_joueurs(self, nb_joueurs: Optional[int] = NOMBRE_DE_JOUEURS):
     #     joueurs = self.vue.ajouter_joueurs(nb_joueurs=nb_joueurs)
     #     self.state.ajouter_joueurs(joueurs)
+
+    def selectionner_tournoi(self) -> Tournoi:
+        """Function to select a Tournament among old Tournament and the actual"""
+        # Order data
+        ordered_tournois = sorted(self.obtenir_liste_tournois(), key=sorters.tournament_chronological, reverse=True)
+        # Select Tournament in list
+        tournoi_selectionne = self.vue.selectionner_tournoi(tournois=ordered_tournois)
+        return tournoi_selectionne
+
+    def obtenir_liste_tournois(self) -> List[Tournoi]:
+        """Function to get all Tournaments (old and actual) in one list"""
+        # Get Tournaments list
+        tournois = []
+        # Old Tournaments
+        tournois.extend(self.state.tournois)
+        # Actual Tournament
+        if self.state.tournoi:
+            tournois.append(self.state.tournoi)
+        return tournois
 
     def mettre_a_jour_joueurs(self):
         """ Generation of new state.tournoi.joueurs_en_jeux list"""
@@ -168,7 +221,7 @@ class Controller:
     def afficher_rapport_tournois(self):
         """Function that shows a descending chronological order report or tournaments"""
         # Order data
-        ordered_data = sorted(self.state.tournois, key=sorters.tournament_chronological, reverse=True)
+        ordered_data = sorted(self.obtenir_liste_tournois(), key=sorters.tournament_chronological, reverse=True)
         # Showing report
         self.vue.afficher_rapport_tournois(donnees_rapport=ordered_data)
 

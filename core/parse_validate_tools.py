@@ -1,5 +1,5 @@
 from typing import Any, Tuple, Optional, Callable
-from datetime import date
+from datetime import datetime
 from core.model import Sex, ControleDuTemps, State
 
 # Global constant
@@ -39,7 +39,7 @@ def parse_date(user_input: str):
     """Function that verify the input is a valid date"""
     try:
         day, month, year = user_input.split('/')
-        res = date(int(year), int(month), int(day))
+        res = datetime(int(year), int(month), int(day))
         return res, True, ''
     except ValueError:
         return None, False, f"{user_input} n'est pas un date valide."
@@ -48,7 +48,7 @@ def parse_date(user_input: str):
 # Functions for input validation
 
 
-def validate_date_format(parsed_date: date):
+def validate_date_format(parsed_date: datetime):
     """Function that verify if the date format is dd/mm/yyyy"""
     if len(str(parsed_date.year)) == 4:
         res = parsed_date

@@ -3,30 +3,29 @@ from typing import List, Optional, Tuple, Dict
 from core.controller import Controller
 from core.model import *
 from core.vue import Vue
-from datetime import datetime, date, timedelta
+from datetime import datetime, timedelta
 
 # Global Constants
 
-TEST_DATETIME = datetime(year=2022, month=2, day=24)
-TEST_DATE = TEST_DATETIME.date()
+
 
 PLAYER1 = Joueur(nom_de_famille='Nom de famille TEST1', prenom='prenom TEST1',
-                 date_de_naissance=TEST_DATE, sexe=Sex.MALE, classement=1)
+                 date_de_naissance=datetime.now(), sexe=Sex.MALE, classement=1)
 PLAYER2 = Joueur(nom_de_famille='Nom de famille TEST2', prenom='prenom TEST2',
-                 date_de_naissance=TEST_DATE, sexe=Sex.FEMALE, classement=2)
+                 date_de_naissance=datetime.now(), sexe=Sex.FEMALE, classement=2)
 PLAYER3 = Joueur(nom_de_famille='Nom de famille TEST3', prenom='prenom TEST3',
-                 date_de_naissance=TEST_DATE, sexe=Sex.MALE, classement=3)
+                 date_de_naissance=datetime.now(), sexe=Sex.MALE, classement=3)
 PLAYER4 = Joueur(nom_de_famille='Nom de famille TEST4', prenom='prenom TEST4',
-                 date_de_naissance=TEST_DATE, sexe=Sex.FEMALE, classement=4)
+                 date_de_naissance=datetime.now(), sexe=Sex.FEMALE, classement=4)
 
 PLAYER_NOUVEAU_CLASSEMENT1 = Joueur(nom_de_famille='Nom de famille TEST1', prenom='prenom TEST1',
-                                    date_de_naissance=TEST_DATE, sexe=Sex.MALE, classement=10)
+                                    date_de_naissance=datetime.now(), sexe=Sex.MALE, classement=10)
 PLAYER_NOUVEAU_CLASSEMENT2 = Joueur(nom_de_famille='Nom de famille TEST2', prenom='prenom TEST2',
-                                    date_de_naissance=TEST_DATE, sexe=Sex.FEMALE, classement=20)
+                                    date_de_naissance=datetime.now(), sexe=Sex.FEMALE, classement=20)
 PLAYER_NOUVEAU_CLASSEMENT3 = Joueur(nom_de_famille='Nom de famille TEST3', prenom='prenom TEST3',
-                                    date_de_naissance=TEST_DATE, sexe=Sex.MALE, classement=30)
+                                    date_de_naissance=datetime.now(), sexe=Sex.MALE, classement=30)
 PLAYER_NOUVEAU_CLASSEMENT4 = Joueur(nom_de_famille='Nom de famille TEST4', prenom='prenom TEST4',
-                                    date_de_naissance=TEST_DATE, sexe=Sex.FEMALE, classement=40)
+                                    date_de_naissance=datetime.now(), sexe=Sex.FEMALE, classement=40)
 
 SCORES_VIDE = [((PLAYER1, None), (PLAYER2, None)), ((PLAYER3, None), (PLAYER4, None))]
 SCORES = [((PLAYER1, Score.GAGNANT), (PLAYER2, Score.PERDANT)), ((PLAYER3, Score.GAGNANT), (PLAYER4, Score.PERDANT))]
@@ -35,8 +34,8 @@ SCORES = [((PLAYER1, Score.GAGNANT), (PLAYER2, Score.PERDANT)), ((PLAYER3, Score
 def tournoi1():
     return Tournoi(nom='Tournoi_TEST',
                    lieu='lieu_TEST',
-                   date_debut=TEST_DATE,
-                   date_fin=TEST_DATE,
+                   date_debut=datetime.now(),
+                   date_fin=datetime.now(),
                    controle_du_temps=ControleDuTemps.BLITZ,
                    description='Remarques_TEST',
                    joueurs_du_tournoi=[PLAYER1, PLAYER2, PLAYER3, PLAYER4],
@@ -47,8 +46,8 @@ def tournoi1():
 def tournoi2():
     return Tournoi(nom='Tournoi_TEST',
                    lieu='lieu_TEST',
-                   date_debut=TEST_DATE + timedelta(days=10),
-                   date_fin=TEST_DATE + timedelta(days=10),
+                   date_debut=datetime.now() + timedelta(days=10),
+                   date_fin=datetime.now() + timedelta(days=10),
                    controle_du_temps=ControleDuTemps.BLITZ,
                    description='Remarques_TEST',
                    joueurs_du_tournoi=[PLAYER1, PLAYER2, PLAYER3, PLAYER4],
@@ -59,8 +58,8 @@ def tournoi2():
 def tournoi3():
     return Tournoi(nom='Tournoi_TEST',
                    lieu='lieu_TEST',
-                   date_debut=TEST_DATE + timedelta(days=20),
-                   date_fin=TEST_DATE + timedelta(days=20),
+                   date_debut=datetime.now() + timedelta(days=20),
+                   date_fin=datetime.now() + timedelta(days=20),
                    controle_du_temps=ControleDuTemps.BLITZ,
                    description='Remarques_TEST',
                    joueurs_du_tournoi=[PLAYER1, PLAYER2, PLAYER3, PLAYER4],
@@ -69,23 +68,23 @@ def tournoi3():
 
 
 def round1():
-    return Round(nom=RoundName.ROUND1, match_liste=[], date_debut=TEST_DATETIME,
-                 date_fin=TEST_DATETIME)
+    return Round(nom=RoundName.ROUND1, match_liste=[], date_debut=datetime.now(),
+                 date_fin=datetime.now())
 
 
 def round2():
-    return Round(nom=RoundName.ROUND2, match_liste=[], date_debut=TEST_DATETIME,
-                 date_fin=TEST_DATETIME)
+    return Round(nom=RoundName.ROUND2, match_liste=[], date_debut=datetime.now(),
+                 date_fin=datetime.now())
 
 
 def round3():
-    return Round(nom=RoundName.ROUND3, match_liste=SCORES, date_debut=TEST_DATETIME,
-                 date_fin=TEST_DATETIME)
+    return Round(nom=RoundName.ROUND3, match_liste=SCORES, date_debut=datetime.now(),
+                 date_fin=datetime.now())
 
 
 def round4():
-    return Round(nom=RoundName.ROUND4, match_liste=SCORES_VIDE, date_debut=TEST_DATETIME,
-                 date_fin=TEST_DATETIME)
+    return Round(nom=RoundName.ROUND4, match_liste=SCORES_VIDE, date_debut=datetime.now(),
+                 date_fin=datetime.now())
 
 
 def state1():
@@ -117,8 +116,8 @@ class TestVue(Vue):
     def menu_creer_nouveau_tournoi(self, acteurs: Dict[int, Joueur]) -> Tournoi:
         return tournoi1()
 
-    def ajouter_joueurs(self, nb_joueurs: Optional[int]) -> List[Joueur]:
-        return [PLAYER1, PLAYER2, PLAYER3, PLAYER4]
+    # def ajouter_joueurs(self, nb_joueurs: Optional[int]) -> List[Joueur]:
+    #     return [PLAYER1, PLAYER2, PLAYER3, PLAYER4]
 
     def creer_nouveau_round(self, numero_round: int) -> Round:
         return round3()

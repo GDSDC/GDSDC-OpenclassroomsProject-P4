@@ -1,5 +1,5 @@
 from typing import List, Optional, Any, Dict
-from datetime import date, datetime
+from datetime import datetime
 
 from core.model import Joueur, Tournoi, Score, Round, RoundName, Match, NOMBRE_DE_JOUEURS
 from core import parse_validate_tools as pvt
@@ -19,13 +19,20 @@ CHOIX_MENU_JOUEURS = ('Afficher la liste des Joueurs',
                       'Quitter')
 CHOIX_MENU_JOUEURS = dict(enumerate(CHOIX_MENU_JOUEURS, 1))
 
-CHOIX_MENU_TOURNOI = ('Créer un nouveau Tournoi',
-                      'Démarrer nouveau Round',
-                      'Entrer les résultats',
-                      'Mettre à jour le classement des Joueurs du Tournoi',
-                      'Terminer le tournoi',
-                      'Quitter')
-CHOIX_MENU_TOURNOI = dict(enumerate(CHOIX_MENU_TOURNOI, 1))
+# CHOIX_MENU_TOURNOI = ('Créer un nouveau Tournoi',
+#                       'Démarrer nouveau Round',
+#                       'Entrer les résultats',
+#                       'Mettre à jour le classement des Joueurs du Tournoi',
+#                       'Terminer le tournoi',
+#                       'Quitter')
+# CHOIX_MENU_TOURNOI = dict(enumerate(CHOIX_MENU_TOURNOI, 1))
+
+CHOIX_MENU_TOURNOI = {1: 'Créer un nouveau Tournoi',
+                      2: 'Démarrer nouveau Round',
+                      3: 'Entrer les résultats',
+                      4: 'Mettre à jour le classement des Joueurs du Tournoi',
+                      5: 'Terminer le tournoi',
+                      6: 'Quitter'}
 
 CHOIX_MENU_RAPPORTS = ('Liste de tous les Acteurs par ordre alphabétique',
                        'Liste de tous les Acteurs par classement',
@@ -108,10 +115,10 @@ Créer un nouveau Tournoi
                                                          validate=pvt.no_validation)
 
         # Définition date de début de tournoi
-        nouveau_tournoi['date_debut'] = date.today()
+        nouveau_tournoi['date_debut'] = datetime.today()
 
         # Définition date de fin de tournoi par defaut
-        # nouveau_tournoi['date_fin'] = date.today()
+        # nouveau_tournoi['date_fin'] = datetime.today()
 
         # Définition le contrôle du temps
         nouveau_tournoi_texte_controle_du_temps = '\nRenseignez le contrôle du temps ("bullet", "blitz" ou "coup rapide") : '
@@ -134,6 +141,23 @@ Créer un nouveau Tournoi
         print(f'\nNouveau Tournoi {nouveau_tournoi.nom} créé avec succès !')
 
         return nouveau_tournoi
+
+    def selectionner_tournoi(self, tournois: List[Tournoi]) -> Tournoi:
+        """Function to select a Tournament among a list"""
+
+        # Show Tournament list
+        self.afficher_rapport_tournois(donnees_rapport=tournois)
+
+        # Select One in list
+        selectionner_tournoi_texte = f'\nSélectionnez un Tournoi dans la liste ci-dessus (1 à {len(tournois)}) : '
+        tournoi_selectionne = pvt.parse_and_validate(explanation=selectionner_tournoi_texte, parse=pvt.parse_int,
+                                                     validate=lambda x: pvt.validate_integer_interval(parsed_int=x,
+                                                                                                      interval=(1,
+                                                                                                                len(tournois))))
+        # Return
+        print(f'\nTournoi {tournois[tournoi_selectionne-1].nom} sélectionné avec succès !')
+        return tournois[tournoi_selectionne-1]
+
 
     def ajouter_joueurs(self, nb_joueurs: Optional[int], acteurs: Dict[int, Joueur]) -> List[Joueur]:
         """AJout des informations de huit joueurs dans une liste de dictionnaires à destination du Controller."""
@@ -462,24 +486,29 @@ Affichage de la liste des {nom_rapport}
     def afficher_rapport_tournois(self, donnees_rapport: List[Tournoi]):
         """Function that shows a descending chronological order report or tournaments"""
 
-        formatted_data = [f'Tournoi {tournoi.nom} de {tournoi.lieu} qui a débuté le : {tournoi.date_debut}' for
+        formatted_data = [f"Tournoi {tournoi.nom} de {tournoi.lieu} qui a débuté le : {tournoi.date_debut.strftime('%d-%m-%Y')}" for
                           tournoi in donnees_rapport]
         self.afficher_rapports(nom_rapport='tournois', donnees_rapport=formatted_data)
 
     def afficher_rapport_tours_tournoi(self, tournoi: Tournoi, donnees_rapport: List[Round]):
         """Function that shows a report or all rounds of a tournament"""
-
-        formatted_data = [f'Tour {round.nom.value} qui a débuté le : {round.date_debut}' for
-                          round in donnees_rapport]
-        self.afficher_rapports(nom_rapport=f'tours du tournoi {tournoi.nom}', donnees_rapport=formatted_data)
+        if not donnees_rapport:
+            print(f'\nAuncun Round créé dans le Tournoi {tournoi.nom} !')
+        else:
+        # TODO : format all date to human style
+            formatted_data = [f"Tour {round.nom.value} qui a débuté le : {round.date_debut.strftime('%d-%m-%Y')}" for
+                              round in donnees_rapport]
+            self.afficher_rapports(nom_rapport=f'tours du tournoi {tournoi.nom}', donnees_rapport=formatted_data)
 
     def afficher_rapport_matchs_tournoi(self, tournoi: Tournoi, donnees_rapport: List[Match]):
         """Function that shows a report or all matchs of a tournament"""
-
-        formatted_data = [
-            f'Match : {joueur_1.prenom} {joueur_1.nom_de_famille} // {joueur_2.prenom} {joueur_2.nom_de_famille}' for
-            ((joueur_1, _), (joueur_2, _)) in donnees_rapport]
-        self.afficher_rapports(nom_rapport=f'matchs du tournoi {tournoi.nom}', donnees_rapport=formatted_data)
+        if not donnees_rapport:
+            print(f'\nAucun match joué dans le Tournoi {tournoi.nom} !')
+        else:
+            formatted_data = [
+                f'Match : {joueur_1.prenom} {joueur_1.nom_de_famille} // {joueur_2.prenom} {joueur_2.nom_de_famille}' for
+                ((joueur_1, _), (joueur_2, _)) in donnees_rapport]
+            self.afficher_rapports(nom_rapport=f'matchs du tournoi {tournoi.nom}', donnees_rapport=formatted_data)
 
 
 if __name__ == '__main__':
