@@ -34,7 +34,7 @@ CHOIX_MENU_RAPPORTS = {1: 'Liste de tous les Acteurs par ordre alphabétique',
                        5: 'Liste de tous les Tournois',
                        6: 'Liste de tous les Tours d\'un Tournoi',
                        7: 'Liste de tous les Matchs d\'un Tournoi',
-                       8:'Quitter'}
+                       8: 'Quitter'}
 
 # CHOIX_MENU_RAPPORTS = ('Liste de tous les Acteurs par ordre alphabétique',
 #                        'Liste de tous les Acteurs par classement',
@@ -160,7 +160,7 @@ Créer un nouveau Tournoi
         print(f'\nTournoi {tournois[tournoi_selectionne - 1].nom} sélectionné avec succès !')
         return tournois[tournoi_selectionne - 1]
 
-    def ajouter_joueurs(self, nb_joueurs: Optional[int], acteurs: Dict[int, Joueur]) -> List[Joueur]:
+    def ajouter_joueurs(self, nb_joueurs: Optional[int], acteurs: Optional[Dict[int, Joueur]] = None) -> List[Joueur]:
         """AJout des informations de huit joueurs dans une liste de dictionnaires à destination du Controller."""
 
         # Initialisation
@@ -172,7 +172,7 @@ Créer un nouveau Tournoi
         # Affichage de l'entête
         affichage_menu_ajouter_joueurs = f"""
 ==============================
-Ajouter joueurs au tournoi
+Ajouter joueurs
 ==============================
 """
         print(affichage_menu_ajouter_joueurs)
@@ -216,7 +216,7 @@ Ajouter joueurs au tournoi
             nb_joueurs = nb_joueurs - len(choix_acteurs)
             affichage_menu_ajouter_nouveaux_joueurs = f"""
 ==============================
-Ajouter {nb_joueurs} nouveaux joueurs au tournoi
+Ajouter {nb_joueurs} nouveaux joueurs
 ==============================
 """
             print(affichage_menu_ajouter_nouveaux_joueurs)
@@ -274,6 +274,10 @@ Renseigner les informations du joueur n°{joueur}
 
                 # Formatage des informations de joueurs au format Joueur
                 nouveaux_joueurs[joueur - 1] = Joueur(**nouveaux_joueurs[joueur - 1])
+
+                # Message
+                print(
+                    f'\nNouveau Joueur {nouveaux_joueurs[joueur - 1].prenom} {nouveaux_joueurs[joueur - 1].nom_de_famille} ajouté avec succès !')
 
         # Concatenation des acteurs et joueurs
         joueurs.extend(choix_acteurs)
