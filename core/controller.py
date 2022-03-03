@@ -32,6 +32,10 @@ class Controller:
                     # Ajouter nouveau Joueur
                     elif choix_menu_joueurs == 2:
                         self.ajouter_nouveau_joueur()
+                    # Supprimer Joueur
+                    elif choix_menu_joueurs == 3:
+                        self.supprimer_joueur()
+                        # TODO : create controller.supprimer_joueur that select a player among actors list and remove it from list
 
 
             # Gestion du Tournoi
