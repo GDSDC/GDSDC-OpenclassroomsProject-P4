@@ -77,5 +77,5 @@ TOURNOI3 = Tournoi(nom='Tournoi_TEST_3',
 init_controller = Controller()
 init_controller.state.acteurs = ACTEURS
 init_controller.state.tournois = [TOURNOI2, TOURNOI3]
-init_controller.state.tournoi = TOURNOI1
+# init_controller.state.tournoi = TOURNOI1
 init_controller.start()

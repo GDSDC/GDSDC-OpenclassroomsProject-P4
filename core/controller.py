@@ -41,13 +41,27 @@ class Controller:
                             print('\nVeuillez créer un Tournoi avant de démarrer un nouveau Round.')
                     # Entrer les résultats
                     elif choix_menu_tournoi == 3:
-                        self.entrer_scores()
+                        if self.state.tournoi:
+                            if self.state.tournoi.rounds:
+                                self.entrer_scores()
+                            else:
+                                print('\nVeuillez démarrer un nouveau Round avant d\'entrer les scores.')
+                        else:
+                            print(
+                                '\nVeuillez créer un Tournoi et démarrer un nouveau Round avant d\'entrer les scores.')
+
                     # MAJ classement des Joueurs du Tournoi
                     elif choix_menu_tournoi == 4:
-                        self.modifier_classement_tournoi()
+                        if self.state.tournoi:
+                            self.modifier_classement_tournoi()
+                        else:
+                            print('\nVeuillez créer un Tournoi avant de modifier le classement de ses Joueurs.')
                     # Terminer Tournoi
                     elif choix_menu_tournoi == 5:
-                        self.terminer_tournoi()
+                        if self.state.tournoi:
+                            self.terminer_tournoi()
+                        else:
+                            print('\nVeuillez créer un Tournoi avant de le terminer.')
                     # Quitter
                     elif choix_menu_tournoi == 6:
                         must_exit_tournament = True
@@ -185,6 +199,9 @@ class Controller:
         """Function to close tournament"""
 
         # Send Sate to database
+
+        # Message
+        print(f'\nTournoi {self.state.tournoi.nom} terminé avec succès !')
 
         # Init the actual instance
         self.__init__()

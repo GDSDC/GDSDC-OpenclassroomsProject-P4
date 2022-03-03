@@ -5,6 +5,7 @@ from core.model import Joueur, Tournoi, Score, Round, RoundName, Match, NOMBRE_D
 from core import parse_validate_tools as pvt
 
 # Constantes Globales
+# TODO : Set all Quit options to 0 so it is easier to quit
 CHOIX_MENU_PRINCIPAL = ('Gestion des Joueurs (ajouter/supprimer)',
                         'Gestion du Tournoi',
                         'Rapports',
