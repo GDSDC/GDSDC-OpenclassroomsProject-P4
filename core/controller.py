@@ -130,7 +130,7 @@ class Controller:
     def ajouter_nouveau_joueur(self):
         """Function to add a player to acteurs"""
         nouveau_joueur = self.vue.ajouter_joueurs(nb_joueurs=1)
-        self.state.ajouter_nouveau_joueur(nouveau_joueur[0])
+        self.state.ajouter_nouveau_joueur(nouveau_joueur)
 
     def supprimer_joueur(self):
         """Function to remove a player from acteurs"""
@@ -143,8 +143,20 @@ class Controller:
         # Gestion du tournoi
 
     def creer_nouveau_tournoi(self):
-        nouveau_tournoi = self.vue.menu_creer_nouveau_tournoi(acteurs=self.state.acteurs)
+        """Function to create a new Tournament and update acteurs with new players"""
+        # Initialisation
+        nouveau_tournoi = None
+        nouveaux_joueurs_a_ajouter_aux_acteurs = []
+        # Get data from user
+        tournoi, joueurs = self.vue.creer_nouveau_tournoi(acteurs=self.state.acteurs)
+        nouveau_tournoi = tournoi
+        nouveaux_joueurs_a_ajouter_aux_acteurs = joueurs
+        # nouveau_tournoi = self.vue.creer_nouveau_tournoi(acteurs=self.state.acteurs)
+        # Create new Tournament
         self.state.creer_nouveau_tournoi(nouveau_tournoi)
+        # Update acteurs
+        self.state.ajouter_nouveau_joueur(nouveaux_joueurs=nouveaux_joueurs_a_ajouter_aux_acteurs)
+        
 
     def selectionner_tournoi(self) -> Tournoi:
         """Function to select a Tournament among old Tournament and the actual"""

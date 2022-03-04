@@ -125,9 +125,10 @@ class State:
     def nombre_joueurs(self):
         return len(self.tournoi.joueurs_du_tournoi)
 
-    def ajouter_nouveau_joueur(self, nouveau_joueur: Joueur):
-        nouvel_indice = list(self.acteurs.keys())[-1] + 1
-        self.acteurs[nouvel_indice] = nouveau_joueur
+    def ajouter_nouveau_joueur(self, nouveaux_joueurs: List[Joueur]):
+        for joueur in nouveaux_joueurs:
+            nouvel_indice = list(self.acteurs.keys())[-1] + 1
+            self.acteurs[nouvel_indice] = joueur
 
     def supprimer_joueur(self, joueur_a_supprimer: Joueur):
         """Function to delete joueur_a_supprimer from self.acteurs"""

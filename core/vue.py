@@ -59,16 +59,16 @@ class Vue:
 
         # Choix du menu
         choix_du_menu_texte = '\nRenseignez votre choix parmis les propositions ci-dessus (0 à ' + str(
-            len(menu)-1) + ') : '
+            len(menu) - 1) + ') : '
         choix_utilisateur_menu = pvt.parse_and_validate(explanation=choix_du_menu_texte,
                                                         parse=pvt.parse_int,
                                                         validate=lambda x: pvt.validate_integer_interval(parsed_int=x,
                                                                                                          interval=(0,
-                                                                                                                   len(menu)-1)))
+                                                                                                                   len(menu) - 1)))
 
         return choix_utilisateur_menu
 
-    def menu_creer_nouveau_tournoi(self, acteurs: Dict[int, Joueur]) -> Tournoi:
+    def creer_nouveau_tournoi(self, acteurs: Dict[int, Joueur]) -> [Tournoi, List[Joueur]]:
         """Création d'un nouveau tournoi en renseignant toutes les informations demandées."""
 
         # Initialisation
@@ -82,6 +82,7 @@ class Vue:
             'rounds': [],
             'joueurs_du_tournoi': [],
         }
+        nouveaux_joueurs_a_ajouter_aux_acteurs = []
 
         # Affichage de l'entête
         affichage_menu_creer_nouveau_tournoi = """
@@ -122,14 +123,17 @@ Créer un nouveau Tournoi
                                                                 validate=pvt.no_validation)
 
         # Choix des joueurs
-        nouveau_tournoi['joueurs_du_tournoi'] = self.ajouter_joueurs(nb_joueurs=NOMBRE_DE_JOUEURS, acteurs=acteurs)
+        joueurs_du_tournoi, nouveaux_joueurs = self.ajouter_joueurs(nb_joueurs=NOMBRE_DE_JOUEURS, acteurs=acteurs)
+        nouveau_tournoi['joueurs_du_tournoi'] = joueurs_du_tournoi
+        nouveaux_joueurs_a_ajouter_aux_acteurs = nouveaux_joueurs
+        # nouveau_tournoi['joueurs_du_tournoi'] = self.ajouter_joueurs(nb_joueurs=NOMBRE_DE_JOUEURS, acteurs=acteurs)
 
         # Formatage du resultat au format Tournoi
         nouveau_tournoi = Tournoi(**nouveau_tournoi)
 
         print(f'\nNouveau Tournoi {nouveau_tournoi.nom} créé avec succès !')
 
-        return nouveau_tournoi
+        return nouveau_tournoi, nouveaux_joueurs_a_ajouter_aux_acteurs
 
     def selectionner_tournoi(self, tournois: List[Tournoi]) -> Tournoi:
         """Function to select a Tournament among a list"""
@@ -147,14 +151,16 @@ Créer un nouveau Tournoi
         print(f'\nTournoi {tournois[tournoi_selectionne - 1].nom} sélectionné avec succès !')
         return tournois[tournoi_selectionne - 1]
 
-    def ajouter_joueurs(self, nb_joueurs: Optional[int], acteurs: Optional[Dict[int, Joueur]] = None) -> List[Joueur]:
+    def ajouter_joueurs(self, nb_joueurs: Optional[int], acteurs: Optional[Dict[int, Joueur]] = None) -> [List[Joueur],
+                                                                                                          List[
+                                                                                                              Joueur]]:
         """AJout des informations de huit joueurs dans une liste de dictionnaires à destination du Controller."""
 
         # Initialisation
         # liste retournée contenant les informations des huit joueurs
         choix_acteurs = []
         nouveaux_joueurs = []
-        joueurs = []
+        joueurs_du_tournoi = []
 
         # Affichage de l'entête
         affichage_menu_ajouter_joueurs = f"""
@@ -267,10 +273,10 @@ Renseigner les informations du joueur n°{joueur}
                     f'\nNouveau Joueur {nouveaux_joueurs[joueur - 1].prenom} {nouveaux_joueurs[joueur - 1].nom_de_famille} ajouté avec succès !')
 
         # Concatenation des acteurs et joueurs
-        joueurs.extend(choix_acteurs)
-        joueurs.extend(nouveaux_joueurs)
+        joueurs_du_tournoi.extend(choix_acteurs)
+        joueurs_du_tournoi.extend(nouveaux_joueurs)
 
-        return joueurs
+        return joueurs_du_tournoi, nouveaux_joueurs
 
     def supprimer_joueur(self, acteurs_liste: List[Joueur]) -> Joueur:
         """Function to select a player to remove from acteurs."""
