@@ -5,27 +5,24 @@ from core.model import Joueur, Tournoi, Score, Round, RoundName, Match, NOMBRE_D
 from core import parse_validate_tools as pvt
 
 # Constantes Globales
-# TODO : Set all Quit options to 0 so it is easier to quit
-CHOIX_MENU_PRINCIPAL = ('Gestion des Joueurs (ajouter/supprimer)',
-                        'Gestion du Tournoi',
-                        'Rapports',
-                        'Sauvegarde / Chargement des données',
-                        'Quitter le programme')
-CHOIX_MENU_PRINCIPAL = dict(enumerate(CHOIX_MENU_PRINCIPAL, 1))
+CHOIX_MENU_PRINCIPAL = {1: 'Gestion des Joueurs (ajouter/supprimer)',
+                        2: 'Gestion du Tournoi',
+                        3: 'Rapports',
+                        4: 'Sauvegarde / Chargement des données',
+                        0: 'Quitter le programme'}
 
-CHOIX_MENU_JOUEURS = ('Afficher la liste des Joueurs',
-                      'Ajouter un nouveau Joueur',
-                      'Supprimer un Joueur',
-                      'Mettre à jour le classement d\'un Joueur',
-                      'Quitter')
-CHOIX_MENU_JOUEURS = dict(enumerate(CHOIX_MENU_JOUEURS, 1))
+CHOIX_MENU_JOUEURS = {1: 'Afficher la liste des Joueurs',
+                      2: 'Ajouter un nouveau Joueur',
+                      3: 'Supprimer un Joueur',
+                      4: 'Mettre à jour le classement d\'un Joueur',
+                      0: 'Quitter'}
 
 CHOIX_MENU_TOURNOI = {1: 'Créer un nouveau Tournoi',
                       2: 'Démarrer nouveau Round',
                       3: 'Entrer les résultats',
                       4: 'Mettre à jour le classement des Joueurs du Tournoi',
                       5: 'Terminer le tournoi',
-                      6: 'Quitter'}
+                      0: 'Quitter'}
 
 CHOIX_MENU_RAPPORTS = {1: 'Liste de tous les Acteurs par ordre alphabétique',
                        2: 'Liste de tous les Acteurs par classement',
@@ -34,17 +31,7 @@ CHOIX_MENU_RAPPORTS = {1: 'Liste de tous les Acteurs par ordre alphabétique',
                        5: 'Liste de tous les Tournois',
                        6: 'Liste de tous les Tours d\'un Tournoi',
                        7: 'Liste de tous les Matchs d\'un Tournoi',
-                       8: 'Quitter'}
-
-# CHOIX_MENU_RAPPORTS = ('Liste de tous les Acteurs par ordre alphabétique',
-#                        'Liste de tous les Acteurs par classement',
-#                        'Liste de tous les Joueurs d\'un Tournoi par ordre alphabétique',
-#                        'Liste de tous les Joueurs d\'un Tournoi par classement',
-#                        'Liste de tous les Tournois',
-#                        'Liste de tous les Tours d\'un Tournoi',
-#                        'Liste de tous les Matchs d\'un Tournoi',
-#                        'Quitter')
-# CHOIX_MENU_RAPPORTS = dict(enumerate(CHOIX_MENU_RAPPORTS, 1))
+                       0: 'Quitter'}
 
 CHOIX_MENU_SAUVEGARDE_CHARGEMENT = ('Sauvegarder l\'état du programme',
                                     'Charger l\'état du programme',
@@ -71,13 +58,13 @@ class Vue:
             print(choix, '--', menu[choix])
 
         # Choix du menu
-        choix_du_menu_texte = '\nRenseignez votre choix parmis les propositions ci-dessus (1 à ' + str(
-            len(menu)) + ') : '
+        choix_du_menu_texte = '\nRenseignez votre choix parmis les propositions ci-dessus (0 à ' + str(
+            len(menu)-1) + ') : '
         choix_utilisateur_menu = pvt.parse_and_validate(explanation=choix_du_menu_texte,
                                                         parse=pvt.parse_int,
                                                         validate=lambda x: pvt.validate_integer_interval(parsed_int=x,
-                                                                                                         interval=(1,
-                                                                                                                   len(menu))))
+                                                                                                         interval=(0,
+                                                                                                                   len(menu)-1)))
 
         return choix_utilisateur_menu
 

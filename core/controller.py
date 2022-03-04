@@ -38,7 +38,7 @@ class Controller:
                     elif choix_menu_joueurs == 4:
                         self.modifier_classement()
                     # Quitter
-                    elif choix_menu_joueurs == 5:
+                    elif choix_menu_joueurs == 0:
                         must_exit_players = True
 
 
@@ -81,7 +81,7 @@ class Controller:
                         else:
                             print('\nVeuillez créer un Tournoi avant de le terminer.')
                     # Quitter
-                    elif choix_menu_tournoi == 6:
+                    elif choix_menu_tournoi == 0:
                         must_exit_tournament = True
 
             # Rapports
@@ -116,12 +116,13 @@ class Controller:
                         tournoi_selectionne = self.selectionner_tournoi()
                         self.afficher_rapport_matchs_tournoi(tournoi=tournoi_selectionne)
                     # Quitter
-                    elif choix_menu_rapports == 8:
+                    elif choix_menu_rapports == 0:
                         must_exit_rapports = True
 
             elif choix_menu_principal == 4:
                 pass
-            elif choix_menu_principal == 5:
+            # Quitter
+            elif choix_menu_principal == 0:
                 must_exit = True
 
     # Gestion des joueurs
