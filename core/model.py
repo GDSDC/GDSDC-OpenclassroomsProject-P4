@@ -136,7 +136,6 @@ class State:
                 del self.acteurs[key]
                 break
 
-
     def creer_nouveau_round(self, nouveau_round: Round):
         self.tournoi.rounds.append(nouveau_round)
 
@@ -154,8 +153,13 @@ class State:
 
     def modifier_classement(self, joueur_classement: Joueur):
         """Function to update players ranking"""
-        pass
-        # TODO : find a way to look for the player in acteurs and update ranking only
+        for key, acteur in self.acteurs.items():
+            if (acteur.date_de_naissance.date() == joueur_classement.date_de_naissance.date()) and (
+                    acteur.nom_de_famille == joueur_classement.nom_de_famille) and (
+                    acteur.prenom == joueur_classement.prenom) and (acteur.sexe == joueur_classement.sexe) and (
+                    acteur.classement != joueur_classement.classement):
+                acteur.classement = joueur_classement.classement
+                break
 
 
 if __name__ == '__main__':
