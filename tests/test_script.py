@@ -113,7 +113,7 @@ class TestVue(Vue):
         # not used in tests
         return 1
 
-    def creer_nouveau_tournoi(self, acteurs: Dict[int, Joueur]) -> Tournoi:
+    def creer_nouveau_tournoi(self, acteurs: Dict[int, Joueur]) -> [Tournoi, List[Joueur]]:
         return tournoi1(), []
 
     # def ajouter_joueurs(self, nb_joueurs: Optional[int]) -> List[Joueur]:
@@ -323,6 +323,7 @@ def test_controller_entrer_scores():
 def test_modifier_classement():
     """Function that test the controller.modifier_classement_tournoi"""
 
+    # TODO : invest in pytest error, maybe rebuild this test function
     # Given
     init_sate = state1()
     controller = Controller(vue=TEST_VUE, state=init_sate)

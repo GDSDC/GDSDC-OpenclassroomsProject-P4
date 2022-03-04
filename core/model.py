@@ -132,10 +132,8 @@ class State:
 
     def supprimer_joueur(self, joueur_a_supprimer: Joueur):
         """Function to delete joueur_a_supprimer from self.acteurs"""
-        for key, value in self.acteurs.items():
-            if value == joueur_a_supprimer:
-                del self.acteurs[key]
-                break
+        key_to_delete = list(self.acteurs.keys())[list(self.acteurs.values()).index(joueur_a_supprimer)]
+        del self.acteurs[key_to_delete]
 
     def creer_nouveau_round(self, nouveau_round: Round):
         self.tournoi.rounds.append(nouveau_round)
@@ -152,15 +150,11 @@ class State:
     def modifier_classement_tournoi(self, joueurs_classement: List[Joueur]):
         self.tournoi.joueurs_du_tournoi = joueurs_classement
 
-    def modifier_classement(self, joueur_classement: Joueur):
+    def modifier_classement(self, joueurs_ancien_classement: List[Joueur], joueurs_nouveau_classement: List[Joueur]):
         """Function to update players ranking"""
-        for key, acteur in self.acteurs.items():
-            if (acteur.date_de_naissance.date() == joueur_classement.date_de_naissance.date()) and (
-                    acteur.nom_de_famille == joueur_classement.nom_de_famille) and (
-                    acteur.prenom == joueur_classement.prenom) and (acteur.sexe == joueur_classement.sexe) and (
-                    acteur.classement != joueur_classement.classement):
-                acteur.classement = joueur_classement.classement
-                break
+        for joueur in joueurs_ancien_classement:
+            key_to_update_ranking = list(self.acteurs.keys())[list(self.acteurs.values()).index(joueur)]
+            self.acteurs[key_to_update_ranking] = joueurs_nouveau_classement[joueurs_ancien_classement.index(joueur)]
 
 
 if __name__ == '__main__':

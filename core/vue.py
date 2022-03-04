@@ -126,7 +126,6 @@ Créer un nouveau Tournoi
         joueurs_du_tournoi, nouveaux_joueurs = self.ajouter_joueurs(nb_joueurs=NOMBRE_DE_JOUEURS, acteurs=acteurs)
         nouveau_tournoi['joueurs_du_tournoi'] = joueurs_du_tournoi
         nouveaux_joueurs_a_ajouter_aux_acteurs = nouveaux_joueurs
-        # nouveau_tournoi['joueurs_du_tournoi'] = self.ajouter_joueurs(nb_joueurs=NOMBRE_DE_JOUEURS, acteurs=acteurs)
 
         # Formatage du resultat au format Tournoi
         nouveau_tournoi = Tournoi(**nouveau_tournoi)
@@ -280,6 +279,8 @@ Renseigner les informations du joueur n°{joueur}
 
     def supprimer_joueur(self, acteurs_liste: List[Joueur]) -> Joueur:
         """Function to select a player to remove from acteurs."""
+
+        joueur_a_supprimer = []
 
         if acteurs_liste:
             # Affichage de l'entête

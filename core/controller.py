@@ -144,9 +144,6 @@ class Controller:
 
     def creer_nouveau_tournoi(self):
         """Function to create a new Tournament and update acteurs with new players"""
-        # Initialisation
-        nouveau_tournoi = None
-        nouveaux_joueurs_a_ajouter_aux_acteurs = []
         # Get data from user
         tournoi, joueurs = self.vue.creer_nouveau_tournoi(acteurs=self.state.acteurs)
         nouveau_tournoi = tournoi
@@ -156,7 +153,6 @@ class Controller:
         self.state.creer_nouveau_tournoi(nouveau_tournoi)
         # Update acteurs
         self.state.ajouter_nouveau_joueur(nouveaux_joueurs=nouveaux_joueurs_a_ajouter_aux_acteurs)
-        
 
     def selectionner_tournoi(self) -> Tournoi:
         """Function to select a Tournament among old Tournament and the actual"""
@@ -231,16 +227,25 @@ class Controller:
 
     def modifier_classement_tournoi(self):
         """Function to update players ranking in a Tournament"""
+        # Initialisation
+        joueurs_ancien_classement = []
+        joueurs_ancien_classement.extend(self.state.tournoi.joueurs_du_tournoi)
+        # Affichage Résultats
         self.afficher_resultats_tournoi()
-        joueurs_classement = self.vue.modifier_classement(joueurs_classement=self.state.tournoi.joueurs_du_tournoi)
-        self.state.modifier_classement_tournoi(joueurs_classement)
+        # MAJ Classement des Joueurs du Tournoi
+        joueurs_nouveau_classement = self.vue.modifier_classement(joueurs_classement=joueurs_ancien_classement)
+        self.state.modifier_classement_tournoi(joueurs_nouveau_classement)
+        # MAJ Classement dans la liste des acteurs
+        self.state.modifier_classement(joueurs_ancien_classement=joueurs_ancien_classement,
+                                       joueurs_nouveau_classement=joueurs_nouveau_classement)
 
     def modifier_classement(self):
         """Function to update players ranking in acteurs"""
         acteurs_ordered_liste = sorted(list(self.state.acteurs.values()), key=sorters.player_alphabetical_by_lastname)
-        joueur_classement = self.vue.selectionner_acteur(acteurs_liste=acteurs_ordered_liste)
-        joueur_nouveau_classement = self.vue.modifier_classement(joueurs_classement=[joueur_classement])[0]
-        self.state.modifier_classement(joueur_classement=joueur_nouveau_classement)
+        joueur_ancien_classement = [self.vue.selectionner_acteur(acteurs_liste=acteurs_ordered_liste)]
+        joueur_nouveau_classement = [self.vue.modifier_classement(joueurs_classement=joueur_ancien_classement)[0]]
+        self.state.modifier_classement(joueurs_ancien_classement=joueur_ancien_classement,
+                                       joueurs_nouveau_classement=joueur_nouveau_classement)
 
     def terminer_tournoi(self):
         """Function to close tournament"""
