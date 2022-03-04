@@ -21,7 +21,6 @@ class Controller:
 
             # Gestion des Joueurs
             if choix_menu_principal == 1:
-                # TODO : créer menu Joueurs
                 must_exit_players = False
                 while not must_exit_players:
                     choix_menu_joueurs = self.vue.afficher_menu(nom_menu=CHOIX_MENU_PRINCIPAL[1],
