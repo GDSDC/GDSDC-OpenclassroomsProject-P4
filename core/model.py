@@ -1,5 +1,5 @@
-from typing import List, Tuple, Optional
-from dataclasses import dataclass
+from typing import List, Tuple, Optional, Dict, Any
+from dataclasses import dataclass, asdict
 from enum import Enum
 from datetime import date, datetime
 
@@ -26,6 +26,24 @@ class Joueur:
     date_de_naissance: datetime
     sexe: Sex
     classement: int
+
+    def to_json(self) -> Dict[str, Any]:
+        """Function to serialize a Joueur to JSON format"""
+        self_as_dict = asdict(self)
+        self_as_dict['date_de_naissance'] = self.date_de_naissance.isoformat()
+        self_as_dict['sexe'] = self.sexe.value
+
+        return self_as_dict
+
+
+    @classmethod
+    def from_json(cls, json_value: Dict[str, Any]) -> 'Joueur':
+        """Class Method to deserialize a JSON into a Joueur instance"""
+        joueur = Joueur(**json_value)
+        joueur.date_de_naissance = date.fromisoformat(json_value['date_de_naissance'])
+        joueur.sexe = Sex(json_value['sexe'])
+
+        return self_as_dict
 
 
 # Classe décrivant le Match

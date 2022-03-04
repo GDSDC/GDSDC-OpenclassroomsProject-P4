@@ -29,6 +29,8 @@ PLAYER_NOUVEAU_CLASSEMENT4 = Joueur(nom_de_famille='Nom de famille TEST4', preno
 SCORES_VIDE = [((PLAYER1, None), (PLAYER2, None)), ((PLAYER3, None), (PLAYER4, None))]
 SCORES = [((PLAYER1, Score.GAGNANT), (PLAYER2, Score.PERDANT)), ((PLAYER3, Score.GAGNANT), (PLAYER4, Score.PERDANT))]
 
+ACTEURS = {1: PLAYER1, 5: PLAYER2, 3: PLAYER3, 4: PLAYER4}
+
 
 def tournoi1():
     return Tournoi(nom='Tournoi_TEST',
@@ -88,6 +90,7 @@ def round4():
 
 def state1():
     state = State()
+    state.acteurs = ACTEURS
     state.tournoi = tournoi1()
     state.tournoi.rounds = [round1(), round2()]
     return state
