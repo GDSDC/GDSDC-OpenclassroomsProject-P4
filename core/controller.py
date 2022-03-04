@@ -38,6 +38,9 @@ class Controller:
                     # MAJ classement d'un Joueur
                     elif choix_menu_joueurs == 4:
                         self.modifier_classement()
+                    # Quitter
+                    elif choix_menu_joueurs == 5:
+                        must_exit_players = True
 
 
             # Gestion du Tournoi
@@ -226,8 +229,6 @@ class Controller:
         joueur_classement = self.vue.selectionner_acteur(acteurs_liste=acteurs_ordered_liste)
         joueur_nouveau_classement = self.vue.modifier_classement(joueurs_classement=[joueur_classement])[0]
         self.state.modifier_classement(joueur_classement=joueur_nouveau_classement)
-
-
 
     def terminer_tournoi(self):
         """Function to close tournament"""
