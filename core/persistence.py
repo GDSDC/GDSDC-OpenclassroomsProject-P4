@@ -1,9 +1,9 @@
 import os
 
 from tinydb import TinyDB, Query, table
-from core.model import Joueur, State, Tournoi
+from model import Joueur, State, Tournoi
 from tests.test_script import state1, state4
-from core import sorters
+import sorters
 from typing import Dict, List, Optional
 from functools import wraps
 
