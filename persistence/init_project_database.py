@@ -1,7 +1,5 @@
 import os, sys
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 from tinydb import TinyDB, Query, table
 from core.model import Joueur, State, Tournoi
 from tests.test_script import state1, state4
