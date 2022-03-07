@@ -74,7 +74,7 @@ def save_players(state: State):
     """Function to save players to database"""
 
     for player_id, player_instance in state.acteurs.items():
-        DB.table(PLAYERS_TABLE.insert(table.Document(player_instance.to_json(), doc_id=player_id))
+        DB.table(PLAYERS_TABLE).insert(table.Document(player_instance.to_json(), doc_id=player_id))
 
 
 def save_tournaments(state: State):
