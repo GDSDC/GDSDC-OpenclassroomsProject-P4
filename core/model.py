@@ -87,8 +87,8 @@ class Round:
         self_as_dict = asdict(self)
         self_as_dict['nom'] = self.nom.value
         self_as_dict['match_liste'] = [
-        ((joueur1.to_json(), score_joueur1.value), (joueur2.to_json(), score_joueur2.value)) for
-        ((joueur1, score_joueur1), (joueur2, score_joueur2)) in self.match_liste]
+            ((joueur1.to_json(), score_joueur1.value), (joueur2.to_json(), score_joueur2.value)) for
+            ((joueur1, score_joueur1), (joueur2, score_joueur2)) in self.match_liste]
         self_as_dict['date_debut'] = self.date_debut.isoformat()
         self_as_dict['date_fin'] = self.date_fin.isoformat()
 
@@ -146,10 +146,12 @@ class Tournoi:
 
 
 class State:
-    def __init__(self):
-        self.acteurs: Dict[int, Joueur] = {}
-        self.tournois: List[Tournoi] = []
-        self.tournoi: Optional[Tournoi] = None
+    def __init__(self, acteurs: Optional[Dict[int, Joueur]] = None,
+                 tournois: Optional[List[Tournoi]] = None,
+                 tournoi: Optional[Tournoi] = None):
+        self.acteurs: Dict[int, Joueur] = acteurs or {}
+        self.tournois: List[Tournoi] = tournois or []
+        self.tournoi: Optional[Tournoi] = tournoi
 
     # for instance comparison in testing
     def __eq__(self, other):
