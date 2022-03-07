@@ -40,10 +40,10 @@ class Joueur:
     def from_json(cls, json_value: Dict[str, Any]) -> 'Joueur':
         """Class Method to deserialize a JSON into a Joueur instance"""
         joueur = Joueur(**json_value)
-        joueur.date_de_naissance = date.fromisoformat(json_value['date_de_naissance'])
+        joueur.date_de_naissance = datetime.fromisoformat(json_value['date_de_naissance'])
         joueur.sexe = Sex(json_value['sexe'])
 
-        return self_as_dict
+        return joueur
 
 
 # Classe décrivant le Match

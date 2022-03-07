@@ -15,14 +15,28 @@ def init_database():
     db.table('players')
     db.table('tournament')
 
+def  clear_database():
+    """Function to clear database"""
+    try:
+        db_path = 'persistence/db.json'
+        os.remove(db_path)
+    except FileNotFoundError:
+        pass
+    init_database()
+
+
 
 def load_players() -> Dict[int, Joueur]:
     """Function to load players from database into actual state"""
 
     # Initalisation
-    players_table = db.table('players')
-    players: List[Dict[str, Any]]
-    # TODO : find a way to iterate over db.table('players') and get doc_id and document.from.json to fill acteurs dict
+    acteurs_from_db = {}
+    db = TinyDB('persistence/db.json')
+    # Iteration over players in db
+    for element in db.table('players'):
+        acteurs_from_db[element.doc_id] = Joueur.from_json(element)
+
+    return acteurs_from_db
 
 
 def save(state: State):
@@ -42,6 +56,13 @@ def save(state: State):
         # tournaments.sort(key=sorters.tournament_chronological)
 
 if __name__ == '__main__':
-    init_database()
-    state_to_save = state1()
-    save(state=state_to_save)
+    # clear_database()
+    # init_database()
+    # state_to_save = state1()
+    # save(state=state_to_save)
+    state_to_load = State()
+    print(state_to_load.acteurs)
+    load_players()
+    state_to_load.acteurs = load_players()
+    print(state_to_load.acteurs)
+
