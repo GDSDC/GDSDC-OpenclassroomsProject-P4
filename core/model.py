@@ -35,7 +35,6 @@ class Joueur:
 
         return self_as_dict
 
-
     @classmethod
     def from_json(cls, json_value: Dict[str, Any]) -> 'Joueur':
         """Class Method to deserialize a JSON into a Joueur instance"""
@@ -83,6 +82,18 @@ class Round:
         else:
             return False
 
+    def to_json(self) -> Dict[str, Any]:
+        """Function to serialize a Round to JSON format"""
+        self_as_dict = asdict(self)
+        self_as_dict['nom'] = self.nom.value
+        self_as_dict['match_liste'] = [
+        ((joueur1.to_json(), score_joueur1.value), (joueur2.to_json(), score_joueur2.value)) for
+        ((joueur1, score_joueur1), (joueur2, score_joueur2)) in self.match_liste]
+        self_as_dict['date_debut'] = self.date_debut.isoformat()
+        self_as_dict['date_fin'] = self.date_fin.isoformat()
+
+        return self_as_dict
+
 
 # Classe décrivant le Tournoi
 class ControleDuTemps(Enum):
@@ -105,6 +116,18 @@ class Tournoi:
     joueurs_du_tournoi: Optional[List[Joueur]] = None
     joueurs_en_jeux: Optional[List[Joueur]] = None
     nombre_tours: int = NOMBRE_DE_TOURS
+
+    def to_json(self) -> Dict[str, Any]:
+        """Function to serialize a Tournament to JSON format"""
+        self_as_dict = asdict(self)
+        self_as_dict['date_debut'] = self.date_debut.isoformat()
+        self_as_dict['date_fin'] = self.date_fin.isoformat()
+        self_as_dict['controle_du_temps'] = self.controle_du_temps.value
+        self_as_dict['rounds'] = [round_object.to_json() for round_object in self.rounds]
+        self_as_dict['joueurs_du_tournoi'] = [joueur.to_json() for joueur in self.joueurs_du_tournoi]
+        self_as_dict['joueurs_en_jeux'] = [joueur.to_json() for joueur in self.joueurs_en_jeux]
+
+        return self_as_dict
 
     # for instance comparison in testing
     def __eq__(self, other):

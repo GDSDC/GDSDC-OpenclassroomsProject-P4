@@ -109,6 +109,12 @@ def state3():
     state.tournoi.rounds = [round1(), round2(), round3(), round4()]
     return state
 
+def state4():
+    state = State()
+    state.tournoi = tournoi1()
+    state.tournoi.rounds = [round3()]
+    return state
+
 
 class TestVue(Vue):
     @staticmethod
