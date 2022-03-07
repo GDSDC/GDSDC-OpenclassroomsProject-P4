@@ -1,49 +1,78 @@
 import os, sys
-
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
+from functools import wraps
 from tinydb import TinyDB, Query, table
 from core.model import Joueur, State, Tournoi
 from tests.test_script import state1, state4
 from core import sorters
-from typing import Dict, List
+from typing import Dict, List, Optional
+
+_DB_PATH = 'resources/db.json'
+
+DB: Optional[TinyDB] = None
 
 
-def init_database():
+def open_database(path: str = _DB_PATH) -> TinyDB:
+    print("Opening connection to DB")
+    return TinyDB(path)
+
+
+def init_database(db: TinyDB):
     """Function to initialize database of the project"""
-    db = TinyDB('persistence/db.json')
+    print("Initializing DB tables")
     db.table('players')
-    db.table('tournament')
+    db.table('tournaments')
+    print("Done!")
 
 
 def clear_database():
     """Function to clear database"""
     try:
-        db_path = 'persistence/db.json'
-        os.remove(db_path)
+        print("Dropping DB")
+        os.remove(_DB_PATH)
     except FileNotFoundError:
         pass
-    init_database()
+    global DB
+    DB = open_database()
+    init_database(DB)
 
 
+def _ensure_db_is_loaded():
+    global DB
+    if DB is None:
+        DB = open_database()
+    else:
+        print("DB is already opened")
+
+
+def with_db(f):
+    @wraps(f)
+    def wrapper():
+        _ensure_db_is_loaded()
+        return f()
+
+    return wrapper
+
+
+@with_db
 def load_players() -> Dict[int, Joueur]:
     """Function to load players from database into actual state"""
 
     # Initalisation
     acteurs_from_db = {}
-    db = TinyDB('persistence/db.json')
+
     # Iteration over players in db
-    for element in db.table('players'):
+    for element in DB.table('players'):
         acteurs_from_db[element.doc_id] = Joueur.from_json(element)
 
     return acteurs_from_db
 
 
+@with_db
 def save(state: State):
     """Function to save actual state to database"""
 
     # Initialisation
-    db = TinyDB('persistence/db.json')
+    db = TinyDB(_DB_PATH)
 
     # Save players
     for player_id, player_instance in state.acteurs.items():

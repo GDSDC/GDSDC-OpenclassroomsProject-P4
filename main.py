@@ -1,6 +1,8 @@
 from core.controller import Controller
-from core.model import Joueur, Sex, Tournoi, ControleDuTemps, Round, RoundName, Score
+from core.model import Joueur, Sex, State, Tournoi, ControleDuTemps, Round, RoundName, Score
 from datetime import datetime, timedelta
+
+from persistence import init_project_database
 
 PLAYER1 = Joueur(nom_de_famille='Nom de famille TEST1', prenom='prenom TEST1',
                  date_de_naissance=datetime.now(), sexe=Sex.MALE, classement=1)
@@ -74,8 +76,8 @@ TOURNOI3 = Tournoi(nom='Tournoi_TEST_3',
 # # init_controller.state.tournois = [TOURNOI2, TOURNOI3, TOURNOI1]
 # init_controller.afficher_rapport_matchs_tournoi(tournoi=TOURNOI2)
 
-init_controller = Controller()
-init_controller.state.acteurs = ACTEURS
-init_controller.state.tournois = [TOURNOI2, TOURNOI3]
-init_controller.state.tournoi = TOURNOI1
+state = State(acteurs=ACTEURS, tournois=[TOURNOI2, TOURNOI3], tournoi=TOURNOI1)
+# state = init_project_database.load_state()
+
+init_controller = Controller(state=state)
 init_controller.start()

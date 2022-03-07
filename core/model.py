@@ -146,10 +146,12 @@ class Tournoi:
 
 
 class State:
-    def __init__(self):
-        self.acteurs: Dict[int, Joueur] = {}
-        self.tournois: List[Tournoi] = []
-        self.tournoi: Optional[Tournoi] = None
+    def __init__(self, acteurs: Optional[Dict[int, Joueur]] = None,
+                 tournois: Optional[List[Tournoi]] = None,
+                 tournoi: Optional[Tournoi] = None):
+        self.acteurs: Dict[int, Joueur] = acteurs or {}
+        self.tournois: List[Tournoi] = tournois or []
+        self.tournoi: Optional[Tournoi] = tournoi
 
     # for instance comparison in testing
     def __eq__(self, other):
