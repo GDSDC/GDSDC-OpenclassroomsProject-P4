@@ -11,6 +11,9 @@ _DB_PATH = 'resources/db.json'
 
 DB: Optional[TinyDB] = None
 
+PLAYERS_TABLE = 'players'
+TOURNAMENTS_TABLE = 'tournaments'
+
 
 def open_database(path: str = _DB_PATH) -> TinyDB:
     print("Opening connection to DB")
@@ -20,8 +23,8 @@ def open_database(path: str = _DB_PATH) -> TinyDB:
 def init_database(db: TinyDB):
     """Function to initialize database of the project"""
     print("Initializing DB tables")
-    db.table('players')
-    db.table('tournaments')
+    db.table(PLAYERS_TABLE)
+    db.table(TOURNAMENTS_TABLE)
     print("Done!")
 
 
@@ -61,7 +64,7 @@ def load_players() -> Dict[int, Joueur]:
     # Initalisation
     acteurs_from_db = {}
     # Iteration over players in db
-    for element in DB.table('players'):
+    for element in DB.table(PLAYERS_TABLE):
         acteurs_from_db[element.doc_id] = Joueur.from_json(element)
 
     return acteurs_from_db
@@ -71,7 +74,7 @@ def save_players(state: State):
     """Function to save players to database"""
 
     for player_id, player_instance in state.acteurs.items():
-        DB.table('players').insert(table.Document(player_instance.to_json(), doc_id=player_id))
+        DB.table(PLAYERS_TABLE.insert(table.Document(player_instance.to_json(), doc_id=player_id))
 
 
 def save_tournaments(state: State):
@@ -83,7 +86,7 @@ def save_tournaments(state: State):
     tournaments.sort(key=sorters.tournament_chronological)
 
     for tournoi in tournaments:
-        DB.table('tournaments').insert(tournoi.to_json())
+        DB.table(TOURNAMENTS_TABLE).insert(tournoi.to_json())
 
 @with_db
 def save(state: State):
