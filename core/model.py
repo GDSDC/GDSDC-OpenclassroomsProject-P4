@@ -87,12 +87,25 @@ class Round:
         self_as_dict = asdict(self)
         self_as_dict['nom'] = self.nom.value
         self_as_dict['match_liste'] = [
-            ((joueur1.to_json(), score_joueur1.value), (joueur2.to_json(), score_joueur2.value)) for
+            [[joueur1.to_json(), score_joueur1.value], [joueur2.to_json(), score_joueur2.value]] for
             ((joueur1, score_joueur1), (joueur2, score_joueur2)) in self.match_liste]
         self_as_dict['date_debut'] = self.date_debut.isoformat()
         self_as_dict['date_fin'] = self.date_fin.isoformat()
 
         return self_as_dict
+
+    @classmethod
+    def from_json(cls, json_value: Dict[str, Any]) -> 'Round':
+        """Class Method to deserialize a JSON into a Round instance"""
+        round_instance = Round(**json_value)
+        round_instance.nom = RoundName(json_value['nom'])
+        round_instance.match_liste = [
+            ((Joueur.from_json(joueur1_json), Score(score_joueur1_json)), (Joueur.from_json(joueur2_json), Score(score_joueur2_json)))
+            for [[joueur1_json, score_joueur1_json], [joueur2_json, score_joueur2_json]] in json_value['match_liste']]
+        round_instance.date_debut = datetime.fromisoformat(json_value['date_debut'])
+        round_instance.date_fin = datetime.fromisoformat(json_value['date_fin'])
+
+        return round_instance
 
 
 # Classe décrivant le Tournoi
@@ -128,6 +141,19 @@ class Tournoi:
         self_as_dict['joueurs_en_jeux'] = [joueur.to_json() for joueur in self.joueurs_en_jeux]
 
         return self_as_dict
+
+    @classmethod
+    def from_json(cls, json_value: Dict[str, Any]) -> 'Tournoi':
+        """Class Method to deserialize a JSON into a Tournament instance"""
+        tournoi = Tournoi(**json_value)
+        tournoi.date_debut = datetime.fromisoformat(json_value['date_debut'])
+        tournoi.date_fin = datetime.fromisoformat(json_value['date_fin'])
+        tournoi.controle_du_temps = ControleDuTemps(json_value['controle_du_temps'])
+        tournoi.rounds = [Round.from_json(round_json) for round_json in json_value['rounds']]
+        tournoi.joueurs_du_tournoi = [Joueur.from_json(joueur_json) for joueur_json in json_value['joueurs_du_tournoi']]
+        tournoi.joueurs_en_jeux = [Joueur.from_json(joueur_json) for joueur_json in json_value['joueurs_en_jeux']]
+
+        return tournoi
 
     # for instance comparison in testing
     def __eq__(self, other):

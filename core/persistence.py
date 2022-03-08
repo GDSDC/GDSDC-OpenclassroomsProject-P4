@@ -7,7 +7,7 @@ import sorters
 from typing import Dict, List, Optional
 from functools import wraps
 
-_DB_PATH = 'resources/db.json'
+_DB_PATH = '../resources/db.json'
 
 DB: Optional[TinyDB] = None
 
@@ -69,6 +69,17 @@ def load_players() -> Dict[int, Joueur]:
 
     return acteurs_from_db
 
+@with_db
+def load_tournaments() -> List[Tournoi]:
+    """Function to load tournaments from database into actual state"""
+
+    # Initalisation
+    tournaments_from_db = []
+    # Iteration over players in db
+    for element in DB.table(TOURNAMENTS_TABLE):
+        tournaments_from_db.append(Tournoi.from_json(element))
+
+    return tournaments_from_db
 
 def save_players(state: State):
     """Function to save players to database"""
@@ -104,3 +115,5 @@ if __name__ == '__main__':
     init_database(db=DB)
     state_to_save = state4()
     save(state=state_to_save)
+    result = load_tournaments()
+    print(result)
