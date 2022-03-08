@@ -196,7 +196,11 @@ class State:
 
     def ajouter_nouveau_joueur(self, nouveaux_joueurs: List[Joueur]):
         for joueur in nouveaux_joueurs:
-            nouvel_indice = list(self.acteurs.keys())[-1] + 1
+            # When acteurs is empty
+            if not self.acteurs:
+                nouvel_indice = 1
+            else:
+                nouvel_indice = list(self.acteurs.keys())[-1] + 1
             self.acteurs[nouvel_indice] = joueur
 
     def supprimer_joueur(self, joueur_a_supprimer: Joueur):

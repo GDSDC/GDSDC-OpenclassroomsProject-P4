@@ -96,11 +96,13 @@ def save_players(state: State):
     """Function to save players to database"""
 
     for player_id, player_instance in state.acteurs.items():
-        DB.table(PLAYERS_TABLE).insert(table.Document(player_instance.to_json(), doc_id=player_id))
+        DB.table(PLAYERS_TABLE).upsert(table.Document(player_instance.to_json(), doc_id=player_id))
 
 
 def save_tournaments(state: State):
     """Function to save tournaments to database"""
+
+    User = Query()
 
     tournaments = state.tournois
     if state.tournoi:
@@ -108,7 +110,7 @@ def save_tournaments(state: State):
     tournaments.sort(key=sorters.tournament_chronological)
 
     for tournoi in state.tournois:
-        DB.table(TOURNAMENTS_TABLE).insert(tournoi.to_json())
+        DB.table(TOURNAMENTS_TABLE).upsert(tournoi.to_json(),User.nom == tournoi.nom )
 
 
 @with_db

@@ -146,7 +146,7 @@ class Controller:
 
     def ajouter_nouveau_joueur(self):
         """Function to add a player to acteurs"""
-        nouveau_joueur = self.vue.ajouter_joueurs(nb_joueurs=1)
+        nouveau_joueur = self.vue.ajouter_joueurs(nb_joueurs=1)[1]
         self.state.ajouter_nouveau_joueur(nouveau_joueur)
 
     def supprimer_joueur(self):

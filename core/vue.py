@@ -33,11 +33,10 @@ CHOIX_MENU_RAPPORTS = {1: 'Liste de tous les Acteurs par ordre alphabétique',
                        7: 'Liste de tous les Matchs d\'un Tournoi',
                        0: 'Quitter'}
 
-CHOIX_MENU_SAUVEGARDE_CHARGEMENT = ('Sauvegarder l\'état du programme',
-                                    'Charger l\'état du programme',
-                                    'Réinitialiser la base donnée',
-                                    'Quitter')
-CHOIX_MENU_SAUVEGARDE_CHARGEMENT = dict(enumerate(CHOIX_MENU_SAUVEGARDE_CHARGEMENT, 1))
+CHOIX_MENU_SAUVEGARDE_CHARGEMENT = {1: 'Sauvegarder l\'état du programme',
+                                    2: 'Charger l\'état du programme',
+                                    3: 'Réinitialiser la base donnée',
+                                    0: 'Quitter'}
 
 
 class Vue:
