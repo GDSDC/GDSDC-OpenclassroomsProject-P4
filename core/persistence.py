@@ -57,7 +57,6 @@ def with_db(f):
     return wrapper
 
 
-@with_db
 def load_players() -> Dict[int, Joueur]:
     """Function to load players from database into actual state"""
 
@@ -69,7 +68,7 @@ def load_players() -> Dict[int, Joueur]:
 
     return acteurs_from_db
 
-@with_db
+
 def load_tournaments() -> List[Tournoi]:
     """Function to load tournaments from database into actual state"""
 
@@ -80,6 +79,19 @@ def load_tournaments() -> List[Tournoi]:
         tournaments_from_db.append(Tournoi.from_json(element))
 
     return tournaments_from_db
+
+@with_db
+def load() -> [Dict[int, Joueur], List[Tournoi]]:
+    """Function to load tournaments and players from database into actual state"""
+
+    # Load players
+    acteurs_loaded = load_players()
+
+    # Load Tournaments
+    tournaments_loaded = load_tournaments()
+
+    return acteurs_loaded, tournaments_loaded
+
 
 def save_players(state: State):
     """Function to save players to database"""
@@ -99,6 +111,7 @@ def save_tournaments(state: State):
     for tournoi in tournaments:
         DB.table(TOURNAMENTS_TABLE).insert(tournoi.to_json())
 
+
 @with_db
 def save(state: State):
     """Function to save actual state to database"""
@@ -115,5 +128,6 @@ if __name__ == '__main__':
     init_database(db=DB)
     state_to_save = state4()
     save(state=state_to_save)
-    result = load_tournaments()
-    print(result)
+    result = load()
+    print(result[0])
+    print(result[1])

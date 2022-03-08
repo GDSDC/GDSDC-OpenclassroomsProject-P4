@@ -111,6 +111,7 @@ def state3():
 
 def state4():
     state = State()
+    state.acteurs = ACTEURS
     state.tournoi = tournoi1()
     state.tournoi.rounds = [round3()]
     return state
