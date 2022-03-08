@@ -4,27 +4,33 @@ from core.controller import Controller
 from core.model import *
 from core.vue import Vue
 from datetime import datetime, timedelta
+import random
 
-# Global Constants
+
+# PLayer Test Generator
+def player_test(indice: int) -> Joueur:
+    player = Joueur(nom_de_famille='Nom de famille TEST' + str(indice), prenom='prenom TEST' + str(indice),
+                    date_de_naissance=datetime.now(), sexe=random.choice([sexe for sexe in Sex]),
+                    classement=indice)
+    return player
 
 
-PLAYER1 = Joueur(nom_de_famille='Nom de famille TEST1', prenom='prenom TEST1',
-                 date_de_naissance=datetime.now(), sexe=Sex.MALE, classement=1)
-PLAYER2 = Joueur(nom_de_famille='Nom de famille TEST2', prenom='prenom TEST2',
-                 date_de_naissance=datetime.now(), sexe=Sex.FEMALE, classement=2)
-PLAYER3 = Joueur(nom_de_famille='Nom de famille TEST3', prenom='prenom TEST3',
-                 date_de_naissance=datetime.now(), sexe=Sex.MALE, classement=3)
-PLAYER4 = Joueur(nom_de_famille='Nom de famille TEST4', prenom='prenom TEST4',
-                 date_de_naissance=datetime.now(), sexe=Sex.FEMALE, classement=4)
+PLAYER1 = player_test(1)
+PLAYER2 = player_test(2)
+PLAYER3 = player_test(3)
+PLAYER4 = player_test(4)
 
-PLAYER_NOUVEAU_CLASSEMENT1 = Joueur(nom_de_famille='Nom de famille TEST1', prenom='prenom TEST1',
-                                    date_de_naissance=datetime.now(), sexe=Sex.MALE, classement=10)
-PLAYER_NOUVEAU_CLASSEMENT2 = Joueur(nom_de_famille='Nom de famille TEST2', prenom='prenom TEST2',
-                                    date_de_naissance=datetime.now(), sexe=Sex.FEMALE, classement=20)
-PLAYER_NOUVEAU_CLASSEMENT3 = Joueur(nom_de_famille='Nom de famille TEST3', prenom='prenom TEST3',
-                                    date_de_naissance=datetime.now(), sexe=Sex.MALE, classement=30)
-PLAYER_NOUVEAU_CLASSEMENT4 = Joueur(nom_de_famille='Nom de famille TEST4', prenom='prenom TEST4',
-                                    date_de_naissance=datetime.now(), sexe=Sex.FEMALE, classement=40)
+# Changing ranking
+def nouveau_classement(joueur: Joueur, nouveau_classement: int) -> Joueur:
+    player_nouveau_classement = joueur
+    player_nouveau_classement.classement = nouveau_classement
+    return player_nouveau_classement
+
+
+PLAYER_NOUVEAU_CLASSEMENT1 = nouveau_classement(joueur=PLAYER1, nouveau_classement=10)
+PLAYER_NOUVEAU_CLASSEMENT2 = nouveau_classement(joueur=PLAYER2, nouveau_classement=20)
+PLAYER_NOUVEAU_CLASSEMENT3 = nouveau_classement(joueur=PLAYER3, nouveau_classement=30)
+PLAYER_NOUVEAU_CLASSEMENT4 = nouveau_classement(joueur=PLAYER4, nouveau_classement=40)
 
 SCORES_VIDE = [((PLAYER1, None), (PLAYER2, None)), ((PLAYER3, None), (PLAYER4, None))]
 SCORES = [((PLAYER1, Score.GAGNANT), (PLAYER2, Score.PERDANT)), ((PLAYER3, Score.GAGNANT), (PLAYER4, Score.PERDANT))]
@@ -41,7 +47,7 @@ def tournoi1():
                    description='Remarques_TEST',
                    joueurs_du_tournoi=[PLAYER1, PLAYER2, PLAYER3, PLAYER4],
                    joueurs_en_jeux=[PLAYER1, PLAYER2, PLAYER3, PLAYER4],
-                   rounds=[])
+                   rounds=[round3()])
 
 
 def tournoi2():
@@ -109,11 +115,9 @@ def state3():
     state.tournoi.rounds = [round1(), round2(), round3(), round4()]
     return state
 
+
 def state4():
-    state = State()
-    state.acteurs = ACTEURS
-    state.tournoi = tournoi1()
-    state.tournoi.rounds = [round3()]
+    state = State(acteurs=ACTEURS, tournoi=tournoi1())
     return state
 
 
