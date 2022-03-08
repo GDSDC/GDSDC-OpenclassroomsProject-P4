@@ -38,7 +38,7 @@ SCORES = [((PLAYER1, Score.GAGNANT), (PLAYER2, Score.PERDANT)), ((PLAYER3, Score
 ACTEURS = {1: PLAYER1, 5: PLAYER2, 3: PLAYER3, 4: PLAYER4}
 
 
-def tournoi1():
+def tournoi1(rounds_input: Optional[List[Round]]=[]) -> Tournoi:
     return Tournoi(nom='Tournoi_TEST',
                    lieu='lieu_TEST',
                    date_debut=datetime.now(),
@@ -47,7 +47,7 @@ def tournoi1():
                    description='Remarques_TEST',
                    joueurs_du_tournoi=[PLAYER1, PLAYER2, PLAYER3, PLAYER4],
                    joueurs_en_jeux=[PLAYER1, PLAYER2, PLAYER3, PLAYER4],
-                   rounds=[round3()])
+                   rounds=rounds_input)
 
 
 def tournoi2():
@@ -95,29 +95,22 @@ def round4():
 
 
 def state1():
-    state = State()
-    state.acteurs = ACTEURS
-    state.tournoi = tournoi1()
-    state.tournoi.rounds = [round1(), round2()]
+    state = State(acteurs=ACTEURS, tournoi=tournoi1(rounds_input=[round1(), round2()]))
     return state
 
 
 def state2():
-    state = State()
-    state.tournoi = tournoi1()
-    state.tournoi.rounds = [round1(), round2(), round3()]
+    state = State(tournoi=tournoi1(rounds_input=[round1(), round2(), round3()]))
     return state
 
 
 def state3():
-    state = State()
-    state.tournoi = tournoi1()
-    state.tournoi.rounds = [round1(), round2(), round3(), round4()]
+    state = State(tournoi=tournoi1(rounds_input=[round1(), round2(), round3(), round4()]))
     return state
 
 
 def state4():
-    state = State(acteurs=ACTEURS, tournoi=tournoi1())
+    state = State(acteurs=ACTEURS, tournoi=tournoi1(rounds_input=[round3()]))
     return state
 
 
