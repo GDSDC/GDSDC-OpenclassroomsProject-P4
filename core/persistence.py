@@ -107,7 +107,7 @@ def save_tournaments(state: State):
         tournaments.append(state.tournoi)
     tournaments.sort(key=sorters.tournament_chronological)
 
-    for tournoi in tournaments:
+    for tournoi in state.tournois:
         DB.table(TOURNAMENTS_TABLE).insert(tournoi.to_json())
 
 

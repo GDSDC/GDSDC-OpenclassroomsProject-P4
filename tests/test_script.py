@@ -20,17 +20,18 @@ PLAYER2 = player_test(2)
 PLAYER3 = player_test(3)
 PLAYER4 = player_test(4)
 
+
 # Changing ranking
-def nouveau_classement(joueur: Joueur, nouveau_classement: int) -> Joueur:
+def nouveau_classement(joueur: Joueur, nouveau_classement_valeur: int) -> Joueur:
     player_nouveau_classement = joueur
-    player_nouveau_classement.classement = nouveau_classement
+    player_nouveau_classement.classement = nouveau_classement_valeur
     return player_nouveau_classement
 
 
-PLAYER_NOUVEAU_CLASSEMENT1 = nouveau_classement(joueur=PLAYER1, nouveau_classement=10)
-PLAYER_NOUVEAU_CLASSEMENT2 = nouveau_classement(joueur=PLAYER2, nouveau_classement=20)
-PLAYER_NOUVEAU_CLASSEMENT3 = nouveau_classement(joueur=PLAYER3, nouveau_classement=30)
-PLAYER_NOUVEAU_CLASSEMENT4 = nouveau_classement(joueur=PLAYER4, nouveau_classement=40)
+PLAYER_NOUVEAU_CLASSEMENT1 = nouveau_classement(joueur=PLAYER1, nouveau_classement_valeur=10)
+PLAYER_NOUVEAU_CLASSEMENT2 = nouveau_classement(joueur=PLAYER2, nouveau_classement_valeur=20)
+PLAYER_NOUVEAU_CLASSEMENT3 = nouveau_classement(joueur=PLAYER3, nouveau_classement_valeur=30)
+PLAYER_NOUVEAU_CLASSEMENT4 = nouveau_classement(joueur=PLAYER4, nouveau_classement_valeur=40)
 
 SCORES_VIDE = [((PLAYER1, None), (PLAYER2, None)), ((PLAYER3, None), (PLAYER4, None))]
 SCORES = [((PLAYER1, Score.GAGNANT), (PLAYER2, Score.PERDANT)), ((PLAYER3, Score.GAGNANT), (PLAYER4, Score.PERDANT))]
@@ -38,7 +39,7 @@ SCORES = [((PLAYER1, Score.GAGNANT), (PLAYER2, Score.PERDANT)), ((PLAYER3, Score
 ACTEURS = {1: PLAYER1, 5: PLAYER2, 3: PLAYER3, 4: PLAYER4}
 
 
-def tournoi1(rounds_input: Optional[List[Round]]=[]) -> Tournoi:
+def tournoi1(rounds_input: Optional[List[Round]] = []) -> Tournoi:
     return Tournoi(nom='Tournoi_TEST',
                    lieu='lieu_TEST',
                    date_debut=datetime.now(),
@@ -111,6 +112,11 @@ def state3():
 
 def state4():
     state = State(acteurs=ACTEURS, tournoi=tournoi1(rounds_input=[round3()]))
+    return state
+
+
+def state5():
+    state = State(tournois=[tournoi1(rounds_input=[round1(), round2(), round3()])])
     return state
 
 
@@ -330,7 +336,6 @@ def test_controller_entrer_scores():
 def test_modifier_classement():
     """Function that test the controller.modifier_classement_tournoi"""
 
-    # TODO : invest in pytest error, maybe rebuild this test function
     # Given
     init_sate = state1()
     controller = Controller(vue=TEST_VUE, state=init_sate)
@@ -349,9 +354,8 @@ def test_controller_terminer_tournoi():
     """Function to test closing a tournament"""
 
     # Given
-    init_sate2 = state2()
-    controller = Controller(state=init_sate2)
-    init_controller = Controller()
+    controller = Controller(state=state2())
+    init_controller = Controller(state=state5())
 
     # Then
     controller.terminer_tournoi()

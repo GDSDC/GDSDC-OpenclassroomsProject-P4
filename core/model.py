@@ -225,6 +225,10 @@ class State:
             key_to_update_ranking = list(self.acteurs.keys())[list(self.acteurs.values()).index(joueur)]
             self.acteurs[key_to_update_ranking] = joueurs_nouveau_classement[joueurs_ancien_classement.index(joueur)]
 
+    def terminer_tournoi(self):
+        """Function to update tourmanent list and clean state.tournoi"""
+        self.tournois.append(self.tournoi)
+        self.tournoi = None
 
 if __name__ == '__main__':
     pass

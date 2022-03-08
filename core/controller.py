@@ -267,13 +267,18 @@ class Controller:
     def terminer_tournoi(self):
         """Function to close tournament"""
 
-        # Send Sate to database
+        # Tounament name
+        tournament_to_close = self.state.tournoi.nom
+
+        # Update State
+        self.state.terminer_tournoi()
+
+        # Send State to database
+        self.save_database()
 
         # Message
-        print(f'\nTournoi {self.state.tournoi.nom} terminé avec succès !')
+        print(f'\nTournoi {tournament_to_close} terminé avec succès !')
 
-        # Init the actual instance
-        self.__init__()
 
     # Rapports
     def afficher_rapport_acteur_alphabetique(self):
