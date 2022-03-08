@@ -35,6 +35,7 @@ CHOIX_MENU_RAPPORTS = {1: 'Liste de tous les Acteurs par ordre alphabétique',
 
 CHOIX_MENU_SAUVEGARDE_CHARGEMENT = ('Sauvegarder l\'état du programme',
                                     'Charger l\'état du programme',
+                                    'Réinitialiser la base donnée',
                                     'Quitter')
 CHOIX_MENU_SAUVEGARDE_CHARGEMENT = dict(enumerate(CHOIX_MENU_SAUVEGARDE_CHARGEMENT, 1))
 

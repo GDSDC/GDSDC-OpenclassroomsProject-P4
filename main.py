@@ -1,40 +1,29 @@
 from core.controller import Controller
 from core.model import Joueur, Sex, Tournoi, ControleDuTemps, Round, RoundName, Score
 from datetime import datetime, timedelta
+from tests.test_script import player_test
 
-PLAYER1 = Joueur(nom_de_famille='Nom de famille TEST1', prenom='prenom TEST1',
-                 date_de_naissance=datetime.now(), sexe=Sex.MALE, classement=1)
-PLAYER2 = Joueur(nom_de_famille='Nom de famille TEST2', prenom='prenom TEST2',
-                 date_de_naissance=datetime.now(), sexe=Sex.FEMALE, classement=3)
-PLAYER3 = Joueur(nom_de_famille='Nom de famille TEST3', prenom='prenom TEST3',
-                 date_de_naissance=datetime.now(), sexe=Sex.MALE, classement=2)
-PLAYER4 = Joueur(nom_de_famille='Nom de famille TEST4', prenom='prenom TEST4',
-                 date_de_naissance=datetime.now(), sexe=Sex.FEMALE, classement=4)
-PLAYER2_1 = Joueur(nom_de_famille='Nom de famille TEST2_1', prenom='prenom TEST2_1',
-                   date_de_naissance=datetime.now(), sexe=Sex.MALE, classement=1)
-PLAYER2_2 = Joueur(nom_de_famille='Nom de famille TEST2_2', prenom='prenom TEST2_2',
-                   date_de_naissance=datetime.now(), sexe=Sex.FEMALE, classement=3)
-PLAYER2_3 = Joueur(nom_de_famille='Nom de famille TEST2_3', prenom='prenom TEST2_3',
-                   date_de_naissance=datetime.now(), sexe=Sex.MALE, classement=2)
-PLAYER2_4 = Joueur(nom_de_famille='Nom de famille TEST2_4', prenom='prenom TEST2_4',
-                   date_de_naissance=datetime.now(), sexe=Sex.FEMALE, classement=4)
-PLAYER3_1 = Joueur(nom_de_famille='Nom de famille TEST3_1', prenom='prenom TEST3_1',
-                   date_de_naissance=datetime.now(), sexe=Sex.MALE, classement=1)
-PLAYER3_2 = Joueur(nom_de_famille='Nom de famille TEST3_2', prenom='prenom TEST3_2',
-                   date_de_naissance=datetime.now(), sexe=Sex.FEMALE, classement=3)
-PLAYER3_3 = Joueur(nom_de_famille='Nom de famille TEST3_3', prenom='prenom TEST3_3',
-                   date_de_naissance=datetime.now(), sexe=Sex.MALE, classement=2)
-PLAYER3_4 = Joueur(nom_de_famille='Nom de famille TEST3_4', prenom='prenom TEST3_4',
-                   date_de_naissance=datetime.now(), sexe=Sex.FEMALE, classement=4)
+PLAYER1 = player_test(indice=1)
+PLAYER2 = player_test(indice=2)
+PLAYER3 = player_test(indice=3)
+PLAYER4 = player_test(indice=4)
+PLAYER5 = player_test(indice=5)
+PLAYER6 = player_test(indice=6)
+PLAYER7 = player_test(indice=7)
+PLAYER8 = player_test(indice=8)
+PLAYER9 = player_test(indice=9)
+PLAYER10 = player_test(indice=10)
+PLAYER11 = player_test(indice=11)
+PLAYER12 = player_test(indice=12)
 
-SCORES_2 = [((PLAYER2_1, Score.GAGNANT), (PLAYER2_2, Score.PERDANT)),
-            ((PLAYER2_3, Score.GAGNANT), (PLAYER2_4, Score.PERDANT))]
-SCORES_VIDE_2 = [((PLAYER2_1, None), (PLAYER2_2, None)), ((PLAYER2_3, None), (PLAYER2_4, None))]
+SCORES_2 = [((PLAYER5, Score.GAGNANT), (PLAYER6, Score.PERDANT)),
+            ((PLAYER7, Score.GAGNANT), (PLAYER8, Score.PERDANT))]
+SCORES_VIDE_2 = [((PLAYER5, None), (PLAYER6, None)), ((PLAYER7, None), (PLAYER8, None))]
 
 # PLAYERS = [PLAYER4, PLAYER3, PLAYER2, PLAYER1]
 ACTEURS = {1: PLAYER4, 2: PLAYER3, 3: PLAYER2, 4: PLAYER1}
 
-ROUND1 = Round(nom=RoundName.ROUND1, match_liste=SCORES_VIDE_2, date_debut=datetime.now(),
+ROUND1 = Round(nom=RoundName.ROUND1, match_liste=SCORES_2, date_debut=datetime.now(),
                date_fin=datetime.now())
 ROUND2 = Round(nom=RoundName.ROUND2, match_liste=SCORES_2, date_debut=datetime.now(),
                date_fin=datetime.now())
@@ -55,8 +44,8 @@ TOURNOI2 = Tournoi(nom='Tournoi_TEST_2',
                    date_fin=datetime.now() + timedelta(days=10),
                    controle_du_temps=ControleDuTemps.BLITZ,
                    description='Remarques_TEST',
-                   joueurs_du_tournoi=[PLAYER2_4, PLAYER2_2, PLAYER2_3, PLAYER2_1],
-                   joueurs_en_jeux=[PLAYER2_1, PLAYER2_2, PLAYER2_3, PLAYER2_4],
+                   joueurs_du_tournoi=[PLAYER8, PLAYER6, PLAYER7, PLAYER5],
+                   joueurs_en_jeux=[PLAYER5, PLAYER6, PLAYER7, PLAYER8],
                    rounds=[ROUND1, ROUND2])
 
 TOURNOI3 = Tournoi(nom='Tournoi_TEST_3',
@@ -65,9 +54,9 @@ TOURNOI3 = Tournoi(nom='Tournoi_TEST_3',
                    date_fin=datetime.now() + timedelta(days=20),
                    controle_du_temps=ControleDuTemps.BLITZ,
                    description='Remarques_TEST',
-                   joueurs_du_tournoi=[PLAYER3_1, PLAYER3_2, PLAYER3_3, PLAYER3_4],
-                   joueurs_en_jeux=[PLAYER3_1, PLAYER3_2, PLAYER3_3, PLAYER3_4],
-                   rounds=[])
+                   joueurs_du_tournoi=[PLAYER9, PLAYER10, PLAYER11, PLAYER12],
+                   joueurs_en_jeux=[PLAYER9, PLAYER10, PLAYER11, PLAYER12],
+                   rounds=[ROUND1, ROUND2])
 #
 # init_controller = Controller()
 # init_controller.state.acteurs = ACTEURS

@@ -1,7 +1,8 @@
-from core.vue import Vue, CHOIX_MENU_PRINCIPAL, CHOIX_MENU_TOURNOI, CHOIX_MENU_RAPPORTS, CHOIX_MENU_JOUEURS
+from core.vue import Vue, CHOIX_MENU_PRINCIPAL, CHOIX_MENU_TOURNOI, CHOIX_MENU_RAPPORTS, CHOIX_MENU_JOUEURS, CHOIX_MENU_SAUVEGARDE_CHARGEMENT
 from core.model import State, Joueur, Tournoi, Score, Round, NOMBRE_DE_JOUEURS
 from typing import List, Optional
 from core import sorters
+from core import persistence
 
 
 class Controller:
@@ -40,7 +41,6 @@ class Controller:
                     # Quitter
                     elif choix_menu_joueurs == 0:
                         must_exit_players = True
-
 
             # Gestion du Tournoi
             elif choix_menu_principal == 2:
@@ -119,8 +119,25 @@ class Controller:
                     elif choix_menu_rapports == 0:
                         must_exit_rapports = True
 
+            # Sauvegarde - Chargement
             elif choix_menu_principal == 4:
-                pass
+                must_exit_sauvegarder = False
+                while not must_exit_sauvegarder:
+                    choix_menu_sauvegarder = self.vue.afficher_menu(nom_menu=CHOIX_MENU_PRINCIPAL[4],
+                                                                    menu=CHOIX_MENU_SAUVEGARDE_CHARGEMENT)
+                    # Sauvegarder l'état du programme
+                    if choix_menu_sauvegarder == 1:
+                        self.save_database()
+                    # Charger l'état du programme
+                    elif choix_menu_sauvegarder == 2:
+                        self.load_database()
+                    # Réinitialiser la base donnée
+                    elif choix_menu_sauvegarder == 3:
+                        persistence.clear_database()
+                    # Quitter
+                    elif choix_menu_sauvegarder == 0:
+                        must_exit_sauvegarder = True
+
             # Quitter
             elif choix_menu_principal == 0:
                 must_exit = True
@@ -312,6 +329,14 @@ class Controller:
         self.vue.afficher_rapport_matchs_tournoi(tournoi=tournoi, donnees_rapport=ordered_data)
 
     # Gestion de la base de données
+
+    def save_database(self):
+        """Function to save the actual state to database"""
+        persistence.save(state=self.state)
+
+    def load_database(self):
+        """Function to load database state into actual state"""
+        self.state.acteurs, self.state.tournois = persistence.load()
 
 
 if __name__ == '__main__':

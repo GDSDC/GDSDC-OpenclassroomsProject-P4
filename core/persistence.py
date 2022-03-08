@@ -1,13 +1,12 @@
 import os
 
 from tinydb import TinyDB, Query, table
-from model import Joueur, State, Tournoi
-from tests.test_script import state1, state4
-import sorters
+from core.model import Joueur, State, Tournoi
+from core import sorters
 from typing import Dict, List, Optional
 from functools import wraps
 
-_DB_PATH = '../resources/db.json'
+_DB_PATH = 'resources/db.json'
 
 DB: Optional[TinyDB] = None
 
@@ -122,12 +121,3 @@ def save(state: State):
     # Save tournaments
     save_tournaments(state=state)
 
-
-if __name__ == '__main__':
-    clear_database()
-    init_database(db=DB)
-    state_to_save = state4()
-    save(state=state_to_save)
-    result = load()
-    print(result[0])
-    print(result[1])
