@@ -2,6 +2,7 @@ from typing import List, Tuple, Optional, Dict, Any
 from dataclasses import dataclass, asdict
 from enum import Enum
 from datetime import date, datetime
+from core import sorters
 
 # INITIALISATION CONSTANTES
 # nombres de tours (Round) par tournoi
@@ -100,7 +101,8 @@ class Round:
         round_instance = Round(**json_value)
         round_instance.nom = RoundName(json_value['nom'])
         round_instance.match_liste = [
-            ((Joueur.from_json(joueur1_json), Score(score_joueur1_json)), (Joueur.from_json(joueur2_json), Score(score_joueur2_json)))
+            ((Joueur.from_json(joueur1_json), Score(score_joueur1_json)),
+             (Joueur.from_json(joueur2_json), Score(score_joueur2_json)))
             for [[joueur1_json, score_joueur1_json], [joueur2_json, score_joueur2_json]] in json_value['match_liste']]
         round_instance.date_debut = datetime.fromisoformat(json_value['date_debut'])
         round_instance.date_fin = datetime.fromisoformat(json_value['date_fin'])
@@ -150,7 +152,8 @@ class Tournoi:
         tournoi.date_fin = datetime.fromisoformat(json_value['date_fin'])
         tournoi.controle_du_temps = ControleDuTemps(json_value['controle_du_temps'])
         tournoi.rounds = [Round.from_json(round_json) for round_json in json_value['rounds']]
-        tournoi.joueurs_du_tournoi = [Joueur.from_json(joueur_json) for joueur_json in json_value['joueurs_du_tournoi']]
+        tournoi.joueurs_du_tournoi = [Joueur.from_json(joueur_json) for joueur_json in
+                                      json_value['joueurs_du_tournoi']]
         tournoi.joueurs_en_jeux = [Joueur.from_json(joueur_json) for joueur_json in json_value['joueurs_en_jeux']]
 
         return tournoi
@@ -211,11 +214,30 @@ class State:
     def creer_nouveau_round(self, nouveau_round: Round):
         self.tournoi.rounds.append(nouveau_round)
 
-    def generer_paires_joueurs(self, joueurs: List[Joueur]):
-        i = 0
-        while i < len(joueurs) - 1:  # -1 pour se proteger d'indexError
-            self.tournoi.rounds[-1].match_liste.append(((joueurs[i], None), (joueurs[i + 1], None)))
-            i += 2
+    def generer_paires_joueurs(self, joueurs: List[Joueur], rounds: List[Round]):
+        """Function generate player pairs in the suisse tournament way"""
+
+        # For the first round
+        if not rounds:
+            joueurs_ordonnes_par_classement = sorted(joueurs, key=sorters.player_by_ranking)
+            # Cuting joueurs_ordonnes_par_classement in upper half and lower half
+            joueurs_superieur = joueurs_ordonnes_par_classement[:int(len(joueurs_ordonnes_par_classement) / 2)]
+            joueurs_inferieur = joueurs_ordonnes_par_classement[int(len(joueurs_ordonnes_par_classement) / 2):]
+        else:
+            # For the next rounds
+            # Initializing players with score
+            joueurs_score = [[joueur, 0] for joueur in joueurs]
+            # Counting points
+            for round_object in rounds:
+                self.joueurs_score_update(round_object=round_object, joueurs_score=joueurs_score)
+            # TODO : terminer fonction et créér joueurs_score_update -> l'idée est générer un liste de [Joueur, total de point]
+            #  sur toutes les match_liste des round pour avec une liste finale de [Joueur, score total du tournoi]
+            #  de façon a pouvoir ensuite créer les liste joueurs_superieur et joueurs_inferieur
+            #  Attention au cas où le score est égal -> différencier sur le classement
+
+        # Generating pairs
+        for i in range(int(len(joueurs) / 2)):
+            self.tournoi.rounds[-1].match_liste.append(((joueurs_superieur[i], None), (joueurs_inferieur[i], None)))
 
     def entrer_scores(self, scores: List[Match]):
         self.tournoi.rounds[-1].match_liste = scores
@@ -233,6 +255,7 @@ class State:
         """Function to update tourmanent list and clean state.tournoi"""
         self.tournois.append(self.tournoi)
         self.tournoi = None
+
 
 if __name__ == '__main__':
     pass
