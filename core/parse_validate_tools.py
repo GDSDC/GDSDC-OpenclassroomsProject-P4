@@ -111,11 +111,6 @@ def validate_sexe(user_input: str):
         )
 
 
-def validate_score(user_input: int):
-    score_choice_interval = (1, 3)
-    return validate_integer_interval(parsed_int=user_input, interval=score_choice_interval)
-
-
 def validate_actor_key(user_input: Any):
     """Function that verify if user_input is an int or str 'terminer' """
     if user_input == 'terminer':
@@ -131,6 +126,7 @@ def validate_actor_key(user_input: Any):
                 False,
                 f'"{user_input}" n\'est pas un choix valide. Veuillez choisir un entier ou le mot "terminer".',
             )
+
 
 def no_validation(user_input):
     """Function that do no validation when this is not needed"""

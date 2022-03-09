@@ -383,10 +383,11 @@ Entrez les scores des {nombre_de_paires} matchs :
             print('Qui est le vainqueur ?')
             print(f'1. {joueur1.prenom} {joueur1.nom_de_famille}')
             print(f'2. {joueur2.prenom} {joueur2.nom_de_famille}')
-            print('3. Match-Nul')
-            match_texte = f'Veuillez choisir le résultat du match n°{idx + 1} (1, 2, ou 3) : '
+            print('0. Match-Nul')
+            match_texte = f'Veuillez choisir le résultat du match n°{idx + 1} (1, 2, ou 0) : '
             resultat_match = pvt.parse_and_validate(explanation=match_texte, parse=pvt.parse_int,
-                                                    validate=pvt.validate_score)
+                                                    validate=lambda x: pvt.validate_integer_interval(parsed_int=x,
+                                                                                                     interval=(0, 2)))
             # Score attribution
             if resultat_match == 1:
                 score_joueur1 = Score.GAGNANT
@@ -394,7 +395,7 @@ Entrez les scores des {nombre_de_paires} matchs :
             elif resultat_match == 2:
                 score_joueur1 = Score.PERDANT
                 score_joueur2 = Score.GAGNANT
-            else:
+            elif resultat_match == 0:
                 score_joueur1 = Score.MATCH_NUL
                 score_joueur2 = Score.MATCH_NUL
             match_liste_scores[idx] = ((joueur1, score_joueur1), (joueur2, score_joueur2))
@@ -570,8 +571,6 @@ Affichage de la liste des {nom_rapport}
 x x x x x x x x x x x x x x xx
 {message}
 x x x x x x x x x x x x x x xx''')
-
-
 
 
 if __name__ == '__main__':

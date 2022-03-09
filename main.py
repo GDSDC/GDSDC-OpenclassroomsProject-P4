@@ -34,8 +34,8 @@ TOURNOI1 = Tournoi(nom='Tournoi_TEST_1',
                    date_fin=datetime.now(),
                    controle_du_temps=ControleDuTemps.BLITZ,
                    description='Remarques_TEST',
-                   joueurs_du_tournoi=[PLAYER1, PLAYER2, PLAYER3, PLAYER4],
-                   joueurs_en_jeux=[PLAYER1, PLAYER2, PLAYER3, PLAYER4],
+                   joueurs_du_tournoi=[player_test(indice=i) for i in range(1,9)],
+                   joueurs_en_jeux=[player_test(indice=i) for i in range(1,9)],
                    rounds=[])
 
 TOURNOI2 = Tournoi(nom='Tournoi_TEST_2',

@@ -1,6 +1,7 @@
-from core.vue import Vue, CHOIX_MENU_PRINCIPAL, CHOIX_MENU_TOURNOI, CHOIX_MENU_RAPPORTS, CHOIX_MENU_JOUEURS, CHOIX_MENU_SAUVEGARDE_CHARGEMENT
+from core.vue import Vue, CHOIX_MENU_PRINCIPAL, CHOIX_MENU_TOURNOI, CHOIX_MENU_RAPPORTS, CHOIX_MENU_JOUEURS, \
+    CHOIX_MENU_SAUVEGARDE_CHARGEMENT
 from core.model import State, Joueur, Tournoi, Score, Round, NOMBRE_DE_JOUEURS
-from typing import List, Optional
+from typing import List, Optional, Union
 from core import sorters
 from core import persistence
 
@@ -31,7 +32,8 @@ class Controller:
                         if self.state.acteurs:
                             self.afficher_rapport_acteur_alphabetique()
                         else:
-                            self.vue.affichage_warning('La liste d\'acteurs est vide. Veuillez ajouter au moins un joueur !')
+                            self.vue.affichage_warning(
+                                'La liste d\'acteurs est vide. Veuillez ajouter au moins un joueur !')
                     # Ajouter nouveau Joueur
                     elif choix_menu_joueurs == 2:
                         self.ajouter_nouveau_joueur()
@@ -40,13 +42,15 @@ class Controller:
                         if self.state.acteurs:
                             self.supprimer_joueur()
                         else:
-                            self.vue.affichage_warning('La liste d\'acteurs est vide. Veuillez ajouter au moins un joueur !')
+                            self.vue.affichage_warning(
+                                'La liste d\'acteurs est vide. Veuillez ajouter au moins un joueur !')
                     # MAJ classement d'un Joueur
                     elif choix_menu_joueurs == 4:
                         if self.state.acteurs:
                             self.modifier_classement()
                         else:
-                            self.vue.affichage_warning('La liste d\'acteurs est vide. Veuillez ajouter au moins un joueur !')
+                            self.vue.affichage_warning(
+                                'La liste d\'acteurs est vide. Veuillez ajouter au moins un joueur !')
                     # Quitter
                     elif choix_menu_joueurs == 0:
                         must_exit_players = True
@@ -72,7 +76,8 @@ class Controller:
                             if self.state.tournoi.rounds:
                                 self.entrer_scores()
                             else:
-                                self.vue.affichage_warning('Veuillez démarrer un nouveau Round avant d\'entrer les scores.')
+                                self.vue.affichage_warning(
+                                    'Veuillez démarrer un nouveau Round avant d\'entrer les scores.')
                         else:
                             self.vue.affichage_warning(
                                 'Veuillez créer un Tournoi et démarrer un nouveau Round avant d\'entrer les scores.')
@@ -82,7 +87,8 @@ class Controller:
                         if self.state.tournoi:
                             self.modifier_classement_tournoi()
                         else:
-                            self.vue.affichage_warning('Veuillez créer un Tournoi avant de modifier le classement de ses Joueurs.')
+                            self.vue.affichage_warning(
+                                'Veuillez créer un Tournoi avant de modifier le classement de ses Joueurs.')
                     # Terminer Tournoi
                     elif choix_menu_tournoi == 5:
                         if self.state.tournoi:
@@ -104,12 +110,14 @@ class Controller:
                         if self.state.acteurs:
                             self.afficher_rapport_acteur_alphabetique()
                         else:
-                            self.vue.affichage_warning('La liste d\'acteurs est vide. Veuillez ajouter au moins un joueur !')                    # Acteurs par par classement
+                            self.vue.affichage_warning(
+                                'La liste d\'acteurs est vide. Veuillez ajouter au moins un joueur !')  # Acteurs par par classement
                     elif choix_menu_rapports == 2:
                         if self.state.acteurs:
                             self.afficher_rapport_acteur_classement()
                         else:
-                            self.vue.affichage_warning('La liste d\'acteurs est vide. Veuillez ajouter au moins un joueur !')
+                            self.vue.affichage_warning(
+                                'La liste d\'acteurs est vide. Veuillez ajouter au moins un joueur !')
                     # Joueurs d'un Tournoi par ordre alphabétique
                     elif choix_menu_rapports == 3:
                         # Warning if no tournament in state
@@ -121,7 +129,8 @@ class Controller:
                             if tournoi_selectionne.joueurs_du_tournoi:
                                 self.afficher_rapport_joueurs_alphabetique(tournoi=tournoi_selectionne)
                             else:
-                                self.vue.affichage_warning(f'Le tournoi {tournoi_selectionne.nom} ne compte aucun joueur. Veuillez ajouter au moins un joueur !')
+                                self.vue.affichage_warning(
+                                    f'Le tournoi {tournoi_selectionne.nom} ne compte aucun joueur. Veuillez ajouter au moins un joueur !')
                     # Joueurs d'un Tournoi par classement
                     elif choix_menu_rapports == 4:
                         # Warning if no tournament in state
@@ -150,7 +159,8 @@ class Controller:
                             if tournoi_selectionne.rounds:
                                 self.afficher_rapport_tours_tournoi(tournoi=tournoi_selectionne)
                             else:
-                                self.vue.affichage_warning(f'Acun Tour créé dans le tournoi {tournoi_selectionne.nom}. Veuillez créer un nouveau Round !')
+                                self.vue.affichage_warning(
+                                    f'Acun Tour créé dans le tournoi {tournoi_selectionne.nom}. Veuillez créer un nouveau Round !')
                     # Matchs d'un Tournoi
                     elif choix_menu_rapports == 7:
                         # Warning if no tournament in state
@@ -162,7 +172,8 @@ class Controller:
                             if tournoi_selectionne.rounds:
                                 self.afficher_rapport_matchs_tournoi(tournoi=tournoi_selectionne)
                             else:
-                                self.vue.affichage_warning(f'Acun Tour créé dans le tournoi {tournoi_selectionne.nom}. Veuillez créer un nouveau Round !')
+                                self.vue.affichage_warning(
+                                    f'Acun Tour créé dans le tournoi {tournoi_selectionne.nom}. Veuillez créer un nouveau Round !')
                     # Quitter
                     elif choix_menu_rapports == 0:
                         must_exit_rapports = True
@@ -260,8 +271,66 @@ class Controller:
         self.generer_paires_joueurs()
 
     def generer_paires_joueurs(self):
-        self.state.generer_paires_joueurs(self.state.tournoi.joueurs_en_jeux)
+        """Function generate player pairs in the suisse tournament way"""
+
+        # Initiliazation
+        joueurs = self.state.tournoi.joueurs_en_jeux
+        rounds = self.state.tournoi.rounds
+        joueurs_paires = []
+
+        # For the first round
+        if len(rounds) == 1:
+            joueurs_ordonnes_par_classement = sorted(joueurs, key=sorters.player_by_ranking)
+            # Cuting joueurs_ordonnes_par_classement in upper half and lower half
+            joueurs_superieur = joueurs_ordonnes_par_classement[:int(len(joueurs_ordonnes_par_classement) / 2)]
+            joueurs_inferieur = joueurs_ordonnes_par_classement[int(len(joueurs_ordonnes_par_classement) / 2):]
+        else:
+            # For the next rounds
+            # Initializing players with score
+            joueurs_score_init = [[joueur, 0] for joueur in joueurs]
+            # Counting points
+            for round_object in rounds:
+                joueurs_score = self.joueurs_score_update(round_object=round_object, joueurs_score=joueurs_score_init)
+            print(f'joueurs_score : {joueurs_score}')
+            # First sorting by ranking
+            joueurs_score.sort(key=lambda x: sorters.player_by_ranking(x[0]))
+            print(f'sorters.player_by_ranking : {joueurs_score}')
+            # Then sorting by total score
+            joueurs_score.sort(key=lambda x: x[1])
+            # Getting player list from joueurs_score
+            joueurs_ordonnes_par_score = [joueur for [joueur, _] in joueurs_score]
+            joueurs_superieur = joueurs_ordonnes_par_score[:int(len(joueurs_ordonnes_par_score) / 2)]
+            joueurs_inferieur = joueurs_ordonnes_par_score[int(len(joueurs_ordonnes_par_score) / 2):]
+        for i in range(int(len(joueurs) / 2)):
+            joueurs_paires.append([joueurs_superieur[i], joueurs_inferieur[i]])
+
+        self.state.generer_paires_joueurs(joueurs_paires=joueurs_paires)
         self.vue.afficher_paires_joueurs(self.state.tournoi.rounds[-1])
+
+    def joueurs_score_update(self, round_object: Round, joueurs_score: List[Union[Joueur, int]]) -> List[
+        Union[Joueur, int]]:
+        """Function to update joueur_score with scores of the round_object"""
+
+        # Initialization
+        joueurs_score_updated = joueurs_score
+        joueurs_score_to_be_updated = []
+        result = []
+
+        # Iteration over matchs in matchs_liste of the round_object
+        for match in round_object.match_liste:
+            for (joueur, score) in match:
+                joueurs_score_to_be_updated.append([joueur, score.value])
+        print(f'joueurs_score_to_be_updated : {joueurs_score_to_be_updated}')
+
+        # result
+        for [joueur, score] in joueurs_score_updated:
+            for [joueur_to_update, score_to_update] in joueurs_score_to_be_updated:
+                if joueur_to_update == joueur:
+                    score += score_to_update
+                    result.append([joueur,score])
+
+        print(f'result : {result}')
+        return result
 
     def entrer_scores(self):
         scores = self.vue.entrer_scores(round_param=self.state.tournoi.rounds[-1])
@@ -325,7 +394,6 @@ class Controller:
 
         # Message
         self.vue.affichage_warning(f'Tournoi {tournament_to_close} terminé avec succès !')
-
 
     # Rapports
     def afficher_rapport_acteur_alphabetique(self):
