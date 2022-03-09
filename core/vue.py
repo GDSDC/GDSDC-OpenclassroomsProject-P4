@@ -564,6 +564,15 @@ Affichage de la liste des {nom_rapport}
                 ((joueur_1, _), (joueur_2, _)) in donnees_rapport]
             self.afficher_rapports(nom_rapport=f'matchs du tournoi {tournoi.nom}', donnees_rapport=formatted_data)
 
+    def affichage_warning(self, message: str):
+        """Function to print warning messages"""
+        print(f'''
+x x x x x x x x x x x x x x xx
+{message}
+x x x x x x x x x x x x x x xx''')
+
+
+
 
 if __name__ == '__main__':
     pass

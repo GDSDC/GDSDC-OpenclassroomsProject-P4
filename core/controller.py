@@ -28,16 +28,25 @@ class Controller:
                                                                 menu=CHOIX_MENU_JOUEURS)
                     # Afficher liste des Joueurs
                     if choix_menu_joueurs == 1:
-                        self.afficher_rapport_acteur_alphabetique()
+                        if self.state.acteurs:
+                            self.afficher_rapport_acteur_alphabetique()
+                        else:
+                            self.vue.affichage_warning('La liste d\'acteurs est vide. Veuillez ajouter au moins un joueur !')
                     # Ajouter nouveau Joueur
                     elif choix_menu_joueurs == 2:
                         self.ajouter_nouveau_joueur()
                     # Supprimer Joueur
                     elif choix_menu_joueurs == 3:
-                        self.supprimer_joueur()
+                        if self.state.acteurs:
+                            self.supprimer_joueur()
+                        else:
+                            self.vue.affichage_warning('La liste d\'acteurs est vide. Veuillez ajouter au moins un joueur !')
                     # MAJ classement d'un Joueur
                     elif choix_menu_joueurs == 4:
-                        self.modifier_classement()
+                        if self.state.acteurs:
+                            self.modifier_classement()
+                        else:
+                            self.vue.affichage_warning('La liste d\'acteurs est vide. Veuillez ajouter au moins un joueur !')
                     # Quitter
                     elif choix_menu_joueurs == 0:
                         must_exit_players = True
@@ -56,30 +65,30 @@ class Controller:
                         if self.state.tournoi:
                             self.creer_nouveau_round()
                         else:
-                            print('\nVeuillez créer un Tournoi avant de démarrer un nouveau Round.')
+                            self.vue.affichage_warning('Veuillez créer un Tournoi avant de démarrer un nouveau Round.')
                     # Entrer les résultats
                     elif choix_menu_tournoi == 3:
                         if self.state.tournoi:
                             if self.state.tournoi.rounds:
                                 self.entrer_scores()
                             else:
-                                print('\nVeuillez démarrer un nouveau Round avant d\'entrer les scores.')
+                                self.vue.affichage_warning('Veuillez démarrer un nouveau Round avant d\'entrer les scores.')
                         else:
-                            print(
-                                '\nVeuillez créer un Tournoi et démarrer un nouveau Round avant d\'entrer les scores.')
+                            self.vue.affichage_warning(
+                                'Veuillez créer un Tournoi et démarrer un nouveau Round avant d\'entrer les scores.')
 
                     # MAJ classement des Joueurs du Tournoi
                     elif choix_menu_tournoi == 4:
                         if self.state.tournoi:
                             self.modifier_classement_tournoi()
                         else:
-                            print('\nVeuillez créer un Tournoi avant de modifier le classement de ses Joueurs.')
+                            self.vue.affichage_warning('Veuillez créer un Tournoi avant de modifier le classement de ses Joueurs.')
                     # Terminer Tournoi
                     elif choix_menu_tournoi == 5:
                         if self.state.tournoi:
                             self.terminer_tournoi()
                         else:
-                            print('\nVeuillez créer un Tournoi avant de le terminer.')
+                            self.vue.affichage_warning('Veuillez créer un Tournoi avant de le terminer.')
                     # Quitter
                     elif choix_menu_tournoi == 0:
                         must_exit_tournament = True
@@ -277,7 +286,7 @@ class Controller:
         self.save_database()
 
         # Message
-        print(f'\nTournoi {tournament_to_close} terminé avec succès !')
+        self.vue.affichage_warning(f'Tournoi {tournament_to_close} terminé avec succès !')
 
 
     # Rapports
