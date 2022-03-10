@@ -289,18 +289,18 @@ class Controller:
             # Initializing players with score
             joueurs_score_init = [[joueur, 0] for joueur in joueurs]
             # Counting points
-            for round_object in rounds:
+            for round_object in rounds[:-1]:
                 joueurs_score = self.joueurs_score_update(round_object=round_object, joueurs_score=joueurs_score_init)
-            print(f'joueurs_score : {joueurs_score}')
+                joueurs_score_init = joueurs_score
             # First sorting by ranking
             joueurs_score.sort(key=lambda x: sorters.player_by_ranking(x[0]))
-            print(f'sorters.player_by_ranking : {joueurs_score}')
             # Then sorting by total score
-            joueurs_score.sort(key=lambda x: x[1])
+            joueurs_score.sort(key=lambda x: x[1], reverse=True)
             # Getting player list from joueurs_score
             joueurs_ordonnes_par_score = [joueur for [joueur, _] in joueurs_score]
             joueurs_superieur = joueurs_ordonnes_par_score[:int(len(joueurs_ordonnes_par_score) / 2)]
             joueurs_inferieur = joueurs_ordonnes_par_score[int(len(joueurs_ordonnes_par_score) / 2):]
+
         for i in range(int(len(joueurs) / 2)):
             joueurs_paires.append([joueurs_superieur[i], joueurs_inferieur[i]])
 
@@ -320,7 +320,6 @@ class Controller:
         for match in round_object.match_liste:
             for (joueur, score) in match:
                 joueurs_score_to_be_updated.append([joueur, score.value])
-        print(f'joueurs_score_to_be_updated : {joueurs_score_to_be_updated}')
 
         # result
         for [joueur, score] in joueurs_score_updated:
@@ -329,7 +328,6 @@ class Controller:
                     score += score_to_update
                     result.append([joueur,score])
 
-        print(f'result : {result}')
         return result
 
     def entrer_scores(self):

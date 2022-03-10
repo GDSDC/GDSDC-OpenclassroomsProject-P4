@@ -8,7 +8,7 @@ from datetime import date, datetime
 NOMBRE_DE_TOURS = 4
 
 # nombre de joueurs par tournoi
-NOMBRE_DE_JOUEURS = 4
+NOMBRE_DE_JOUEURS = 8
 
 
 # Classe décrivant le Joueur
@@ -216,52 +216,9 @@ class State:
     def generer_paires_joueurs(self, joueurs_paires: List[Union[Joueur, Joueur]]):
         """Function generate player pairs in the suisse tournament way"""
 
-        # # For the first round
-        # if not rounds:
-        #     joueurs_ordonnes_par_classement = sorted(joueurs, key=sorters.player_by_ranking)
-        #     # Cuting joueurs_ordonnes_par_classement in upper half and lower half
-        #     joueurs_superieur = joueurs_ordonnes_par_classement[:int(len(joueurs_ordonnes_par_classement) / 2)]
-        #     joueurs_inferieur = joueurs_ordonnes_par_classement[int(len(joueurs_ordonnes_par_classement) / 2):]
-        # else:
-        #     # For the next rounds
-        #     # Initializing players with score
-        #     joueurs_score = [[joueur, 0] for joueur in joueurs]
-        #     # Counting points
-        #     for round_object in rounds:
-        #         joueurs_score = self.joueurs_score_update(round_object=round_object, joueurs_score=joueurs_score)
-        #     # First sorting by ranking
-        #     joueurs_score.sort(key=lambda x: sorters.player_by_ranking(x[0]))
-        #     # Then sorting by total score
-        #     joueurs_score.sort(key=lambda x: x[1])
-        #     # Getting player list from joueurs_score
-        #     joueurs_ordonnes_par_score = [joueur for [joueur, _] in joueurs_score]
-        #     joueurs_superieur = joueurs_ordonnes_par_score[:int(len(joueurs_ordonnes_par_score) / 2)]
-        #     joueurs_inferieur = joueurs_ordonnes_par_score[int(len(joueurs_ordonnes_par_score) / 2):]
-
         # Generating pairs into match_liste
         for [joueur_1, joueur_2] in joueurs_paires:
             self.tournoi.rounds[-1].match_liste.append(((joueur_1, None), (joueur_2, None)))
-
-    # def joueurs_score_update(self, round_object: Round, joueurs_score: List[Union[Joueur, int]]) -> List[
-    #     Union[Joueur, int]]:
-    #     """Function to update joueur_score with scores of the round_object"""
-    #
-    #     # Initialization
-    #     joueurs_score_updated = joueurs_score
-    #     joueurs_score_to_be_updated = []
-    #
-    #     # Iteration over matchs in matchs_liste of the round_object
-    #     for match in round_object.match_liste:
-    #         for (joueur, score) in match:
-    #             joueurs_score_to_be_updated.append([joueur, score.value])
-    #
-    #     # result
-    #     for [joueur, score] in joueurs_score_updated:
-    #         for [joueur_to_update, score_to_update] in joueurs_score_to_be_updated:
-    #             if joueur_to_update == joueur:
-    #                 score += score_to_update
-    #
-    #     return joueurs_score_updated
 
     def entrer_scores(self, scores: List[Match]):
         self.tournoi.rounds[-1].match_liste = scores
