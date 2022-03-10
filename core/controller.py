@@ -61,8 +61,7 @@ class Controller:
             elif choix_menu_principal == 2:
                 must_exit_tournament = False
                 while not must_exit_tournament:
-                    tournoi_en_cours_texte = f'- Tournoi en cours : {self.state.tournoi.nom if self.state.tournoi else None}'
-                    choix_menu_tournoi = self.vue.afficher_menu(nom_menu=f'{CHOIX_MENU_PRINCIPAL[2]}  {tournoi_en_cours_texte if self.state.tournoi else None }',
+                    choix_menu_tournoi = self.vue.afficher_menu(nom_menu=f'{CHOIX_MENU_PRINCIPAL[2]}  {"// Tournoi en cours : " + self.state.tournoi.nom if self.state.tournoi else ""}',
                                                                 menu=CHOIX_MENU_TOURNOI)
                     # Créer un nouveau tournoi
                     if choix_menu_tournoi == 1:
