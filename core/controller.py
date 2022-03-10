@@ -6,6 +6,7 @@ from core import sorters
 from core import persistence
 from datetime import datetime
 
+
 class Controller:
     """Contrôleur principal."""
 
@@ -109,7 +110,7 @@ class Controller:
                         elif not self.state.tournoi.rounds:
                             self.vue.affichage_warning(
                                 'Veuillez démarrer un nouveau Round avant de Terminer le tournoi.')
-                        elif len(self.state.tournoi.rounds[-1].match_liste) > 1 or not  \
+                        elif len(self.state.tournoi.rounds[-1].match_liste) > 1 or not \
                                 self.state.tournoi.rounds[-1].match_liste[0][0][1]:
                             self.vue.affichage_warning(
                                 'Veuillez renseigner tous les scores pour déternminer le gagnant du Tournoi avant de le Terminer.')
@@ -131,7 +132,8 @@ class Controller:
                             self.afficher_rapport_acteur_alphabetique()
                         else:
                             self.vue.affichage_warning(
-                                'La liste d\'acteurs est vide. Veuillez ajouter au moins un joueur !')  # Acteurs par par classement
+                                'La liste d\'acteurs est vide. Veuillez ajouter au moins un joueur !')
+                    # Acteurs par par classement
                     elif choix_menu_rapports == 2:
                         if self.state.acteurs:
                             self.afficher_rapport_acteur_classement()
