@@ -180,7 +180,7 @@ class Controller:
                                 self.afficher_rapport_tours_tournoi(tournoi=tournoi_selectionne)
                             else:
                                 self.vue.affichage_warning(
-                                    f'Acun Tour créé dans le tournoi {tournoi_selectionne.nom}. Veuillez créer un nouveau Round !')
+                                    f'Aucun Tour créé dans le tournoi {tournoi_selectionne.nom}. Veuillez créer un nouveau Round !')
                     # Matchs d'un Tournoi
                     elif choix_menu_rapports == 7:
                         # Warning if no tournament in state
