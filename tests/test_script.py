@@ -3,15 +3,13 @@ from typing import List, Optional, Tuple, Dict
 from core.controller import Controller
 from core.model import *
 from core.vue import Vue
-from datetime import datetime, timedelta
-import random
+from datetime import datetime, timedelta, date
 
 
 # PLayer Test Generator
 def player_test(indice: int) -> Joueur:
     player = Joueur(nom_de_famille='Nom de famille TEST' + str(indice), prenom='prenom TEST' + str(indice),
-                    date_de_naissance=datetime.now(), sexe=random.choice([sexe for sexe in Sex]),
-                    classement=indice)
+                    date_de_naissance=datetime(date.today().year,date.today().month, date.today().day), sexe=Sex.MALE, classement=indice)
     return player
 
 

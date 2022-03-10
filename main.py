@@ -21,7 +21,7 @@ SCORES_2 = [((PLAYER5, Score.GAGNANT), (PLAYER6, Score.PERDANT)),
 SCORES_VIDE_2 = [((PLAYER5, None), (PLAYER6, None)), ((PLAYER7, None), (PLAYER8, None))]
 
 # PLAYERS = [PLAYER4, PLAYER3, PLAYER2, PLAYER1]
-ACTEURS = {1: PLAYER4, 2: PLAYER3, 3: PLAYER2, 4: PLAYER1}
+ACTEURS = {1: PLAYER4, 2: PLAYER3, 3: PLAYER2, 4: PLAYER1, 5:PLAYER5, 6:PLAYER6, 7:PLAYER7, 8:PLAYER8}
 
 ROUND1 = Round(nom=RoundName.ROUND1, match_liste=SCORES_2, date_debut=datetime.now(),
                date_fin=datetime.now())

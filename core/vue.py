@@ -437,7 +437,8 @@ Scores du round : {round_variable.nom.value}
         """Function to update players ranking"""
 
         # Initialisation
-        joueurs_classement_updated = joueurs_classement
+        joueurs_ancien_classement = joueurs_classement
+        joueurs_nouveau_classement = []
 
         # Affichage de l'entête
         affichage_classement_entete = """
@@ -449,11 +450,14 @@ Mettez à jour le classement des joueurs suivant :
         print(affichage_classement_entete)
 
         # Iteration sur les joueurs du tournoi
-        for joueur in joueurs_classement_updated:
+        for joueur in joueurs_ancien_classement:
             joueur_classement_texte = f'{joueur.prenom} {joueur.nom_de_famille} / Classement actuel = {joueur.classement} --> Nouveau classement : '
             nouveau_classement = pvt.parse_and_validate(explanation=joueur_classement_texte, parse=pvt.parse_int,
                                                         validate=pvt.validate_integer_positive)
-            joueur.classement = nouveau_classement
+            joueur_classement_a_ajour = Joueur(nom_de_famille=joueur.nom_de_famille, prenom=joueur.prenom,
+                                               date_de_naissance=joueur.date_de_naissance, sexe=joueur.sexe,
+                                               classement=nouveau_classement)
+            joueurs_nouveau_classement.append(joueur_classement_a_ajour)
 
         # Message Validation
         affichage_classement_validation = """
@@ -462,7 +466,7 @@ Classements mis à jour avec succès !
 """
         print(affichage_classement_validation)
 
-        return joueurs_classement_updated
+        return joueurs_nouveau_classement
 
     def afficher_rapports(self, nom_rapport: str, donnees_rapport: List[Any]):
         """Function that shows a report"""
