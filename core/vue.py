@@ -107,9 +107,6 @@ Créer un nouveau Tournoi
         # Définition date de début de tournoi
         nouveau_tournoi['date_debut'] = datetime.today()
 
-        # Définition date de fin de tournoi par defaut
-        # nouveau_tournoi['date_fin'] = datetime.today()
-
         # Définition le contrôle du temps
         nouveau_tournoi_texte_controle_du_temps = '\nRenseignez le contrôle du temps ("bullet", "blitz" ou "coup rapide") : '
         nouveau_tournoi['controle_du_temps'] = pvt.parse_and_validate(
@@ -356,7 +353,7 @@ Création du {nouveau_round['nom'].value} avec succès !
         print(affichage_creer_nouveau_round)
 
         # Définition date de début de round
-        nouveau_round['date_debut'] = datetime.today()
+        nouveau_round['date_debut'] = datetime.now()
 
         # Formatage du resultat au format Round
         nouveau_round = Round(**nouveau_round)

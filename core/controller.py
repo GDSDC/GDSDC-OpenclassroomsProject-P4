@@ -4,7 +4,7 @@ from core.model import State, Joueur, Tournoi, Score, Round, NOMBRE_DE_JOUEURS
 from typing import List, Optional, Union, Tuple
 from core import sorters
 from core import persistence
-
+from datetime import datetime
 
 class Controller:
     """Contrôleur principal."""
@@ -284,10 +284,16 @@ class Controller:
         self.state.tournoi.joueurs_en_jeux = joueurs_qui_passent_au_prochain_tour
 
     def creer_nouveau_round(self):
+        # Ending previous round if exists
+        if self.state.tournoi.rounds:
+            self.state.tournoi.rounds[-1].date_fin = datetime.now()
+        # Updating players for the new round
         self.mettre_a_jour_joueurs()
+        # Creating new round
         numero_round = len(self.state.tournoi.rounds) + 1
         nouveau_round = self.vue.creer_nouveau_round(numero_round=numero_round)
         self.state.creer_nouveau_round(nouveau_round)
+        # Updating new round match_liste with fresh pairs of players
         self.generer_paires_joueurs()
 
     def generer_paires_joueurs(self):
@@ -402,8 +408,14 @@ class Controller:
     def terminer_tournoi(self):
         """Function to close tournament"""
 
+        # Ending last round
+        self.state.tournoi.rounds[-1].date_fin = datetime.now()
+
         # Tounament name
         tournament_to_close = self.state.tournoi.nom
+
+        # Tournament date_fin
+        self.state.tournoi.date_fin = datetime.now()
 
         # Update State
         self.state.terminer_tournoi()
