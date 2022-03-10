@@ -9,7 +9,8 @@ from datetime import datetime, timedelta, date
 # PLayer Test Generator
 def player_test(indice: int) -> Joueur:
     player = Joueur(nom_de_famille='Nom de famille TEST' + str(indice), prenom='prenom TEST' + str(indice),
-                    date_de_naissance=datetime(date.today().year,date.today().month, date.today().day), sexe=Sex.MALE, classement=indice)
+                    date_de_naissance=datetime(date.today().year, date.today().month, date.today().day), sexe=Sex.MALE,
+                    classement=indice)
     return player
 
 
@@ -117,6 +118,11 @@ def state5():
     state = State(tournois=[tournoi1(rounds_input=[round1(), round2(), round3()])])
     return state
 
+def state6():
+    state = State(tournois=[tournoi1(rounds_input=[round3(), round4()])])
+    return state
+
+
 
 class TestVue(Vue):
     @staticmethod
@@ -200,7 +206,7 @@ def test_model_generer_paires_joueurs():
     state = state1()
 
     # When
-    state.generer_paires_joueurs([PLAYER1, PLAYER2, PLAYER3, PLAYER4])
+    state.generer_paires_joueurs([(PLAYER1, PLAYER2), (PLAYER3, PLAYER4)])
 
     # Then
     assert state.tournoi.rounds[-1].match_liste == [((PLAYER1, None), (PLAYER2, None)),
@@ -289,10 +295,9 @@ def test_controller_generer_paires_joueurs():
     """Function to test the controller.creation of paires"""
 
     # Given
-    init_sate = state1()
-    print(f'init_sate.tournoi.joueurs_en_jeux : {init_sate.tournoi.joueurs_en_jeux}')
+    init_sate = state6()
     controller = Controller(vue=TEST_VUE, state=init_sate)
-    print(f' state.tournoi.joueurs_en_jeux : {controller.state.tournoi.joueurs_en_jeux}')
+    print(controller.state.tournoi)
 
     # When
     controller.generer_paires_joueurs()
