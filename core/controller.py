@@ -67,7 +67,15 @@ class Controller:
                     # Démarrer nouveau Round
                     elif choix_menu_tournoi == 2:
                         if self.state.tournoi:
-                            self.creer_nouveau_round()
+                            # First Round
+                            if not self.state.tournoi.rounds:
+                                self.creer_nouveau_round()
+                            # Scores filled
+                            elif self.state.tournoi.rounds[-1].match_liste[0][0][1]:
+                                self.creer_nouveau_round()
+                            else:
+                                self.vue.affichage_warning(
+                                    'Veuillez entrer les scores avant de démarrer un nouveau Round.')
                         else:
                             self.vue.affichage_warning('Veuillez créer un Tournoi avant de démarrer un nouveau Round.')
                     # Entrer les résultats
@@ -288,6 +296,7 @@ class Controller:
             # For the next rounds
             # Initializing players with score
             joueurs_score_init = [[joueur, 0] for joueur in joueurs]
+            joueurs_score = []
             # Counting points
             for round_object in rounds[:-1]:
                 joueurs_score = self.joueurs_score_update(round_object=round_object, joueurs_score=joueurs_score_init)
@@ -326,7 +335,7 @@ class Controller:
             for [joueur_to_update, score_to_update] in joueurs_score_to_be_updated:
                 if joueur_to_update == joueur:
                     score += score_to_update
-                    result.append((joueur,score))
+                    result.append((joueur, score))
 
         return result
 
