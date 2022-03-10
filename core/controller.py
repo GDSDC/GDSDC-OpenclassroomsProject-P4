@@ -59,14 +59,16 @@ class Controller:
             elif choix_menu_principal == 2:
                 must_exit_tournament = False
                 while not must_exit_tournament:
-                    choix_menu_tournoi = self.vue.afficher_menu(nom_menu=f'{CHOIX_MENU_PRINCIPAL[2]}  {"// Tournoi en cours : " + self.state.tournoi.nom if self.state.tournoi else ""}',
-                                                                menu=CHOIX_MENU_TOURNOI)
+                    choix_menu_tournoi = self.vue.afficher_menu(
+                        nom_menu=f'{CHOIX_MENU_PRINCIPAL[2]}  {"// Tournoi en cours : " + self.state.tournoi.nom if self.state.tournoi else ""}',
+                        menu=CHOIX_MENU_TOURNOI)
                     # Créer un nouveau tournoi
                     if choix_menu_tournoi == 1:
                         if not self.state.tournoi:
                             self.creer_nouveau_tournoi()
                         else:
-                            self.vue.affichage_warning('Veuillez terminer le tournoi actuel avant d\'en créer un nouveau !')
+                            self.vue.affichage_warning(
+                                'Veuillez terminer le tournoi actuel avant d\'en créer un nouveau !')
                     # Démarrer nouveau Round
                     elif choix_menu_tournoi == 2:
                         if self.state.tournoi:
@@ -102,10 +104,17 @@ class Controller:
                                 'Veuillez créer un Tournoi avant de modifier le classement de ses Joueurs.')
                     # Terminer Tournoi
                     elif choix_menu_tournoi == 5:
-                        if self.state.tournoi:
-                            self.terminer_tournoi()
-                        else:
+                        if not self.state.tournoi:
                             self.vue.affichage_warning('Veuillez créer un Tournoi avant de le terminer.')
+                        elif not self.state.tournoi.rounds:
+                            self.vue.affichage_warning(
+                                'Veuillez démarrer un nouveau Round avant de Terminer le tournoi.')
+                        elif len(self.state.tournoi.rounds[-1].match_liste) > 1 or not  \
+                                self.state.tournoi.rounds[-1].match_liste[0][0][1]:
+                            self.vue.affichage_warning(
+                                'Veuillez renseigner tous les scores pour déternminer le gagnant du Tournoi avant de le Terminer.')
+                        else:
+                            self.terminer_tournoi()
                     # Quitter
                     elif choix_menu_tournoi == 0:
                         must_exit_tournament = True
