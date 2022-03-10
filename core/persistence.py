@@ -1,15 +1,13 @@
 import os
-
 from tinydb import TinyDB, Query, table
 from core.model import Joueur, State, Tournoi
 from core import sorters
 from typing import Dict, List, Optional
 from functools import wraps
 
+# GLOBAL CONSTANTS
 _DB_PATH = 'resources/db.json'
-
 DB: Optional[TinyDB] = None
-
 PLAYERS_TABLE = 'players'
 TOURNAMENTS_TABLE = 'tournaments'
 
@@ -40,6 +38,7 @@ def clear_database():
 
 
 def _ensure_db_is_loaded():
+    """Function to ensure_db_is_loaded"""
     global DB
     if DB is None:
         DB = open_database()
@@ -59,7 +58,7 @@ def with_db(f):
 def load_players() -> Dict[int, Joueur]:
     """Function to load players from database into actual state"""
 
-    # Initalisation
+    # Initalization
     acteurs_from_db = {}
     # Iteration over players in db
     for element in DB.table(PLAYERS_TABLE):
@@ -71,13 +70,14 @@ def load_players() -> Dict[int, Joueur]:
 def load_tournaments() -> List[Tournoi]:
     """Function to load tournaments from database into actual state"""
 
-    # Initalisation
+    # Initalization
     tournaments_from_db = []
     # Iteration over players in db
     for element in DB.table(TOURNAMENTS_TABLE):
         tournaments_from_db.append(Tournoi.from_json(element))
 
     return tournaments_from_db
+
 
 @with_db
 def load() -> [Dict[int, Joueur], List[Tournoi]]:
@@ -110,7 +110,7 @@ def save_tournaments(state: State):
     tournaments.sort(key=sorters.tournament_chronological)
 
     for tournoi in state.tournois:
-        DB.table(TOURNAMENTS_TABLE).upsert(tournoi.to_json(),User.nom == tournoi.nom )
+        DB.table(TOURNAMENTS_TABLE).upsert(tournoi.to_json(), User.nom == tournoi.nom)
 
 
 @with_db
@@ -122,4 +122,3 @@ def save(state: State):
 
     # Save tournaments
     save_tournaments(state=state)
-

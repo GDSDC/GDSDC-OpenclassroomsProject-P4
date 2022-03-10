@@ -4,7 +4,7 @@ from datetime import datetime
 from core.model import Joueur, Tournoi, Score, Round, RoundName, Match, NOMBRE_DE_JOUEURS
 from core import parse_validate_tools as pvt
 
-# Constantes Globales
+# GLOBAL CONSTANTS
 CHOIX_MENU_PRINCIPAL = {1: 'Gestion des Joueurs (ajouter/supprimer)',
                         2: 'Gestion du Tournoi',
                         3: 'Rapports',
@@ -40,12 +40,12 @@ CHOIX_MENU_SAUVEGARDE_CHARGEMENT = {1: 'Sauvegarder l\'état du programme',
 
 
 class Vue:
-    """Classe qui gère l'interface/menu du programme."""
+    """Class that manages the interface/menu of the program."""
 
     def afficher_menu(self, nom_menu: str, menu: Dict[int, str]) -> int:
-        """Affichage d'un menu et récupération du choix de l'utilisateur."""
+        """Display of a menu and recovery of the user's choice."""
 
-        # Affichage de l'entête
+        # Header display
         affichage_menu = f"""
 ==============================
 {nom_menu}
@@ -53,11 +53,11 @@ class Vue:
     """
         print(affichage_menu)
 
-        # Affichage des différents choix
+        # Display of the different choices
         for choix in menu.keys():
             print(choix, '--', menu[choix])
 
-        # Choix du menu
+        # Menu choice
         choix_du_menu_texte = '\nRenseignez votre choix parmis les propositions ci-dessus (0 à ' + str(
             len(menu) - 1) + ') : '
         choix_utilisateur_menu = pvt.parse_and_validate(explanation=choix_du_menu_texte,
@@ -69,9 +69,9 @@ class Vue:
         return choix_utilisateur_menu
 
     def creer_nouveau_tournoi(self, acteurs: Dict[int, Joueur]) -> [Tournoi, List[Joueur]]:
-        """Création d'un nouveau tournoi en renseignant toutes les informations demandées."""
+        """Creation of a new tournament by filling in all the requested information."""
 
-        # Initialisation
+        # Initialization
         nouveau_tournoi = {
             'nom': '',
             'lieu': '',
@@ -84,7 +84,7 @@ class Vue:
         }
         nouveaux_joueurs_a_ajouter_aux_acteurs = []
 
-        # Affichage de l'entête
+        # Header display
         affichage_menu_creer_nouveau_tournoi = """
 ==============================
 Créer un nouveau Tournoi
@@ -92,22 +92,22 @@ Créer un nouveau Tournoi
 """
         print(affichage_menu_creer_nouveau_tournoi)
 
-        # Définition du nom du tournoi
+        # Tournament name definition
         nouveau_tournoi_texte_nom = '\nRenseignez le Nom du tournoi : '
         nouveau_tournoi['nom'] = pvt.parse_and_validate(explanation=nouveau_tournoi_texte_nom,
                                                         parse=pvt.parse_string_not_empty,
                                                         validate=pvt.no_validation)
 
-        # Définition du le lieu du tournoi
+        # Tournament venue definition
         nouveau_tournoi_texte_lieu = '\nRenseignez le Lieu du tournoi : '
         nouveau_tournoi['lieu'] = pvt.parse_and_validate(explanation=nouveau_tournoi_texte_lieu,
                                                          parse=pvt.parse_string_not_empty,
                                                          validate=pvt.no_validation)
 
-        # Définition date de début de tournoi
+        # Tournament start date definition
         nouveau_tournoi['date_debut'] = datetime.today()
 
-        # Définition le contrôle du temps
+        # Definition of time control
         nouveau_tournoi_texte_controle_du_temps = '\nRenseignez le contrôle du temps ("bullet", "blitz" ou "coup rapide") : '
         nouveau_tournoi['controle_du_temps'] = pvt.parse_and_validate(
             explanation=nouveau_tournoi_texte_controle_du_temps, parse=pvt.parse_string_not_empty,
@@ -119,12 +119,12 @@ Créer un nouveau Tournoi
                                                                 parse=pvt.parse_string_not_empty,
                                                                 validate=pvt.no_validation)
 
-        # Choix des joueurs
+        # Choice of players
         joueurs_du_tournoi, nouveaux_joueurs = self.ajouter_joueurs(nb_joueurs=NOMBRE_DE_JOUEURS, acteurs=acteurs)
         nouveau_tournoi['joueurs_du_tournoi'] = joueurs_du_tournoi
         nouveaux_joueurs_a_ajouter_aux_acteurs = nouveaux_joueurs
 
-        # Formatage du resultat au format Tournoi
+        # Formatting the result in Tournoi format
         nouveau_tournoi = Tournoi(**nouveau_tournoi)
 
         print(f'\nNouveau Tournoi {nouveau_tournoi.nom} créé avec succès !')
@@ -150,15 +150,14 @@ Créer un nouveau Tournoi
     def ajouter_joueurs(self, nb_joueurs: Optional[int], acteurs: Optional[Dict[int, Joueur]] = None) -> [List[Joueur],
                                                                                                           List[
                                                                                                               Joueur]]:
-        """AJout des informations de huit joueurs dans une liste de dictionnaires à destination du Controller."""
+        """Function to select players among acteurs's list and create new players for the tournament"""
 
-        # Initialisation
-        # liste retournée contenant les informations des huit joueurs
+        # Initialization
         choix_acteurs = []
         nouveaux_joueurs = []
         joueurs_du_tournoi = []
 
-        # Affichage de l'entête
+        # Header display
         affichage_menu_ajouter_joueurs = f"""
 ==============================
 Ajouter joueurs
@@ -167,7 +166,7 @@ Ajouter joueurs
         print(affichage_menu_ajouter_joueurs)
 
         if acteurs:
-            # Choix des joueurs parmis les acteurs
+            # Choice of players among the acteurs
             acteurs_affichage = '''\nChoix des joueurs parmis les acteurs : '''
             for (key, acteur) in acteurs.items():
                 acteurs_affichage += f'''\n{key} - {acteur.prenom} {acteur.nom_de_famille}'''
@@ -201,7 +200,7 @@ Ajouter joueurs
         if len(choix_acteurs) == nb_joueurs:
             pass
         else:
-            # Choix nouveaux joueurs
+            # Choice new players
             nb_joueurs = nb_joueurs - len(choix_acteurs)
             affichage_menu_ajouter_nouveaux_joueurs = f"""
 ==============================
@@ -210,9 +209,9 @@ Ajouter {nb_joueurs} nouveaux joueurs
 """
             print(affichage_menu_ajouter_nouveaux_joueurs)
 
-            # Boucle sur les huits joueurs
+            # Loop on remaining players to be created
             for joueur in range(1, nb_joueurs + 1):
-                # dictionnaire type contenant les informations d'un joueur
+                # Standard dictionary containing player information
                 information_nouveau_joueur = {
                     'nom_de_famille': '',
                     'prenom': '',
@@ -221,54 +220,54 @@ Ajouter {nb_joueurs} nouveaux joueurs
                     'classement': ''
                 }
 
-                # ajout du dictionnaire type à la liste de nouveaux joueurs
+                # Added standard dictionary to new players list
                 nouveaux_joueurs.append(information_nouveau_joueur)
 
-                # Affichage de l'entête pour chaque nouveau joueur
+                # Header display pour chaque nouveau joueur
                 affichage_nouveau_joueur = f"""
 Renseigner les informations du joueur n°{joueur}
 ==========================================
                 """
                 print(affichage_nouveau_joueur)
 
-                # Définition du nom de famille
+                # Definition of surname
                 nouveau_joueur_texte_nom = f'\nRenseignez le Nom de famille du joueur n°{joueur} : '
                 nouveaux_joueurs[joueur - 1]['nom_de_famille'] = pvt.parse_and_validate(
                     explanation=nouveau_joueur_texte_nom, parse=pvt.parse_string_not_empty, validate=pvt.no_validation)
 
-                # Définition le prénom
+                # First name definition
                 nouveau_joueur_texte_prenom = f'\nRenseignez le Prénom du joueur n°{joueur} : '
                 nouveaux_joueurs[joueur - 1]['prenom'] = pvt.parse_and_validate(
                     explanation=nouveau_joueur_texte_prenom,
                     parse=pvt.parse_string_not_empty,
                     validate=pvt.no_validation)
 
-                # Définition de la date de naissance
+                # Definition of date of birth
                 nouveau_joueur_texte_date_naissance = f'\nRenseignez la Date de naissance du joueur n°{joueur} au format "jj/mm/aaaa" : '
                 nouveaux_joueurs[joueur - 1]['date_de_naissance'] = pvt.parse_and_validate(
                     explanation=nouveau_joueur_texte_date_naissance, parse=pvt.parse_date,
                     validate=pvt.validate_date_format)
 
-                # Définition du sexe
+                # Definition of sex
                 nouveau_joueur_texte_sexe = f'\nRenseignez le sexe du joueur n°{joueur} ("m"/"f") :'
                 nouveaux_joueurs[joueur - 1]['sexe'] = pvt.parse_and_validate(explanation=nouveau_joueur_texte_sexe,
                                                                               parse=pvt.parse_string_not_empty,
                                                                               validate=pvt.validate_sexe)
 
-                # Définition du classement
+                # Rank definition
                 nouveau_joueur_texte_classement = f'\nRenseignez le classement du joueur n°{joueur} : '
                 nouveaux_joueurs[joueur - 1]['classement'] = pvt.parse_and_validate(
                     explanation=nouveau_joueur_texte_classement, parse=pvt.parse_int,
                     validate=pvt.validate_integer_positive)
 
-                # Formatage des informations de joueurs au format Joueur
+                # Formatting Player Information in Joueur Format
                 nouveaux_joueurs[joueur - 1] = Joueur(**nouveaux_joueurs[joueur - 1])
 
                 # Message
                 print(
                     f'\nNouveau Joueur {nouveaux_joueurs[joueur - 1].prenom} {nouveaux_joueurs[joueur - 1].nom_de_famille} ajouté avec succès !')
 
-        # Concatenation des acteurs et joueurs
+        # Concatenation of acteurs and players
         joueurs_du_tournoi.extend(choix_acteurs)
         joueurs_du_tournoi.extend(nouveaux_joueurs)
 
@@ -280,7 +279,7 @@ Renseigner les informations du joueur n°{joueur}
         joueur_a_supprimer = []
 
         if acteurs_liste:
-            # Affichage de l'entête
+            # Header display
             affichage_supprimer_joueur = f"""
 ==============================
 Supprimer un Joueur
@@ -288,7 +287,7 @@ Supprimer un Joueur
             """
             print(affichage_supprimer_joueur)
 
-            # Choix d'un joueur parmis les acteurs
+            # Choice of a player among the acteurs
             acteurs_affichage = '''\nChoix d'un joueur à supprimer parmis les acteurs : '''
             for (key, acteur) in enumerate(acteurs_liste, 1):
                 acteurs_affichage += f'''\n{key} - {acteur.prenom} {acteur.nom_de_famille}'''
@@ -315,7 +314,7 @@ Supprimer un Joueur
 
         nombre_de_paires = len(round_param.match_liste)
 
-        # Affichage de l'entête
+        # Header display
         affichage_paires_joueurs_entete = f"""
 ==========================================================
 {nombre_de_paires} nouvelles paires de joueurs générées avec succès !
@@ -323,7 +322,7 @@ Supprimer un Joueur
 """
         print(affichage_paires_joueurs_entete)
 
-        # Boucle pour afficher toutes les paires de joueurs
+        # Loop to show all player pairs
         paires = 1
         for ((joueur1, score1), (joueur2, score2)) in round_param.match_liste:
             print(
@@ -331,9 +330,9 @@ Supprimer un Joueur
             paires += 1
 
     def creer_nouveau_round(self, numero_round: int) -> Round:
-        """Affichage menu creer_nouveau_round"""
+        """Display menu creer_nouveau_round"""
 
-        # Initialisation
+        # Initialization
         nouveau_round = {
             'nom': '',
             'match_liste': [],
@@ -341,10 +340,10 @@ Supprimer un Joueur
             'date_fin': ''
         }
 
-        # Définition du nom du Round
+        # Setting the Round name
         nouveau_round['nom'] = RoundName('Round ' + str(numero_round))
 
-        # Affichage
+        # Display
         affichage_creer_nouveau_round = f'''
 ==============================
 Création du {nouveau_round['nom'].value} avec succès !
@@ -352,21 +351,21 @@ Création du {nouveau_round['nom'].value} avec succès !
 '''
         print(affichage_creer_nouveau_round)
 
-        # Définition date de début de round
+        # Round start date definition
         nouveau_round['date_debut'] = datetime.now()
 
-        # Formatage du resultat au format Round
+        # Formatting the result in Round format
         nouveau_round = Round(**nouveau_round)
 
         return nouveau_round
 
     def entrer_scores(self, round_param: Round) -> List[Match]:
 
-        # Initialisation
+        # Initialization
         match_liste_scores = round_param.match_liste
         nombre_de_paires = len(match_liste_scores)
 
-        # Affichage menu entrer scores
+        # Diplay menu entrer scores
         affichage_menu_entrer_scores = f'''
 ==========================================================
 Entrez/Modifiez les scores des {nombre_de_paires} matchs :  
@@ -374,7 +373,7 @@ Entrez/Modifiez les scores des {nombre_de_paires} matchs :
 '''
         print(affichage_menu_entrer_scores)
 
-        # Boucle sur les matchs
+        # Loop on matches
         for idx, ((joueur1, _), (joueur2, _)) in enumerate(match_liste_scores):
             print(f'Match n°{idx + 1} : ')
             print('Qui est le vainqueur ?')
@@ -385,7 +384,7 @@ Entrez/Modifiez les scores des {nombre_de_paires} matchs :
             resultat_match = pvt.parse_and_validate(explanation=match_texte, parse=pvt.parse_int,
                                                     validate=lambda x: pvt.validate_integer_interval(parsed_int=x,
                                                                                                      interval=(0, 2)))
-            # Score attribution
+            # Scoring
             if resultat_match == 1:
                 score_joueur1 = Score.GAGNANT
                 score_joueur2 = Score.PERDANT
@@ -402,7 +401,7 @@ Entrez/Modifiez les scores des {nombre_de_paires} matchs :
     def afficher_resultats(self, scores_results: List[Round]):
         """Function that shows all scores of the Tournament"""
 
-        # Affichage de l'entête
+        # Header display
         affichage_scores_entete = """
 ==========================================================
 Affichage des scores
@@ -410,9 +409,9 @@ Affichage des scores
 """
         print(affichage_scores_entete)
 
-        # Iteration sur les rounds
+        # Iteration on the rounds
         for round_variable in scores_results:
-            # Affichage entête par round
+            # Header display per round
             affichage_round = f"""
 ==========================================================
 Scores du round : {round_variable.nom.value}
@@ -420,9 +419,9 @@ Scores du round : {round_variable.nom.value}
 """
             print(affichage_round)
 
-            # Iteration sur tous les matchs du rounds
+            # Iteration on all the matches of the rounds
             for ((joueur1, score_joueur1), (joueur2, score_joueur2)) in round_variable.match_liste:
-                # Affichage scores par match
+                # Display scores per match
                 affichage_scores_match = f"""
 ----------------------------------------------------------
 {joueur1.prenom} {joueur1.nom_de_famille} : {score_joueur1.value} points
@@ -433,11 +432,11 @@ Scores du round : {round_variable.nom.value}
     def modifier_classement(self, joueurs_classement: List[Joueur]) -> List[Joueur]:
         """Function to update players ranking"""
 
-        # Initialisation
+        # Initialization
         joueurs_ancien_classement = joueurs_classement
         joueurs_nouveau_classement = []
 
-        # Affichage de l'entête
+        # Header display
         affichage_classement_entete = """
 ==========================================================
 Mise à jour des classements
@@ -446,7 +445,7 @@ Mettez à jour le classement des joueurs suivant :
 """
         print(affichage_classement_entete)
 
-        # Iteration sur les joueurs du tournoi
+        # Tournament Player Iteration
         for joueur in joueurs_ancien_classement:
             joueur_classement_texte = f'{joueur.prenom} {joueur.nom_de_famille} / Classement actuel = {joueur.classement} --> Nouveau classement : '
             nouveau_classement = pvt.parse_and_validate(explanation=joueur_classement_texte, parse=pvt.parse_int,
@@ -456,7 +455,7 @@ Mettez à jour le classement des joueurs suivant :
                                                classement=nouveau_classement)
             joueurs_nouveau_classement.append(joueur_classement_a_ajour)
 
-        # Message Validation
+        # Validation message
         affichage_classement_validation = """
 ----------------------------------------------------------
 Classements mis à jour avec succès !
@@ -468,7 +467,7 @@ Classements mis à jour avec succès !
     def afficher_rapports(self, nom_rapport: str, donnees_rapport: List[Any]):
         """Function that shows a report"""
 
-        # Affichage de l'entête
+        # Header display
         affichage_rapport_entete = f"""
 ==========================================================
 Affichage de la liste des {nom_rapport}
@@ -476,11 +475,11 @@ Affichage de la liste des {nom_rapport}
 """
         print(affichage_rapport_entete)
 
-        # Affichage de la liste
+        # List display
         for idx, element in enumerate(donnees_rapport):
             print(f'{idx + 1}. {element}')
 
-        # Affichage fin de liste
+        # End of list display
         print("""
 ----------------------------------------------------------
 """)
@@ -572,7 +571,3 @@ Affichage de la liste des {nom_rapport}
 x x x x x x x x x x x x x x xx
 {message}
 x x x x x x x x x x x x x x xx''')
-
-
-if __name__ == '__main__':
-    pass

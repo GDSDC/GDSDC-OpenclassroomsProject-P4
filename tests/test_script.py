@@ -118,10 +118,10 @@ def state5():
     state = State(tournois=[tournoi1(rounds_input=[round1(), round2(), round3()])])
     return state
 
+
 def state6():
     state = State(tournois=[tournoi1(rounds_input=[round3(), round4()])])
     return state
-
 
 
 class TestVue(Vue):
@@ -132,9 +132,6 @@ class TestVue(Vue):
 
     def creer_nouveau_tournoi(self, acteurs: Dict[int, Joueur]) -> [Tournoi, List[Joueur]]:
         return tournoi1(), []
-
-    # def ajouter_joueurs(self, nb_joueurs: Optional[int]) -> List[Joueur]:
-    #     return [PLAYER1, PLAYER2, PLAYER3, PLAYER4]
 
     def creer_nouveau_round(self, numero_round: int) -> Round:
         return round3()
@@ -149,7 +146,7 @@ class TestVue(Vue):
                 PLAYER_NOUVEAU_CLASSEMENT4]
 
 
-# Initialisation
+# Initialization
 TEST_VUE = TestVue()
 
 
@@ -167,21 +164,6 @@ def test_model_creer_nouveau_tournoi():
 
     # Then
     assert state.tournoi == nouveau_tournoi
-
-
-# def test_model_ajouter_joueurs():
-#     """Function to test the state.creation of players"""
-#
-#     # Given
-#     state = state1()
-#     player1 = PLAYER1
-#     player2 = PLAYER2
-#     # When
-#     state.ajouter_joueurs([player1, player2])
-#
-#     # Then
-#     assert state.tournoi.joueurs_en_jeux == [player1, player2]
-#     assert state.nombre_joueurs() == 2
 
 
 def test_model_creer_nouveau_round():
@@ -258,22 +240,6 @@ def test_controller_creer_nouveau_tournoi():
 
     # Then
     assert controller.state.tournoi == nouveau_tournoi
-
-
-# def test_controller_ajouter_joueurs():
-#     """Function to test the controller.creation of players"""
-#
-#     # Given
-#     init_sate = state1()
-#     controller = Controller(vue=TEST_VUE, state=init_sate)
-#     liste_joueurs = [PLAYER1, PLAYER2, PLAYER3, PLAYER4]
-#
-#     # When
-#     controller.ajouter_joueurs()
-#
-#     # Then
-#     assert controller.state.tournoi.joueurs_en_jeux == liste_joueurs
-#     assert controller.state.nombre_joueurs() == len(liste_joueurs)
 
 
 def test_controller_creer_nouveau_round():
@@ -365,7 +331,3 @@ def test_controller_terminer_tournoi():
 
     # Then
     assert controller.state == init_controller.state
-
-
-if __name__ == '__main__':
-    pass

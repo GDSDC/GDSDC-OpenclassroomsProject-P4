@@ -8,10 +8,10 @@ from datetime import datetime
 
 
 class Controller:
-    """Contrôleur principal."""
+    """Main Controller."""
 
     def __init__(self, state: Optional[State] = None, vue: Optional[Vue] = None):
-        """Initialise les modèles et les vues."""
+        """Initialize state and vue."""
         self.state = state or State()
         self.vue = vue or Vue()
 
@@ -88,30 +88,38 @@ class Controller:
                     elif choix_menu_tournoi == 3:
                         if self.state.tournoi:
                             if self.state.tournoi.rounds:
+                                # Tournament and Rounds not empty
                                 self.entrer_scores()
                             else:
+                                # Tournament but Rounds empty
                                 self.vue.affichage_warning(
                                     'Veuillez démarrer un nouveau Round avant d\'entrer les scores.')
                         else:
+                            # No Tournament
                             self.vue.affichage_warning(
                                 'Veuillez créer un Tournoi et démarrer un nouveau Round avant d\'entrer les scores.')
 
                     # MAJ classement des Joueurs du Tournoi
                     elif choix_menu_tournoi == 4:
                         if self.state.tournoi:
+                            # Tournament
                             self.modifier_classement_tournoi()
                         else:
+                            # No Tournament
                             self.vue.affichage_warning(
                                 'Veuillez créer un Tournoi avant de modifier le classement de ses Joueurs.')
                     # Terminer Tournoi
                     elif choix_menu_tournoi == 5:
                         if not self.state.tournoi:
+                            # No Tournament
                             self.vue.affichage_warning('Veuillez créer un Tournoi avant de le terminer.')
                         elif not self.state.tournoi.rounds:
+                            # Tournament but Rounds empty
                             self.vue.affichage_warning(
                                 'Veuillez démarrer un nouveau Round avant de Terminer le tournoi.')
                         elif len(self.state.tournoi.rounds[-1].match_liste) > 1 or not \
                                 self.state.tournoi.rounds[-1].match_liste[0][0][1]:
+                            # Tournament and Rounds ok but winner not defined (match_liste too large (>1 for the final) or scores not filled (=None)
                             self.vue.affichage_warning(
                                 'Veuillez renseigner tous les scores pour déternminer le gagnant du Tournoi avant de le Terminer.')
                         else:
@@ -129,71 +137,75 @@ class Controller:
                     # Acteurs par ordre alphabétique
                     if choix_menu_rapports == 1:
                         if self.state.acteurs:
+                            # Acteurs not empty
                             self.afficher_rapport_acteur_alphabetique()
                         else:
+                            # Acteurs empty
                             self.vue.affichage_warning(
                                 'La liste d\'acteurs est vide. Veuillez ajouter au moins un joueur !')
                     # Acteurs par par classement
                     elif choix_menu_rapports == 2:
+                        # Acteurs not empty
                         if self.state.acteurs:
                             self.afficher_rapport_acteur_classement()
                         else:
+                            # Acteurs empty
                             self.vue.affichage_warning(
                                 'La liste d\'acteurs est vide. Veuillez ajouter au moins un joueur !')
                     # Joueurs d'un Tournoi par ordre alphabétique
                     elif choix_menu_rapports == 3:
-                        # Warning if no tournament in state
                         if not self.obtenir_liste_tournois():
+                            # Warning if no tournament in state
                             self.vue.affichage_warning('Aucun tournoi créé. Veuillez créer un nouveau Tournoi !')
                         else:
                             tournoi_selectionne = self.selectionner_tournoi()
-                            # Warning if no players in tournament
                             if tournoi_selectionne.joueurs_du_tournoi:
                                 self.afficher_rapport_joueurs_alphabetique(tournoi=tournoi_selectionne)
                             else:
+                                # Warning if no players in tournament
                                 self.vue.affichage_warning(
                                     f'Le tournoi {tournoi_selectionne.nom} ne compte aucun joueur. Veuillez ajouter au moins un joueur !')
                     # Joueurs d'un Tournoi par classement
                     elif choix_menu_rapports == 4:
-                        # Warning if no tournament in state
                         if not self.obtenir_liste_tournois():
+                            # Warning if no tournament in state
                             self.vue.affichage_warning('Aucun tournoi créé. Veuillez créer un nouveau Tournoi !')
                         else:
                             tournoi_selectionne = self.selectionner_tournoi()
-                            # Warning if no players in tournament
                             if tournoi_selectionne.joueurs_du_tournoi:
+                                # Warning if no players in tournament
                                 self.afficher_rapport_joueurs_classement(tournoi=tournoi_selectionne)
                     # Tournois
                     elif choix_menu_rapports == 5:
-                        # Warning if no tournament in state
                         if not self.obtenir_liste_tournois():
+                            # Warning if no tournament in state
                             self.vue.affichage_warning('Aucun tournoi créé. Veuillez créer un nouveau Tournoi !')
                         else:
                             self.afficher_rapport_tournois()
                     # Tours d'un Tournoi
                     elif choix_menu_rapports == 6:
-                        # Warning if no tournament in state
                         if not self.obtenir_liste_tournois():
+                            # Warning if no tournament in state
                             self.vue.affichage_warning('Aucun tournoi créé. Veuillez créer un nouveau Tournoi !')
                         else:
                             tournoi_selectionne = self.selectionner_tournoi()
-                            # Warning if no round in tournament
                             if tournoi_selectionne.rounds:
                                 self.afficher_rapport_tours_tournoi(tournoi=tournoi_selectionne)
                             else:
+                                # Warning if no round in tournament
                                 self.vue.affichage_warning(
                                     f'Aucun Tour créé dans le tournoi {tournoi_selectionne.nom}. Veuillez créer un nouveau Round !')
                     # Matchs d'un Tournoi
                     elif choix_menu_rapports == 7:
-                        # Warning if no tournament in state
                         if not self.obtenir_liste_tournois():
+                            # Warning if no tournament in state
                             self.vue.affichage_warning('Aucun tournoi créé. Veuillez créer un nouveau Tournoi !')
                         else:
                             tournoi_selectionne = self.selectionner_tournoi()
-                            # Warning if no round in tournament
                             if tournoi_selectionne.rounds:
                                 self.afficher_rapport_matchs_tournoi(tournoi=tournoi_selectionne)
                             else:
+                                # Warning if no round in tournament
                                 self.vue.affichage_warning(
                                     f'Acun Tour créé dans le tournoi {tournoi_selectionne.nom}. Veuillez créer un nouveau Round !')
                     # Quitter
@@ -272,13 +284,13 @@ class Controller:
 
     def mettre_a_jour_joueurs(self):
         """ Generation of new state.tournoi.joueurs_en_jeux list"""
-        # Initialisation
+        # Initialization
         joueurs_qui_passent_au_prochain_tour = []
         # In case it is the very first round of Tournament
         if not self.state.tournoi.rounds:
             joueurs_qui_passent_au_prochain_tour.extend(self.state.tournoi.joueurs_du_tournoi)
         else:
-            # Iteration sur tous les résultats de tous les matchs du précédent Round
+            # Iteration over all the results of all the matches of the previous Round
             for match in self.state.tournoi.rounds[-1].match_liste:
                 for (joueur, score) in match:
                     if score != Score.PERDANT:
@@ -306,8 +318,8 @@ class Controller:
         rounds = self.state.tournoi.rounds
         joueurs_paires = []
 
-        # For the first round
         if len(rounds) == 1:
+            # For the first round
             joueurs_ordonnes_par_classement = sorted(joueurs, key=sorters.player_by_ranking)
             # Cuting joueurs_ordonnes_par_classement in upper half and lower half
             joueurs_superieur = joueurs_ordonnes_par_classement[:int(len(joueurs_ordonnes_par_classement) / 2)]
@@ -330,6 +342,7 @@ class Controller:
             joueurs_superieur = joueurs_ordonnes_par_score[:int(len(joueurs_ordonnes_par_score) / 2)]
             joueurs_inferieur = joueurs_ordonnes_par_score[int(len(joueurs_ordonnes_par_score) / 2):]
 
+        # Generating pairs
         for i in range(int(len(joueurs) / 2)):
             joueurs_paires.append((joueurs_superieur[i], joueurs_inferieur[i]))
 
@@ -365,7 +378,7 @@ class Controller:
 
     def afficher_resultats_tournoi(self):
         """Function that shows all scores of the Tournament"""
-        # Initialisation
+        # Initialization
         scores_results = []
         # Appending round_list if not empty
         if not self.state.tournoi.rounds:
@@ -387,15 +400,15 @@ class Controller:
 
     def modifier_classement_tournoi(self):
         """Function to update players ranking in a Tournament"""
-        # Initialisation
+        # Initialization
         joueurs_ancien_classement = []
         joueurs_ancien_classement.extend(self.state.tournoi.joueurs_du_tournoi)
-        # Affichage Résultats
+        # Showing tournament results
         self.afficher_resultats_tournoi()
-        # MAJ Classement des Joueurs du Tournoi
+        # Updating ranking of players of tournament
         joueurs_nouveau_classement = self.vue.modifier_classement(joueurs_classement=joueurs_ancien_classement)
         self.state.modifier_classement_tournoi(joueurs_nouveau_classement)
-        # MAJ Classement dans la liste des acteurs
+        # Updating ranking of players in Acteurs
         self.state.modifier_classement(joueurs_ancien_classement=joueurs_ancien_classement,
                                        joueurs_nouveau_classement=joueurs_nouveau_classement)
 
@@ -490,7 +503,3 @@ class Controller:
     def load_database(self):
         """Function to load database state into actual state"""
         self.state.acteurs, self.state.tournois = persistence.load()
-
-
-if __name__ == '__main__':
-    pass

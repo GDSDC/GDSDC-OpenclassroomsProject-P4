@@ -2,9 +2,6 @@ from typing import Any, Tuple, Optional, Callable
 from datetime import datetime
 from core.model import Sex, ControleDuTemps, State
 
-# Global constant
-MENU_LENGTH = 6  # -> Find a way to get the data from the length of dictionnary CHOIX_MENU_PRINCIPAL
-
 
 # Functions for input parsing
 
@@ -57,9 +54,7 @@ def validate_date_format(parsed_date: datetime):
         return None, False, 'La date doit être au format jj/mm/aaaa'
 
 
-def validate_integer_interval(
-        parsed_int: int, interval: Tuple[int, int] = (1, MENU_LENGTH)
-):
+def validate_integer_interval(parsed_int: int, interval: Tuple[int, int]):
     """Function that verify if the integer is in the interval"""
     res = parsed_int
     if (parsed_int >= interval[0]) and (parsed_int <= interval[1]):
@@ -134,7 +129,7 @@ def no_validation(user_input):
     return res, True, ''
 
 
-### Global Function Parse & Validate
+# Global Function Parse & Validate
 
 
 def parse_and_validate(

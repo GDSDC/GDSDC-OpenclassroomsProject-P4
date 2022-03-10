@@ -3,24 +3,24 @@ from dataclasses import dataclass, asdict
 from enum import Enum
 from datetime import date, datetime
 
-# INITIALISATION CONSTANTES
-# nombres de tours (Round) par tournoi
+# INITIALIZATION CONSTANTS
+# Number of Rounds per tournament
 NOMBRE_DE_TOURS = 4
 
-# nombre de joueurs par tournoi
+# Number of players per tournament
 NOMBRE_DE_JOUEURS = 8
 
 
-# Classe décrivant le Joueur
+# Class describing the Joueur
 class Sex(Enum):
-    """Classe Enum du sexe"""
+    """Sex Enum Class"""
     MALE = 'm'
     FEMALE = 'f'
 
 
 @dataclass
 class Joueur:
-    """Classe décrivant un Joueur"""
+    """Class describing a player"""
     nom_de_famille: str
     prenom: str
     date_de_naissance: datetime
@@ -45,23 +45,24 @@ class Joueur:
         return joueur
 
 
-# Classe décrivant le Match
+# Class describing the Match
 class Score(Enum):
-    """Classe Enum du système de points"""
+    """Point System Enum Class"""
     GAGNANT = 1
     PERDANT = 0
     MATCH_NUL = 1 / 2
 
 
-# Classes décrivant le Round
+# Classes describing the Round
 class RoundName(Enum):
-    """Classe Enum décrivant les noms de Rounds utilisés"""
+    """Enum class describing the names of Rounds used"""
     ROUND1 = 'Round 1'
     ROUND2 = 'Round 2'
     ROUND3 = 'Round 3'
     ROUND4 = 'Round 4'
 
 
+# Type alias for Match
 Match = Tuple[Tuple[Joueur, Optional[Score]], Tuple[Joueur, Optional[Score]]]
 
 
@@ -109,9 +110,9 @@ class Round:
         return round_instance
 
 
-# Classe décrivant le Tournoi
+# Class describing the Tournament
 class ControleDuTemps(Enum):
-    """Classe Enum du Contrôle du temps"""
+    """Time Control Enum Class"""
     BULLET = 'bullet'
     BLITZ = 'blitz'
     COUP_RAPIDE = 'coup rapide'
@@ -119,7 +120,7 @@ class ControleDuTemps(Enum):
 
 @dataclass
 class Tournoi:
-    """Classe décrivant un Tournoi"""
+    """Class describing a Tournament"""
     nom: str
     lieu: str
     date_debut: datetime
@@ -236,7 +237,3 @@ class State:
         """Function to update tourmanent list and clean state.tournoi"""
         self.tournois.append(self.tournoi)
         self.tournoi = None
-
-
-if __name__ == '__main__':
-    pass
