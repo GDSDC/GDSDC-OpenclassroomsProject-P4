@@ -88,7 +88,8 @@ def validate_controle_du_temps(user_input: str):
         return (
             None,
             False,
-            f'"{user_input}" n\'est pas un choix de contrôle du temps valide. Veuillez choisir un élément dans la liste {exemple_controle_du_temps}.',
+            f'"{user_input}" n\'est pas un choix de contrôle du temps valide. '
+            f'Veuillez choisir un élément dans la liste {exemple_controle_du_temps}.',
         )
 
 
@@ -102,7 +103,8 @@ def validate_sexe(user_input: str):
         return (
             None,
             False,
-            f'"{user_input}" n\'est pas un choix de sexe valide. Veuillez choisir un élément dans la liste {exemple_sexe}.',
+            f'"{user_input}" n\'est pas un choix de sexe valide. '
+            f'Veuillez choisir un élément dans la liste {exemple_sexe}.',
         )
 
 

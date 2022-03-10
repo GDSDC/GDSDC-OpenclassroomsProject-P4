@@ -1,5 +1,6 @@
 from core.model import Joueur, Tournoi
 
+
 # Functions to help sorting process
 
 def player_alphabetical_by_lastname(player: Joueur):

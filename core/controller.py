@@ -61,7 +61,8 @@ class Controller:
                 must_exit_tournament = False
                 while not must_exit_tournament:
                     choix_menu_tournoi = self.vue.afficher_menu(
-                        nom_menu=f'{CHOIX_MENU_PRINCIPAL[2]}  {"// Tournoi en cours : " + self.state.tournoi.nom if self.state.tournoi else ""}',
+                        nom_menu=f'{CHOIX_MENU_PRINCIPAL[2]}  '
+                                 f'{"// Tournoi en cours : " + self.state.tournoi.nom if self.state.tournoi else ""}',
                         menu=CHOIX_MENU_TOURNOI)
                     # Créer un nouveau tournoi
                     if choix_menu_tournoi == 1:
@@ -79,7 +80,8 @@ class Controller:
                             # Previous Round is Final Round
                             elif len(self.state.tournoi.rounds[-1].match_liste) == 1:
                                 self.vue.affichage_warning(
-                                    'Round final en cours ou terminé. Vous ne pouvez plus créer de nouvaux Round sur ce Tournoi !')
+                                    'Round final en cours ou terminé. '
+                                    'Vous ne pouvez plus créer de nouvaux Round sur ce Tournoi !')
                             # Scores filled
                             elif self.state.tournoi.rounds[-1].match_liste[0][0][1]:
                                 self.creer_nouveau_round()
@@ -123,9 +125,11 @@ class Controller:
                                 'Veuillez démarrer un nouveau Round avant de Terminer le tournoi.')
                         elif len(self.state.tournoi.rounds[-1].match_liste) > 1 or not \
                                 self.state.tournoi.rounds[-1].match_liste[0][0][1]:
-                            # Tournament and Rounds ok but winner not defined (match_liste too large (>1 for the final) or scores not filled (=None)
+                            # Tournament and Rounds ok but winner not defined
+                            # (match_liste too large (>1 for the final) or scores not filled (=None)
                             self.vue.affichage_warning(
-                                'Veuillez renseigner tous les scores pour déternminer le gagnant du Tournoi avant de le Terminer.')
+                                'Veuillez renseigner tous les scores pour déternminer '
+                                'le gagnant du Tournoi avant de le Terminer.')
                         else:
                             self.terminer_tournoi()
                     # Quitter
@@ -168,7 +172,8 @@ class Controller:
                             else:
                                 # Warning if no players in tournament
                                 self.vue.affichage_warning(
-                                    f'Le tournoi {tournoi_selectionne.nom} ne compte aucun joueur. Veuillez ajouter au moins un joueur !')
+                                    f'Le tournoi {tournoi_selectionne.nom} ne compte aucun joueur. '
+                                    f'Veuillez ajouter au moins un joueur !')
                     # Joueurs d'un Tournoi par classement
                     elif choix_menu_rapports == 4:
                         if not self.obtenir_liste_tournois():
@@ -198,7 +203,8 @@ class Controller:
                             else:
                                 # Warning if no round in tournament
                                 self.vue.affichage_warning(
-                                    f'Aucun Tour créé dans le tournoi {tournoi_selectionne.nom}. Veuillez créer un nouveau Round !')
+                                    f'Aucun Tour créé dans le tournoi {tournoi_selectionne.nom}. '
+                                    f'Veuillez créer un nouveau Round !')
                     # Matchs d'un Tournoi
                     elif choix_menu_rapports == 7:
                         if not self.obtenir_liste_tournois():
@@ -211,7 +217,8 @@ class Controller:
                             else:
                                 # Warning if no round in tournament
                                 self.vue.affichage_warning(
-                                    f'Acun Tour créé dans le tournoi {tournoi_selectionne.nom}. Veuillez créer un nouveau Round !')
+                                    f'Acun Tour créé dans le tournoi {tournoi_selectionne.nom}. '
+                                    f'Veuillez créer un nouveau Round !')
                     # Quitter
                     elif choix_menu_rapports == 0:
                         must_exit_rapports = True
@@ -354,7 +361,7 @@ class Controller:
         self.vue.afficher_paires_joueurs(self.state.tournoi.rounds[-1])
 
     def joueurs_score_update(self, round_object: Round, joueurs_score: List[Tuple[Joueur, int]]) -> List[
-        Tuple[Joueur, int]]:
+            Tuple[Joueur, int]]:
         """Function to update joueur_score with scores of the round_object"""
 
         # Initialization
