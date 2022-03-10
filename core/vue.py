@@ -19,7 +19,7 @@ CHOIX_MENU_JOUEURS = {1: 'Afficher la liste des Joueurs',
 
 CHOIX_MENU_TOURNOI = {1: 'Créer un nouveau Tournoi',
                       2: 'Démarrer nouveau Round',
-                      3: 'Entrer les résultats',
+                      3: 'Entrer/Modifier les résultats',
                       4: 'Mettre à jour le classement des Joueurs du Tournoi',
                       5: 'Terminer le tournoi',
                       0: 'Quitter'}
@@ -372,7 +372,7 @@ Création du {nouveau_round['nom'].value} avec succès !
         # Affichage menu entrer scores
         affichage_menu_entrer_scores = f'''
 ==========================================================
-Entrez les scores des {nombre_de_paires} matchs :  
+Entrez/Modifiez les scores des {nombre_de_paires} matchs :  
 ==========================================================        
 '''
         print(affichage_menu_entrer_scores)

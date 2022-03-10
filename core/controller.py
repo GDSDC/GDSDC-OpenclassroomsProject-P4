@@ -56,7 +56,6 @@ class Controller:
                         must_exit_players = True
 
             # Gestion du Tournoi
-            #  TODO : afficher un message lorsque l'on tente de créer un nouveau tournoi sans avoir terminer l'actuel tournoi
             elif choix_menu_principal == 2:
                 must_exit_tournament = False
                 while not must_exit_tournament:
