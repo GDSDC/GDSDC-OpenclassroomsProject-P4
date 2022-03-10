@@ -76,6 +76,10 @@ class Controller:
                             # First Round
                             if not self.state.tournoi.rounds:
                                 self.creer_nouveau_round()
+                            # Previous Round is Final Round
+                            elif len(self.state.tournoi.rounds[-1].match_liste) == 1:
+                                self.vue.affichage_warning(
+                                    'Round final en cours ou terminé. Vous ne pouvez plus créer de nouvaux Round sur ce Tournoi !')
                             # Scores filled
                             elif self.state.tournoi.rounds[-1].match_liste[0][0][1]:
                                 self.creer_nouveau_round()
