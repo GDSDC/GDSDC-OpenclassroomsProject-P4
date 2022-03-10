@@ -213,7 +213,7 @@ class State:
     def creer_nouveau_round(self, nouveau_round: Round):
         self.tournoi.rounds.append(nouveau_round)
 
-    def generer_paires_joueurs(self, joueurs_paires: List[Union[Joueur, Joueur]]):
+    def generer_paires_joueurs(self, joueurs_paires: List[Tuple[Joueur, Joueur]]):
         """Function generate player pairs in the suisse tournament way"""
 
         # Generating pairs into match_liste

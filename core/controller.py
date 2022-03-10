@@ -1,7 +1,7 @@
 from core.vue import Vue, CHOIX_MENU_PRINCIPAL, CHOIX_MENU_TOURNOI, CHOIX_MENU_RAPPORTS, CHOIX_MENU_JOUEURS, \
     CHOIX_MENU_SAUVEGARDE_CHARGEMENT
 from core.model import State, Joueur, Tournoi, Score, Round, NOMBRE_DE_JOUEURS
-from typing import List, Optional, Union
+from typing import List, Optional, Union, Tuple
 from core import sorters
 from core import persistence
 
@@ -302,13 +302,13 @@ class Controller:
             joueurs_inferieur = joueurs_ordonnes_par_score[int(len(joueurs_ordonnes_par_score) / 2):]
 
         for i in range(int(len(joueurs) / 2)):
-            joueurs_paires.append([joueurs_superieur[i], joueurs_inferieur[i]])
+            joueurs_paires.append((joueurs_superieur[i], joueurs_inferieur[i]))
 
         self.state.generer_paires_joueurs(joueurs_paires=joueurs_paires)
         self.vue.afficher_paires_joueurs(self.state.tournoi.rounds[-1])
 
-    def joueurs_score_update(self, round_object: Round, joueurs_score: List[Union[Joueur, int]]) -> List[
-        Union[Joueur, int]]:
+    def joueurs_score_update(self, round_object: Round, joueurs_score: List[Tuple[Joueur, int]]) -> List[
+        Tuple[Joueur, int]]:
         """Function to update joueur_score with scores of the round_object"""
 
         # Initialization
@@ -326,7 +326,7 @@ class Controller:
             for [joueur_to_update, score_to_update] in joueurs_score_to_be_updated:
                 if joueur_to_update == joueur:
                     score += score_to_update
-                    result.append([joueur,score])
+                    result.append((joueur,score))
 
         return result
 
