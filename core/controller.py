@@ -1,7 +1,7 @@
 from core.vue import Vue, CHOIX_MENU_PRINCIPAL, CHOIX_MENU_TOURNOI, CHOIX_MENU_RAPPORTS, CHOIX_MENU_JOUEURS, \
     CHOIX_MENU_SAUVEGARDE_CHARGEMENT
-from core.model import State, Joueur, Tournoi, Score, Round, NOMBRE_DE_JOUEURS
-from typing import List, Optional, Union, Tuple
+from core.model import State, Joueur, Tournoi, Score, Round
+from typing import List, Optional, Tuple
 from core import sorters
 from core import persistence
 from datetime import datetime

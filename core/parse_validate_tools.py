@@ -1,6 +1,6 @@
 from typing import Any, Tuple, Optional, Callable
 from datetime import datetime
-from core.model import Sex, ControleDuTemps, State
+from core.model import Sex, ControleDuTemps
 
 
 # Functions for input parsing

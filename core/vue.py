@@ -173,7 +173,7 @@ Créer un nouveau Tournoi
         joueurs_du_tournoi = []
 
         # Header display
-        affichage_menu_ajouter_joueurs = f"""
+        affichage_menu_ajouter_joueurs = """
 ==============================
 Ajouter joueurs
 ==============================
@@ -310,7 +310,7 @@ Renseigner les informations du joueur n°{joueur}
 
         if acteurs_liste:
             # Header display
-            affichage_supprimer_joueur = f"""
+            affichage_supprimer_joueur = """
 ==============================
 Supprimer un Joueur
 ==============================
@@ -396,8 +396,8 @@ Création du {nouveau_round['nom'].value} avec succès !
         # Diplay menu entrer scores
         affichage_menu_entrer_scores = f"""
 ==========================================================
-Entrez/Modifiez les scores des {nombre_de_paires} matchs :  
-==========================================================        
+Entrez/Modifiez les scores des {nombre_de_paires} matchs :
+==========================================================
 """
         print(affichage_menu_entrer_scores)
 

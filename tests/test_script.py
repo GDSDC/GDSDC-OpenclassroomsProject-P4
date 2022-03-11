@@ -1,7 +1,6 @@
-from typing import List, Optional, Tuple, Dict
-
+from typing import List, Optional, Dict
 from core.controller import Controller
-from core.model import *
+from core.model import Joueur, Sex, Tournoi, Round, Score, ControleDuTemps, RoundName, State, Match
 from core.vue import Vue
 from datetime import datetime, timedelta, date
 

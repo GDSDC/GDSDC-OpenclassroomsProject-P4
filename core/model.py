@@ -1,7 +1,7 @@
-from typing import List, Tuple, Optional, Dict, Any, Union
+from typing import List, Tuple, Optional, Dict, Any
 from dataclasses import dataclass, asdict
 from enum import Enum
-from datetime import date, datetime
+from datetime import datetime
 
 # INITIALIZATION CONSTANTS
 # Number of Rounds per tournament
