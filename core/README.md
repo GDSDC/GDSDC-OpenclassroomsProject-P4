@@ -1,7 +1,7 @@
-# OpenclassroomsProject-P4
+# OpenClassRooms Project-P4
 
-OpenclassroomsProject-P2 est un projet Python ayant un but d'apprentissage dans le cadre de la formation OpenClassRooms Développeur d'Application Python.
-Thème du projet : Designez une application Python adaptée aux besoins d'un client.
+OpenClassRooms Project-P4 est un projet Python ayant un but d'apprentissage dans le cadre de la formation OpenClassRooms Développeur d'Application Python.
+Thème du projet : Développez un programme logiciel en Python.
 
 ## Installation
 
@@ -40,6 +40,6 @@ pip install -r core/requirements.txt
 
 Lancer simplement le script python main.py présent à la source du dossier de travail.
 ```python
-python main.py
+python3 main.py
 ```
 
