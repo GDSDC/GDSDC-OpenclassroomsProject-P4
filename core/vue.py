@@ -545,7 +545,7 @@ Affichage de la liste des {nom_rapport}
         """Function that format players list into str list for printing in reports"""
 
         formatted_data = [
-            f"{joueur.prenom} {joueur.nom_de_famille} / classement : {joueur.classement}" for joueur in data
+            f"{joueur.nom_de_famille} {joueur.prenom} / classement : {joueur.classement}" for joueur in data
         ]
         return formatted_data
 
