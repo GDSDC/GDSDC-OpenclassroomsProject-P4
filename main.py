@@ -4,4 +4,5 @@ from datetime import datetime, timedelta
 from tests.test_script import player_test
 
 init_controller = Controller()
+init_controller.load_database()
 init_controller.start()
