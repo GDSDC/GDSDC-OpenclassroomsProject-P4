@@ -44,7 +44,7 @@ CHOIX_MENU_RAPPORTS = {
 CHOIX_MENU_SAUVEGARDE_CHARGEMENT = {
     1: "Sauvegarder l'état du programme",
     2: "Charger l'état du programme",
-    3: "Réinitialiser la base donnée",
+    3: "Réinitialiser la base de donnée",
     0: "Quitter",
 }
 
