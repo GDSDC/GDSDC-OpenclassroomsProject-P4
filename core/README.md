@@ -10,12 +10,12 @@ Thème du projet : Designez une application Python adaptée aux besoins d'un cli
 Clonez le repository sur votre machine.
 
 ```bash
-git clone https://github.com/GDSDC/GDSDC-OpenclassroomsProject-P4.git
+git clone https://github.com/GDSDC/OpenclassroomsProject-P4.git
 ```
 
 Accédez au répertoire cloné.
 ```bash
-cd GDSDC-OpenclassroomsProject-P4
+cd OpenclassroomsProject-P4
 ```
 
 ### 2. Création d'un environnement virtuel 
