@@ -48,6 +48,7 @@ class Vue:
             "description": "",
             "rounds": [],
             "joueurs_du_tournoi": [],
+            "joueurs_en_jeux": []
         }
 
         # Header display
@@ -92,6 +93,7 @@ Créer un nouveau Tournoi
         # Choice of players
         joueurs_du_tournoi, nouveaux_joueurs = self.ajouter_joueurs(nb_joueurs=NOMBRE_DE_JOUEURS, acteurs=acteurs)
         nouveau_tournoi["joueurs_du_tournoi"] = joueurs_du_tournoi
+        nouveau_tournoi["joueurs_en_jeux"] = joueurs_du_tournoi
         nouveaux_joueurs_a_ajouter_aux_acteurs = nouveaux_joueurs
 
         # Formatting the result in Tournoi format
