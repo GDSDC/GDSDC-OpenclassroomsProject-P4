@@ -4,50 +4,6 @@ from datetime import datetime
 from core.model import Joueur, Tournoi, Score, Round, RoundName, Match, NOMBRE_DE_JOUEURS
 from core import parse_validate_tools as pvt
 
-# GLOBAL CONSTANTS
-CHOIX_MENU_PRINCIPAL = {
-    1: "Gestion des Joueurs (ajouter/supprimer)",
-    2: "Gestion du Tournoi",
-    3: "Rapports",
-    4: "Sauvegarde / Chargement des données",
-    0: "Quitter le programme",
-}
-
-CHOIX_MENU_JOUEURS = {
-    1: "Afficher la liste des Joueurs",
-    2: "Ajouter un nouveau Joueur",
-    3: "Supprimer un Joueur",
-    4: "Mettre à jour le classement d'un Joueur",
-    0: "Quitter",
-}
-
-CHOIX_MENU_TOURNOI = {
-    1: "Créer un nouveau Tournoi",
-    2: "Démarrer nouveau Round",
-    3: "Entrer/Modifier les résultats",
-    4: "Mettre à jour le classement des Joueurs du Tournoi",
-    5: "Terminer le tournoi",
-    0: "Quitter",
-}
-
-CHOIX_MENU_RAPPORTS = {
-    1: "Liste de tous les Acteurs par ordre alphabétique",
-    2: "Liste de tous les Acteurs par classement",
-    3: "Liste de tous les Joueurs d'un Tournoi par ordre alphabétique",
-    4: "Liste de tous les Joueurs d'un Tournoi par classement",
-    5: "Liste de tous les Tournois",
-    6: "Liste de tous les Tours d'un Tournoi",
-    7: "Liste de tous les Matchs d'un Tournoi",
-    0: "Quitter",
-}
-
-CHOIX_MENU_SAUVEGARDE_CHARGEMENT = {
-    1: "Sauvegarder l'état du programme",
-    2: "Charger l'état du programme",
-    3: "Réinitialiser la base de donnée",
-    0: "Quitter",
-}
-
 
 class Vue:
     """Class that manages the interface/menu of the program."""
@@ -69,7 +25,7 @@ class Vue:
 
         # Menu choice
         choix_du_menu_texte = (
-            "\nRenseignez votre choix parmis les propositions ci-dessus (0 à " + str(len(menu) - 1) + ") : "
+                "\nRenseignez votre choix parmis les propositions ci-dessus (0 à " + str(len(menu) - 1) + ") : "
         )
         choix_utilisateur_menu = pvt.parse_and_validate(
             explanation=choix_du_menu_texte,
@@ -163,7 +119,7 @@ Créer un nouveau Tournoi
         return tournois[tournoi_selectionne - 1]
 
     def ajouter_joueurs(
-        self, nb_joueurs: Optional[int], acteurs: Optional[Dict[int, Joueur]] = None
+            self, nb_joueurs: Optional[int], acteurs: Optional[Dict[int, Joueur]] = None
     ) -> [List[Joueur], List[Joueur]]:
         """Function to select players among acteurs's list and create new players for the tournament"""
 
@@ -562,7 +518,7 @@ Affichage de la liste des {nom_rapport}
         self.afficher_rapports(nom_rapport="acteurs par ordre de classement", donnees_rapport=formatted_data)
 
     def afficher_rapport_joueurs_alphabetique(
-        self, tournoi: Tournoi, donnees_rapport: List[Joueur]
+            self, tournoi: Tournoi, donnees_rapport: List[Joueur]
     ) -> [str, List[str]]:
         """Function that shows a ranking ordered report of the players of a tournament"""
 

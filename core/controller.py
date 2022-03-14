@@ -1,6 +1,6 @@
-from core.vue import Vue, CHOIX_MENU_PRINCIPAL, CHOIX_MENU_TOURNOI, CHOIX_MENU_RAPPORTS, CHOIX_MENU_JOUEURS, \
-    CHOIX_MENU_SAUVEGARDE_CHARGEMENT
-from core.model import State, Joueur, Tournoi, Score, Round
+from core.vue import Vue
+from core.model import State, Joueur, Tournoi, Score, Round, CHOIX_MENU_PRINCIPAL, CHOIX_MENU_TOURNOI, \
+    CHOIX_MENU_RAPPORTS, CHOIX_MENU_JOUEURS, CHOIX_MENU_SAUVEGARDE_CHARGEMENT
 from typing import List, Optional, Tuple
 from core import sorters
 from core import persistence
@@ -361,7 +361,7 @@ class Controller:
         self.vue.afficher_paires_joueurs(self.state.tournoi.rounds[-1])
 
     def joueurs_score_update(self, round_object: Round, joueurs_score: List[Tuple[Joueur, int]]) -> List[
-            Tuple[Joueur, int]]:
+        Tuple[Joueur, int]]:
         """Function to update joueur_score with scores of the round_object"""
 
         # Initialization

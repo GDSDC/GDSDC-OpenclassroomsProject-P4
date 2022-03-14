@@ -3,6 +3,50 @@ from dataclasses import dataclass, asdict
 from enum import Enum
 from datetime import datetime
 
+# GLOBAL MENUS
+CHOIX_MENU_PRINCIPAL = {
+    1: "Gestion des Joueurs (ajouter/supprimer)",
+    2: "Gestion du Tournoi",
+    3: "Rapports",
+    4: "Sauvegarde / Chargement des données",
+    0: "Quitter le programme",
+}
+
+CHOIX_MENU_JOUEURS = {
+    1: "Afficher la liste des Joueurs",
+    2: "Ajouter un nouveau Joueur",
+    3: "Supprimer un Joueur",
+    4: "Mettre à jour le classement d'un Joueur",
+    0: "Quitter",
+}
+
+CHOIX_MENU_TOURNOI = {
+    1: "Créer un nouveau Tournoi",
+    2: "Démarrer nouveau Round",
+    3: "Entrer/Modifier les résultats",
+    4: "Mettre à jour le classement des Joueurs du Tournoi",
+    5: "Terminer le tournoi",
+    0: "Quitter",
+}
+
+CHOIX_MENU_RAPPORTS = {
+    1: "Liste de tous les Acteurs par ordre alphabétique",
+    2: "Liste de tous les Acteurs par classement",
+    3: "Liste de tous les Joueurs d'un Tournoi par ordre alphabétique",
+    4: "Liste de tous les Joueurs d'un Tournoi par classement",
+    5: "Liste de tous les Tournois",
+    6: "Liste de tous les Tours d'un Tournoi",
+    7: "Liste de tous les Matchs d'un Tournoi",
+    0: "Quitter",
+}
+
+CHOIX_MENU_SAUVEGARDE_CHARGEMENT = {
+    1: "Sauvegarder l'état du programme",
+    2: "Charger l'état du programme",
+    3: "Réinitialiser la base de donnée",
+    0: "Quitter",
+}
+
 # INITIALIZATION CONSTANTS
 # Number of Rounds per tournament
 NOMBRE_DE_TOURS = 4
