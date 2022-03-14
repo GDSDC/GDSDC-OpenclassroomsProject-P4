@@ -1,0 +1,5 @@
+[flake8]
+max-line-length = 119
+exclude = env,__pycache__,.pytest_cache,.git
+format = html
+htmldir = flake8-rapport
