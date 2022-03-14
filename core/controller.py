@@ -37,7 +37,7 @@ class Controller:
                                 'La liste d\'acteurs est vide. Veuillez ajouter au moins un joueur !')
                     # Ajouter nouveau Joueur
                     elif choix_menu_joueurs == 2:
-                        self.ajouter_nouveau_joueur()
+                        self.ajouter_nouveaux_joueurs()
                     # Supprimer Joueur
                     elif choix_menu_joueurs == 3:
                         if self.state.acteurs:
@@ -248,10 +248,10 @@ class Controller:
 
     # Gestion des joueurs
 
-    def ajouter_nouveau_joueur(self):
+    def ajouter_nouveaux_joueurs(self):
         """Function to add a player to acteurs"""
-        nouveau_joueur = self.vue.ajouter_joueurs(nb_joueurs=1)[1]
-        self.state.ajouter_nouveau_joueur(nouveau_joueur)
+        _, nouveaux_joueurs = self.vue.ajouter_joueurs(nb_joueurs=1)
+        self.state.ajouter_nouveau_joueur(nouveaux_joueurs)
 
     def supprimer_joueur(self):
         """Function to remove a player from acteurs"""
