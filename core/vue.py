@@ -35,7 +35,7 @@ class Vue:
 
         return choix_utilisateur_menu
 
-    def creer_nouveau_tournoi(self, acteurs: Dict[int, Joueur]) -> [Tournoi, List[Joueur]]:
+    def creer_nouveau_tournoi(self, acteurs: Dict[int, Joueur]) -> Tuple[Tournoi, List[Joueur]]:
         """Creation of a new tournament by filling in all the requested information."""
 
         # Initialization
@@ -120,7 +120,7 @@ Créer un nouveau Tournoi
 
     def ajouter_joueurs(
             self, nb_joueurs: Optional[int], acteurs: Optional[Dict[int, Joueur]] = None
-    ) -> [List[Joueur], List[Joueur]]:
+    ) -> Tuple[List[Joueur], List[Joueur]]:
         """Function to select players among acteurs's list and create new players for the tournament"""
 
         # Initialization
