@@ -1,4 +1,4 @@
-from typing import List, Optional, Any, Dict
+from typing import List, Optional, Any, Dict, Tuple
 from datetime import datetime
 
 from core.model import Joueur, Tournoi, Score, Round, RoundName, Match, NOMBRE_DE_JOUEURS
