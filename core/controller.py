@@ -293,27 +293,10 @@ class Controller:
             tournois.append(self.state.tournoi)
         return tournois
 
-    def mettre_a_jour_joueurs(self):
-        """ Generation of new state.tournoi.joueurs_en_jeux list"""
-        # Initialization
-        joueurs_qui_passent_au_prochain_tour = []
-        # In case it is the very first round of Tournament
-        if not self.state.tournoi.rounds:
-            joueurs_qui_passent_au_prochain_tour.extend(self.state.tournoi.joueurs_du_tournoi)
-        else:
-            # Iteration over all the results of all the matches of the previous Round
-            for match in self.state.tournoi.rounds[-1].match_liste:
-                for (joueur, score) in match:
-                    if score != Score.PERDANT:
-                        joueurs_qui_passent_au_prochain_tour.append(joueur)
-        self.state.tournoi.joueurs_en_jeux = joueurs_qui_passent_au_prochain_tour
-
     def creer_nouveau_round(self):
         # Ending previous round if exists
         if self.state.tournoi.rounds:
             self.state.tournoi.rounds[-1].date_fin = datetime.now()
-        # Updating players for the new round
-        self.mettre_a_jour_joueurs()
         # Creating new round
         numero_round = len(self.state.tournoi.rounds) + 1
         nouveau_round = self.vue.creer_nouveau_round(numero_round=numero_round)
