@@ -361,7 +361,7 @@ class Controller:
         self.vue.afficher_paires_joueurs(self.state.tournoi.rounds[-1])
 
     def joueurs_score_update(self, round_object: Round, joueurs_score: List[Tuple[Joueur, int]]) -> List[
-        Tuple[Joueur, int]]:
+            Tuple[Joueur, int]]:
         """Function to update joueur_score with scores of the round_object"""
 
         # Initialization
