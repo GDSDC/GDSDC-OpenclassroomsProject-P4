@@ -33,7 +33,7 @@ source env/bin/activate
 
 Installez les paquets présents dans la liste requirements.txt
 ```bash
-pip install -r core/requirements.txt
+pip install -r requirements.txt
 ```
 
 ## Utilisation
