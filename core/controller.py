@@ -336,12 +336,38 @@ class Controller:
             joueurs_score.sort(key=lambda x: x[1], reverse=True)
             # Getting player list from joueurs_score
             joueurs_ordonnes_par_score = [joueur for [joueur, _] in joueurs_score]
-            # Generating pairs
-            for i in range(int(len(joueurs) / 2)):
-                joueurs_paires.append((joueurs_ordonnes_par_score[2*i], joueurs_ordonnes_par_score[2*i+1]))
+            # Generating pairs, looking for matchs already played
+            while joueurs_ordonnes_par_score:
+                must_exit_pair_founded = False
+                i = 1
+                while not must_exit_pair_founded:
+                    if not self.match_deja_joue(
+                            paire_joueur=(joueurs_ordonnes_par_score[0], joueurs_ordonnes_par_score[i])):
+                        joueurs_paires.append((joueurs_ordonnes_par_score[0], joueurs_ordonnes_par_score[i]))
+                        del joueurs_ordonnes_par_score[0]
+                        del joueurs_ordonnes_par_score[i-1]
+                        must_exit_pair_founded = True
+                    else:
+                        i += 1
+            # TODO : finaliser cette partie et s'assurer que cela fonctionne
 
         self.state.generer_paires_joueurs(joueurs_paires=joueurs_paires)
         self.vue.afficher_paires_joueurs(self.state.tournoi.rounds[-1])
+
+    def match_deja_joue(self, paire_joueur: Tuple[Joueur, Joueur]):
+        """Function that verifies if a match between two players have already been played or not"""
+
+        # Initialization
+        result = False
+
+        if len(self.state.tournoi.rounds) > 1:
+            for round_object in self.state.tournoi.rounds[:-1]:
+                for ((joueur1, _), (joueur2, _)) in round_object.match_liste:
+                    if (joueur1 in paire_joueur) and (joueur2 in paire_joueur):
+                        result = True
+                        break
+
+        return result
 
     def joueurs_score_update(self, round_object: Round, joueurs_score: List[Tuple[Joueur, int]]) -> List[
             Tuple[Joueur, int]]:
