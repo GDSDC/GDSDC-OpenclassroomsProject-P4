@@ -126,7 +126,7 @@ Créer un nouveau Tournoi
         # Initialization
         choix_acteurs = []
         nouveaux_joueurs = []
-        joueurs_du_tournoi = []
+        joueurs = []
 
         # Header display
         affichage_menu_ajouter_joueurs = """
@@ -254,10 +254,10 @@ Renseigner les informations du joueur n°{joueur}
                 )
 
         # Concatenation of acteurs and players
-        joueurs_du_tournoi.extend(choix_acteurs)
-        joueurs_du_tournoi.extend(nouveaux_joueurs)
+        joueurs.extend(choix_acteurs)
+        joueurs.extend(nouveaux_joueurs)
 
-        return joueurs_du_tournoi, nouveaux_joueurs
+        return joueurs, nouveaux_joueurs
 
     def supprimer_joueur(self, acteurs_liste: List[Joueur]) -> Joueur:
         """Function to select a player to remove from acteurs."""
