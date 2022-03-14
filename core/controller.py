@@ -318,6 +318,9 @@ class Controller:
             # Cuting joueurs_ordonnes_par_classement in upper half and lower half
             joueurs_superieur = joueurs_ordonnes_par_classement[:int(len(joueurs_ordonnes_par_classement) / 2)]
             joueurs_inferieur = joueurs_ordonnes_par_classement[int(len(joueurs_ordonnes_par_classement) / 2):]
+            # Generating pairs
+            for i in range(int(len(joueurs) / 2)):
+                joueurs_paires.append((joueurs_superieur[i], joueurs_inferieur[i]))
         else:
             # For the next rounds
             # Initializing players with score
@@ -333,12 +336,9 @@ class Controller:
             joueurs_score.sort(key=lambda x: x[1], reverse=True)
             # Getting player list from joueurs_score
             joueurs_ordonnes_par_score = [joueur for [joueur, _] in joueurs_score]
-            joueurs_superieur = joueurs_ordonnes_par_score[:int(len(joueurs_ordonnes_par_score) / 2)]
-            joueurs_inferieur = joueurs_ordonnes_par_score[int(len(joueurs_ordonnes_par_score) / 2):]
-
-        # Generating pairs
-        for i in range(int(len(joueurs) / 2)):
-            joueurs_paires.append((joueurs_superieur[i], joueurs_inferieur[i]))
+            # Generating pairs
+            for i in range(int(len(joueurs) / 2)):
+                joueurs_paires.append((joueurs_ordonnes_par_score[2*i], joueurs_ordonnes_par_score[2*i+1]))
 
         self.state.generer_paires_joueurs(joueurs_paires=joueurs_paires)
         self.vue.afficher_paires_joueurs(self.state.tournoi.rounds[-1])
