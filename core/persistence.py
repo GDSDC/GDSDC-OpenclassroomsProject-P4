@@ -13,22 +13,22 @@ TOURNAMENTS_TABLE = 'tournaments'
 
 
 def open_database(path: str = _DB_PATH) -> TinyDB:
-    print("Opening connection to DB")
+    # print("Opening connection to DB")
     return TinyDB(path)
 
 
 def init_database(db: TinyDB):
     """Function to initialize database of the project"""
-    print("Initializing DB tables")
+    # print("Initializing DB tables")
     db.table(PLAYERS_TABLE)
     db.table(TOURNAMENTS_TABLE)
-    print("Done!")
+    # print("Done!")
 
 
 def clear_database():
     """Function to clear database"""
     try:
-        print("Dropping DB")
+        # print("Dropping DB")
         os.remove(_DB_PATH)
     except FileNotFoundError:
         pass
@@ -42,8 +42,8 @@ def _ensure_db_is_loaded():
     global DB
     if DB is None:
         DB = open_database()
-    else:
-        print("DB is already opened")
+    # else:
+    #     print("DB is already opened")
 
 
 def with_db(f):
