@@ -99,6 +99,7 @@ class Controller:
                                 self.entrer_scores()
                                 # Showing results when it is last Round and Scores are filled
                                 if self.state.tournoi.rounds[-1].nom == RoundName.ROUND4:
+                                    self.afficher_resultats_tournoi()
                                     self.afficher_vainqueur_tournoi()
                             else:
                                 # Tournament but Rounds empty
@@ -395,7 +396,7 @@ class Controller:
 
         return result
 
-    def joueurs_score_total(self, rounds: List[Round]) -> List[Tuple[Joueur,int]]:
+    def joueurs_score_total(self, rounds: List[Round]) -> List[Tuple[Joueur, int]]:
         """Function that output players total score"""
 
         # Initiliazation
@@ -425,18 +426,9 @@ class Controller:
         if not self.state.tournoi.rounds:
             pass
         else:
-            # In case actual round is the Round 1
-            if len(self.state.tournoi.rounds) == 1:
-                pass
-            else:
-                scores_results.extend(self.state.tournoi.rounds[:-1])
-            # Updating scores with actual round
-            for ((joueur1, score_joueur1), (joueur2, score_joueur2)) in self.state.tournoi.rounds[-1].match_liste:
-                if (score_joueur1 is None) and (score_joueur2 is None):
-                    pass
-                else:
-                    scores_results.append(self.state.tournoi.rounds[-1])
-                    break
+            rounds_scored = [round_object for round_object in self.state.tournoi.rounds if
+                             round_object.match_liste[0][0][1]]
+            scores_results = self.joueurs_score_total(rounds=rounds_scored)
         self.vue.afficher_resultats(scores_results)
 
     def modifier_classement_tournoi(self):
@@ -467,12 +459,10 @@ class Controller:
         vainqueurs_scores = self.selectionner_vainqueur_tournoi()
         self.vue.afficher_vainqueur_tournoi(tournoi=self.state.tournoi, vainqueurs_scores=vainqueurs_scores)
 
-
     def selectionner_vainqueur_tournoi(self) -> List[Tuple[Joueur, int]]:
         """Function that output winners with score !"""
 
         # Initiliazation
-        joueurs = self.state.tournoi.joueurs_du_tournoi
         rounds = self.state.tournoi.rounds
 
         # Counting points
