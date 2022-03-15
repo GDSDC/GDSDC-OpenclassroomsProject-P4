@@ -570,8 +570,8 @@ x x x x x x x x x x x x x x xx"""
         if len(vainqueurs_scores) == 1:
             [(vainqueur, score)] = vainqueurs_scores
             print(f"""\n==========================================================
-Le vainqueur du Tournoi {tournoi.nom} est {vainqueur.prenom} {vainqueur.nom_de_famille} avec un score total de 
-{score} points !
+Le vainqueur du Tournoi {tournoi.nom} est {vainqueur.prenom} {vainqueur.nom_de_famille} avec un score total de """
+                  f"""{score} points !
 ==========================================================""")
 
         else:

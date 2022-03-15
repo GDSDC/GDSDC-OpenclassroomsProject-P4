@@ -1,5 +1,5 @@
 from core.vue import Vue
-from core.model import State, Joueur, Tournoi, Score, Round, RoundName, CHOIX_MENU_PRINCIPAL, CHOIX_MENU_TOURNOI, \
+from core.model import State, Joueur, Tournoi, Round, RoundName, CHOIX_MENU_PRINCIPAL, CHOIX_MENU_TOURNOI, \
     CHOIX_MENU_RAPPORTS, CHOIX_MENU_JOUEURS, CHOIX_MENU_SAUVEGARDE_CHARGEMENT
 from typing import List, Optional, Tuple
 from core import sorters
