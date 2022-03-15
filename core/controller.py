@@ -395,6 +395,24 @@ class Controller:
 
         return result
 
+    def joueurs_score_total(self, rounds: List[Round]) -> List[Tuple[Joueur,int]]:
+        """Function that output players total score"""
+
+        # Initiliazation
+        joueurs = self.state.tournoi.joueurs_du_tournoi
+        joueurs_score_init = [[joueur, 0] for joueur in joueurs]
+        joueurs_scores = []
+
+        # Counting points
+        for round_object in rounds:
+            joueurs_scores = self.joueurs_score_update(round_object=round_object, joueurs_score=joueurs_score_init)
+            joueurs_score_init = joueurs_scores
+
+        # Sorting by total score
+        joueurs_scores.sort(key=lambda x: x[1], reverse=True)
+
+        return joueurs_scores
+
     def entrer_scores(self):
         scores = self.vue.entrer_scores(round_param=self.state.tournoi.rounds[-1])
         self.state.entrer_scores(scores)
@@ -449,22 +467,16 @@ class Controller:
         vainqueurs_scores = self.selectionner_vainqueur_tournoi()
         self.vue.afficher_vainqueur_tournoi(tournoi=self.state.tournoi, vainqueurs_scores=vainqueurs_scores)
 
+
     def selectionner_vainqueur_tournoi(self) -> List[Tuple[Joueur, int]]:
         """Function that output winners with score !"""
 
         # Initiliazation
         joueurs = self.state.tournoi.joueurs_du_tournoi
         rounds = self.state.tournoi.rounds
-        joueurs_score_init = [[joueur, 0] for joueur in joueurs]
-        joueurs_scores = []
 
         # Counting points
-        for round_object in rounds:
-            joueurs_scores = self.joueurs_score_update(round_object=round_object, joueurs_score=joueurs_score_init)
-            joueurs_score_init = joueurs_scores
-
-        # Sorting by total score
-        joueurs_scores.sort(key=lambda x: x[1], reverse=True)
+        joueurs_scores = self.joueurs_score_total(rounds=rounds)
 
         # Finding Winners
         _, vainqueur_score = joueurs_scores[0]
