@@ -576,3 +576,21 @@ x x x x x x x x x x x x x x xx
 {message}
 x x x x x x x x x x x x x x xx"""
         )
+
+    def afficher_vainqueur_tournoi(self, tournoi: Tournoi, vainqueurs_scores: List[Tuple[Joueur, int]]):
+        """Function that shows final results and the winner informations with score !"""
+
+        # If there is ONE winner
+        if len(vainqueurs_scores) == 1:
+            [(vainqueur, score)] = vainqueurs_scores
+            print(f"""==========================================================
+Le vainqueur du Tournoi {tournoi.nom} est {vainqueur.prenom} {vainqueur.nom_de_famille} avec un score total de 
+{score} points !
+==========================================================""")
+
+        else:
+            print(f"""==========================================================
+Voici la liste des {len(vainqueurs_scores)} vainqueurs du Tournoi {tournoi.nom} :""")
+            for (vainqueur, score) in vainqueurs_scores:
+                print(f'- {vainqueur.prenom} {vainqueur.nom_de_famille} avec un score total de {score} points')
+            print('==========================================================')

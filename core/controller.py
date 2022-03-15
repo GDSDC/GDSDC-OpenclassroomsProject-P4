@@ -1,5 +1,5 @@
 from core.vue import Vue
-from core.model import State, Joueur, Tournoi, Score, Round, CHOIX_MENU_PRINCIPAL, CHOIX_MENU_TOURNOI, \
+from core.model import State, Joueur, Tournoi, Score, Round, RoundName, CHOIX_MENU_PRINCIPAL, CHOIX_MENU_TOURNOI, \
     CHOIX_MENU_RAPPORTS, CHOIX_MENU_JOUEURS, CHOIX_MENU_SAUVEGARDE_CHARGEMENT
 from typing import List, Optional, Tuple
 from core import sorters
@@ -78,10 +78,11 @@ class Controller:
                             if not self.state.tournoi.rounds:
                                 self.creer_nouveau_round()
                             # Previous Round is Final Round
-                            elif len(self.state.tournoi.rounds[-1].match_liste) == 1:
+                            elif self.state.tournoi.rounds[-1].nom == RoundName.ROUND4:
                                 self.vue.affichage_warning(
                                     'Round final en cours ou terminé. '
-                                    'Vous ne pouvez plus créer de nouvaux Round sur ce Tournoi !')
+                                    'Vous ne pouvez plus créer de nouvaux Round sur ce Tournoi ! '
+                                    'Veuillez entrer les scores ou terminer le Tournoi.')
                             # Scores filled
                             elif self.state.tournoi.rounds[-1].match_liste[0][0][1]:
                                 self.creer_nouveau_round()
@@ -96,6 +97,9 @@ class Controller:
                             if self.state.tournoi.rounds:
                                 # Tournament and Rounds not empty
                                 self.entrer_scores()
+                                # Showing results when it is last Round and Scores are filled
+                                if self.state.tournoi.rounds[-1].nom == RoundName.ROUND4:
+                                    self.afficher_vainqueur_tournoi()
                             else:
                                 # Tournament but Rounds empty
                                 self.vue.affichage_warning(
@@ -345,11 +349,10 @@ class Controller:
                             paire_joueur=(joueurs_ordonnes_par_score[0], joueurs_ordonnes_par_score[i])):
                         joueurs_paires.append((joueurs_ordonnes_par_score[0], joueurs_ordonnes_par_score[i]))
                         del joueurs_ordonnes_par_score[0]
-                        del joueurs_ordonnes_par_score[i-1]
+                        del joueurs_ordonnes_par_score[i - 1]
                         must_exit_pair_founded = True
                     else:
                         i += 1
-            # TODO : finaliser cette partie et s'assurer que cela fonctionne
 
         self.state.generer_paires_joueurs(joueurs_paires=joueurs_paires)
         self.vue.afficher_paires_joueurs(self.state.tournoi.rounds[-1])
@@ -439,6 +442,37 @@ class Controller:
         joueur_nouveau_classement = [self.vue.modifier_classement(joueurs_classement=joueur_ancien_classement)[0]]
         self.state.modifier_classement(joueurs_ancien_classement=joueur_ancien_classement,
                                        joueurs_nouveau_classement=joueur_nouveau_classement)
+
+    def afficher_vainqueur_tournoi(self):
+        """Function that shows final results and the winner informations with score !"""
+
+        vainqueurs_scores = self.selectionner_vainqueur_tournoi()
+        self.vue.afficher_vainqueur_tournoi(tournoi=self.state.tournoi,vainqueurs_scores=vainqueurs_scores)
+
+
+    def selectionner_vainqueur_tournoi(self) -> List[Tuple[Joueur,int]]:
+        """Function that output winners with score !"""
+
+        # Initiliazation
+        joueurs = self.state.tournoi.joueurs_du_tournoi
+        rounds = self.state.tournoi.rounds
+        joueurs_score_init = [[joueur, 0] for joueur in joueurs]
+        joueurs_scores = []
+
+        # Counting points
+        for round_object in rounds:
+            joueurs_scores = self.joueurs_score_update(round_object=round_object, joueurs_score=joueurs_score_init)
+            joueurs_score_init = joueurs_scores
+
+        # Sorting by total score
+        joueurs_scores.sort(key=lambda x: x[1], reverse=True)
+
+        # Finding Winners
+        _,vainqueur_score = joueurs_scores[0]
+        vainqueurs_scores = [(joueur, score) for (joueur, score) in joueurs_scores if score == vainqueur_score ]
+
+        return vainqueurs_scores
+
 
     def terminer_tournoi(self):
         """Function to close tournament"""
