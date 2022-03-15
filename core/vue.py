@@ -386,7 +386,7 @@ Entrez/Modifiez les scores des {nombre_de_paires} matchs :
 
         return match_liste_scores
 
-    def afficher_resultats(self, scores_results: List[Round]):
+    def afficher_resultats(self, scores_results: List[Tuple[Joueur, int]]):
         """Function that shows all scores of the Tournament"""
 
         # Header display
@@ -397,25 +397,11 @@ Affichage des scores
 """
         print(affichage_scores_entete)
 
-        # Iteration on the rounds
-        for round_variable in scores_results:
-            # Header display per round
-            affichage_round = f"""
-==========================================================
-Scores du round : {round_variable.nom.value}
-==========================================================
-"""
-            print(affichage_round)
-
-            # Iteration on all the matches of the rounds
-            for ((joueur1, score_joueur1), (joueur2, score_joueur2)) in round_variable.match_liste:
-                # Display scores per match
-                affichage_scores_match = f"""
-----------------------------------------------------------
-{joueur1.prenom} {joueur1.nom_de_famille} : {score_joueur1.value} points
-{joueur2.prenom} {joueur2.nom_de_famille} : {score_joueur2.value} points
-"""
-                print(affichage_scores_match)
+        # Iteration on players scores
+        i = 1
+        for (joueur, score_joueur) in scores_results:
+            print(f'{i}. {joueur.prenom} {joueur.nom_de_famille} : {score_joueur} points.')
+            i += 1
 
     def modifier_classement(self, joueurs_classement: List[Joueur]) -> List[Joueur]:
         """Function to update players ranking"""
