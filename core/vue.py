@@ -583,13 +583,13 @@ x x x x x x x x x x x x x x xx"""
         # If there is ONE winner
         if len(vainqueurs_scores) == 1:
             [(vainqueur, score)] = vainqueurs_scores
-            print(f"""==========================================================
+            print(f"""\n==========================================================
 Le vainqueur du Tournoi {tournoi.nom} est {vainqueur.prenom} {vainqueur.nom_de_famille} avec un score total de 
 {score} points !
 ==========================================================""")
 
         else:
-            print(f"""==========================================================
+            print(f"""\n==========================================================
 Voici la liste des {len(vainqueurs_scores)} vainqueurs du Tournoi {tournoi.nom} :""")
             for (vainqueur, score) in vainqueurs_scores:
                 print(f'- {vainqueur.prenom} {vainqueur.nom_de_famille} avec un score total de {score} points')
