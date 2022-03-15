@@ -127,10 +127,10 @@ class Controller:
                             # Tournament but Rounds empty
                             self.vue.affichage_warning(
                                 'Veuillez démarrer un nouveau Round avant de Terminer le tournoi.')
-                        elif len(self.state.tournoi.rounds[-1].match_liste) > 1 or not \
+                        elif self.state.tournoi.rounds[-1].nom != RoundName.ROUND4 or not \
                                 self.state.tournoi.rounds[-1].match_liste[0][0][1]:
                             # Tournament and Rounds ok but winner not defined
-                            # (match_liste too large (>1 for the final) or scores not filled (=None)
+                            # RoundName not ROUND4 or scores not filled (=None)
                             self.vue.affichage_warning(
                                 'Veuillez renseigner tous les scores pour déternminer '
                                 'le gagnant du Tournoi avant de le Terminer.')
@@ -447,10 +447,9 @@ class Controller:
         """Function that shows final results and the winner informations with score !"""
 
         vainqueurs_scores = self.selectionner_vainqueur_tournoi()
-        self.vue.afficher_vainqueur_tournoi(tournoi=self.state.tournoi,vainqueurs_scores=vainqueurs_scores)
+        self.vue.afficher_vainqueur_tournoi(tournoi=self.state.tournoi, vainqueurs_scores=vainqueurs_scores)
 
-
-    def selectionner_vainqueur_tournoi(self) -> List[Tuple[Joueur,int]]:
+    def selectionner_vainqueur_tournoi(self) -> List[Tuple[Joueur, int]]:
         """Function that output winners with score !"""
 
         # Initiliazation
@@ -468,11 +467,10 @@ class Controller:
         joueurs_scores.sort(key=lambda x: x[1], reverse=True)
 
         # Finding Winners
-        _,vainqueur_score = joueurs_scores[0]
-        vainqueurs_scores = [(joueur, score) for (joueur, score) in joueurs_scores if score == vainqueur_score ]
+        _, vainqueur_score = joueurs_scores[0]
+        vainqueurs_scores = [(joueur, score) for (joueur, score) in joueurs_scores if score == vainqueur_score]
 
         return vainqueurs_scores
-
 
     def terminer_tournoi(self):
         """Function to close tournament"""
