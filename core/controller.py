@@ -238,7 +238,9 @@ class Controller:
                     if choix_menu_sauvegarder == 1:
                         # In Case actual Tournament not closed
                         if self.state.tournoi and not self.state.tournoi.date_fin:
-                            self.vue.affichage_warning(message='Veuillez Terminer le Tournoi actuel avant de sauvegarder l\'état du programme !')
+                            self.vue.affichage_warning(
+                                message='Veuillez Terminer le Tournoi actuel avant de sauvegarder l\'état du '
+                                        'programme !')
                         else:
                             self.save_database()
                     # Charger l'état du programme
