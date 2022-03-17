@@ -256,37 +256,6 @@ def test_controller_creer_nouveau_round():
     assert controller.state.tournoi.rounds == [round1(), round2(), round3()]
 
 
-def test_controller_generer_paires_joueurs():
-    """Function to test the controller.creation of paires"""
-
-    # Given
-    init_sate = state6()
-    controller = Controller(vue=TEST_VUE, state=init_sate)
-    print(controller.state.tournoi)
-
-    # When
-    controller.generer_paires_joueurs()
-
-    # Then
-    assert controller.state.tournoi.rounds[-1].match_liste == [((PLAYER1, None), (PLAYER2, None)),
-                                                               ((PLAYER3, None), (PLAYER4, None))]
-
-
-def test_controller_mettre_a_jour_joueurs():
-    """Function to test the update of players when creating new Round"""
-
-    # Given
-    init_sate2 = state2()
-    controller = Controller(vue=TEST_VUE, state=init_sate2)
-
-    # When
-    controller.mettre_a_jour_joueurs()
-
-    # Then
-    assert controller.state.tournoi.joueurs_en_jeux == [PLAYER1, PLAYER3]
-    assert controller.state.tournoi.joueurs_du_tournoi == [PLAYER1, PLAYER2, PLAYER3, PLAYER4]
-
-
 def test_controller_entrer_scores():
     """Function that test the controller.entrer_scores"""
 
@@ -299,23 +268,6 @@ def test_controller_entrer_scores():
 
     # Then
     assert controller.state.tournoi.rounds[-1].match_liste == SCORES
-
-
-def test_modifier_classement():
-    """Function that test the controller.modifier_classement_tournoi"""
-
-    # Given
-    init_sate = state1()
-    controller = Controller(vue=TEST_VUE, state=init_sate)
-
-    # When
-    controller.modifier_classement_tournoi()
-
-    # Then
-    assert controller.state.tournoi.joueurs_du_tournoi == [PLAYER_NOUVEAU_CLASSEMENT1,
-                                                           PLAYER_NOUVEAU_CLASSEMENT2,
-                                                           PLAYER_NOUVEAU_CLASSEMENT3,
-                                                           PLAYER_NOUVEAU_CLASSEMENT4]
 
 
 def test_controller_terminer_tournoi():
